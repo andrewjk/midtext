@@ -1,0 +1,752 @@
+Textet
+======
+
+Like a strict markdown, with (mostly!) one way of doing things.
+
+So that there is as little confusion as possible about output.
+
+Where an output is ambiguous, there should be an easy way for the author to
+amend the text to output what they meant.
+
+Paragraphs
+----------
+
+Most text in a document is contained within a paragraph. This is a paragraph!
+
+Paragraphs continue over multiple lines, and end when a blank line is
+encountered.
+
+Block elements often contain one or more paragraphs which in turn contain
+their text.
+
+Here are two paragraphs:
+```````````````````````````````` example
+I'm the first paragraph and I end with the following blank line.
+
+I'm the second paragraph
+and I continue onto this second line.
+.
+<p>I'm the first paragraph and I end with the following blank line.</p>
+<p>I'm the second paragraph
+and I continue onto this second line.</p>
+````````````````````````````````
+
+Blocks
+------
+
+Blocks start with a unique character or string, followed by a space.
+
+Any block character can be escaped with \ to prevent its usual meaning.
+
+### Headings
+
+There are two types of headings. Underlined headings consist of some text,
+followed by a line containing only spaces and `=` or `-`:
+
+```````````````````````````````` example
+Heading 1
+===
+.
+<h1>Heading 1</h1>
+````````````````````````````````
+
+```````````````````````````````` example
+Heading 2
+---
+.
+<h2>Heading 2</h2>
+````````````````````````````````
+
+```````````````````````````````` example
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+####### Not a heading
+.
+<h1>Heading 1</h1>
+<h2>Heading 2</h2>
+<h3>Heading 3</h3>
+<h4>Heading 4</h4>
+<h5>Heading 5</h5>
+<h6>Heading 6</h6>
+<p>####### Not a heading</p>
+````````````````````````````````
+
+Headings do not contain paragraphs, and so cannot be continued on the next
+line:
+
+```````````````````````````````` example
+# Heading 1
+And some paragraph text
+.
+<h1>Heading 1</h1>
+<p>And some paragraph text</p>
+````````````````````````````````
+
+Headings can be continued with a \ though?
+
+### Block quotes
+
+Block quotes are started with a `>`:
+
+```````````````````````````````` example
+> This is what someone said
+.
+<blockquote>
+<p>This is what someone said</p>
+</blockquote>
+````````````````````````````````
+
+Block quotes contain at least one paragraph, which can be continued with
+another `>` symbol, or just by continuing the text:
+
+```````````````````````````````` example
+> Block quote
+> with continuation
+and some more
+.
+<blockquote>
+<p>Block quote
+with continuation
+and some more</p>
+</blockquote>
+````````````````````````````````
+
+Block quotes can contain multiple paragraphs by positioning the following
+paragraphs' starts at or beyond the start of the blockquote's first paragraph:
+
+```````````````````````````````` example
+> Block quote paragraph 1
+
+  And paragraph 2
+
+    And this is another paragraph
+.
+<blockquote>
+<p>Block quote paragraph 1</p>
+<p>And paragraph 2</p>
+<p>And this is another paragraph</p>
+</blockquote>
+````````````````````````````````
+
+Block quotes can be nested by placing them within another block quote:
+
+```````````````````````````````` example
+> Block quote
+  > Nested block quote
+ > Still nested
+.
+<blockquote>
+<p>Block quote
+Nested block quote
+Still nested</p>
+</blockquote>
+````````````````````````````````
+
+Block quotes can also be nested by using double `>` (do we need the space??)
+
+```````````````````````````````` example
+> > Nested block quote
+> More
+>
+>> A new block quote
+.
+<blockquote>
+<blockquote>
+<p>Nested block quote
+More</p>
+</blockquote>
+<blockquote>
+<p>A new block quote</p>
+</blockquote>
+</blockquote>
+````````````````````````````````
+
+### Lists
+
+Bullet lists start with `-`, `*` or `+`:
+
+```````````````````````````````` example
+- Bullet list item
+* Also a bullet list item
++ Yet another bullet list item
+.
+<ul>
+<li>Bullet list item</li>
+</ul>
+<ul>
+<li>Also a bullet list item</li>
+</ul>
+<ul>
+<li>Yet another bullet list item</li>
+</ul>
+````````````````````````````````
+
+Ordered lists start with `1.` or `a.` or `A.`:
+
+```````````````````````````````` example
+1. Ordered list item
+a. Also an ordered list item (be careful!)
+A. Yet another ordered list item
+.
+<ol>
+<li>Ordered list item</li>
+</ol>
+<ol type="a">
+<li>Also an ordered list item (be careful!)</li>
+</ol>
+<ol type="A">
+<li>Yet another ordered list item</li>
+</ol>
+````````````````````````````````
+
+Ordered lists do not need to start at 1. or a., or even have continuous
+numbering:
+```````````````````````````````` example
+5. Ordered lists can start at any number
+4. And have unordered numbers
+4. And multiple numbers
+.
+<ol start="5">
+<li>Ordered lists can start at any number</li>
+<li>And have unordered numbers</li>
+<li>And multiple numbers</li>
+</ol>
+````````````````````````````````
+
+Lists are loose (with a paragraph in each item) if there is a space after the
+first item:
+
+```````````````````````````````` example
+- Loose list item 1
+
+- Loose list item 2
+
+- Loose list item 3
+.
+<ul>
+<li>
+<p>Loose list item 1</p>
+</li>
+<li>
+<p>Loose list item 2</p>
+</li>
+<li>
+<p>Loose list item 3</p>
+</li>
+</ul>
+````````````````````````````````
+
+This is the case even if subsequent items don't have spaces:
+
+```````````````````````````````` example
+- Loose list item 1
+
+- Loose list item 2
+- Loose list item 3
+.
+<ul>
+<li>
+<p>Loose list item 1</p>
+</li>
+<li>
+<p>Loose list item 2</p>
+</li>
+<li>
+<p>Loose list item 3</p>
+</li>
+</ul>
+````````````````````````````````
+
+List items are indented if their markup begins past the content start of the
+previous item:
+
+```````````````````````````````` example
+- Bullet list item
+ - Not indented
+   - Indented list item
+            - Indented again!
+.
+<ul>
+<li>Bullet list item</li>
+<li>Not indented
+<ul>
+<li>Indented list item
+<ul>
+<li>Indented again!</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+````````````````````````````````
+
+List items can also be nested by using a double marker (do we need the space??):
+
+```````````````````````````````` example
+- - Nested list item
+.
+<ul>
+<li>
+<ul>
+<li>Nested list item</li>
+</ul>
+</li>
+</ul>
+````````````````````````````````
+
+List items can contain multiple paragraphs:
+
+```````````````````````````````` example
+- Bullet list item
+can be continued
+
+  AND it can keep going into new paragraphs, so long as the first
+line is indented past the beginning
+.
+<ul>
+<li>
+<p>Bullet list item
+can be continued</p>
+<p>AND it can keep going into new paragraphs, so long as the first
+line is indented past the beginning</p>
+</li>
+</ul>
+````````````````````````````````
+
+Any change of a list item property (type, loose, etc) starts a new list, except
+for loose = true after loose = false (because it's the last item).
+
+This is three lists:
+
+```````````````````````````````` example
+- Item 1
+- Item 2
+
+- Item 3
+- Item 4
+
+- Item 5
+- Item 6
+.
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+</ul>
+<ul>
+<li>Item 3</li>
+<li>Item 4</li>
+</ul>
+<ul>
+<li>Item 5</li>
+<li>Item 6</li>
+</ul>
+````````````````````````````````
+
+However, this is only two lists, one tight and one loose:
+
+```````````````````````````````` example
+- Item 1
+- Item 2
+
+- Item 3
+
+- Item 4
+- Item 5
+.
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+</ul>
+<ul>
+<li>
+<p>Item 3</p>
+</li>
+<li>
+<p>Item 4</p>
+</li>
+<li>
+<p>Item 5</p>
+</li>
+</ul>
+````````````````````````````````
+
+### Task lists
+
+A task list allows you to enter a list of tasks with not done, in progress
+or completed statuses:
+
+```````````````````````````````` example
+- [ ] Task list item
+- [-] In progress task list item
+  - [x] Completed task list item
+.
+<ul>
+<li><input type="checkbox" disabled> Task list item</li>
+<li><input type="checkbox" disabled checked indeterminate> In progress task list item
+<ul>
+<li><input type="checkbox" disabled checked> Completed task list item</li>
+</ul>
+</li>
+</ul>
+````````````````````````````````
+
+Task lists can be ordered too:
+
+```````````````````````````````` example
+1. [ ] Task list item
+   a. [-] In progress task list item
+   b. [x] Completed task list item
+.
+<ol>
+<li><input type="checkbox" disabled> Task list item
+<ol type="a">
+<li><input type="checkbox" disabled checked indeterminate> In progress task list item</li>
+<li><input type="checkbox" disabled checked> Completed task list item</li>
+</ol>
+</li>
+</ol>
+````````````````````````````````
+
+### Section breaks
+
+Three or more `-` or `_` or `*` on a line by themselves outputs a <hr>:
+
+```````````````````````````````` example
+___
+
+-----
+.
+<hr />
+<hr />
+````````````````````````````````
+
+They can have spaces:
+
+```````````````````````````````` example
+ * * * 
+.
+<hr />
+````````````````````````````````
+
+### Block code
+
+Block code can be entered between three backticks, known as a fence:
+
+```````````````````````````````` example
+```
+Block code
+```
+.
+<pre><code>Block code
+</code></pre>
+````````````````````````````````
+
+With language info for formatting the output:
+
+```````````````````````````````` example
+``` javascript
+let x = 5;
+```
+.
+<pre><code class="language-javascript">let x = 5;
+</code></pre>
+````````````````````````````````
+
+Everything between those ticks is read verbatim, and not formatted.
+
+However, if the opening backticks are indented, the initial indentation will
+be removed from the output:
+
+```````````````````````````````` example
+  ```
+  let x = 5,
+      y = 10;
+  let z = x + y;
+  ```
+.
+<pre><code>let x = 5,
+    y = 10;
+let z = x + y;
+</code></pre>
+````````````````````````````````
+
+### Raw content
+
+```````````````````````````````` example
+~~~ html
+<video width="320" height="240" controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+  Your browser does not support the video tag.
+</video>
+~~~
+.
+<video width="320" height="240" controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+  Your browser does not support the video tag.
+</video>
+````````````````````````````````
+
+Cannot contain any formatting -- everything must be done in the output format
+(typically HTML).
+
+### Details
+
+```````````````````````````````` example
+? Something is hidden here
+? Consider this disclosed
+and here is some more info about it
+.
+<details>
+<summary>Something is hidden here</summary>
+<p>Consider this disclosed
+and here is some more info about it</p>
+</details>
+````````````````````````````````
+
+### Aside
+
+```````````````````````````````` example
+@ Aside which can be
+@ continued on the next line
+
+  And needs to be indented
+to have another paragraph
+.
+<aside>
+<p>Aside which can be
+continued on the next line</p>
+<p>And needs to be indented
+to have another paragraph</p>
+</aside>
+````````````````````````````````
+
+### Caption
+
+TODO: If after a table, put it in the table, if after an image, wrap it all in a <figure>
+
+^ This is a caption for the previous
+block
+
+### Divs
+
+A div is a custom block. It doesn't necessarily represent a HTML div e.g. if
+exporting to PDF.
+
+```````````````````````````````` example
+:::
+I'm a div.
+
+Containing two paragraphs.
+:::
+.
+<div>
+<p>I'm a div.</p>
+<p>Containing two paragraphs.</p>
+</div>
+````````````````````````````````
+
+### Hard breaks
+
+To include a hard break (`<br />`) in the output, end the line with `\`:
+
+```````````````````````````````` example
+This paragraph \
+has a hard break
+.
+<p>This paragraph <br />
+has a hard break</p>
+````````````````````````````````
+
+Spaces around the hard break are ignored:
+
+```````````````````````````````` TODO: example
+This paragraph     \  
+has a hard break
+.
+<p>This paragraph     <br />
+has a hard break</p>
+````````````````````````````````
+
+Hard breaks also work in headers:
+```````````````````````````````` example
+# A \
+header \
+that \
+spans \
+multiple \
+lines
+.
+<h1>A<br />
+header<br />
+that<br />
+spans<br />
+multiple<br />
+lines</h1>
+````````````````````````````````
+
+### Tables
+
+Tables require pipes around each cell:
+
+```````````````````````````````` example
+| Table | Header |
+| --- | --- |
+| Cell 1 | Cell 2 |
+.
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cell 1</td>
+<td>Cell 2</td>
+</tr>
+</tbody>
+</table>
+```````````````````````````````` example
+
+With alignment set for each column:
+
+```````````````````````````````` example
+| Table | Header |
+| ---: | :---: |
+| Cell 1 | Cell 2 |
+.
+<table>
+<thead>
+<tr>
+<th align="right">Table</th>
+<th align="center">Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">Cell 1</td>
+<td align="center">Cell 2</td>
+</tr>
+</tbody>
+</table>
+```````````````````````````````` example
+
+### Math
+
+TODO: Find a good library
+
+$$$
+math here
+$$$
+
+Or $$math$$ can go in a paragraph (note the double `$`).
+
+Inlines
+-------
+
+```````````````````````````````` example
+- *Italic*
+- **Bold**
+- ***Bold and italic***
+.
+<ul>
+<li><em>Italic</em></li>
+<li><strong>Bold</strong></li>
+<li><em><strong>Bold and italic</strong></em></li>
+</ul>
+````````````````````````````````
+
+If you want to do weird things with nesting, you will need to alternate symbols:
+
+```````````````````````````````` example
+- *__I'm italic and bold__ and I'm just italic*
+.
+<ul>
+<li><em><strong>I'm italic and bold</strong> and I'm just italic</em></li>
+</ul>
+````````````````````````````````
+
+Code spans, strikethroughs, highlights, and superscript are included:
+
+```````````````````````````````` example
+- `Code`
+- ~Strikethrough~
+- =Highlight=
+- ^Superscript^
+.
+<ul>
+<li><code>Code</code></li>
+<li><s>Strikethrough</s></li>
+<li><mark>Highlight</mark></li>
+<li><sup>Superscript</sup></li>
+</ul>
+````````````````````````````````
+
+### Links
+
+\[link text](url)
+
+OR
+
+\[link text][ref] \
+\[ref]: url
+
+OR 
+
+- <http://www.example.com>
+- <mailto:blah@example.com>
+
+### Images / Media
+
+![image alt](url)
+
+OR
+
+\![image alt][ref] \
+\![ref]: url
+
+## Raw
+
+You can add raw HTML inline using `%`:
+
+```````````````````````````````` example
+The formula for water is %H<sub>2</sub>O%!
+.
+<p>The formula for water is H<sub>2</sub>O!</p>
+````````````````````````````````
+
+## Spans
+
+Like a div, spans in text will not necessarily be rendered as a span:
+
+```````````````````````````````` example
+I'm some :inline content:!
+.
+<p>I'm some <span>inline content</span>!</p>
+````````````````````````````````
+
+Attributes
+----------
+
+Like djot, we allow {} before any block element and after any inline element to add attributes:
+
+```````````````````````````````` example
+{#id.class attribute=hey}
+:::
+I'm a div with some attributes.
+
+And I'm a :span:{class="info"} with some attributes.
+:::
+.
+<div id="id" class="class" attribute="hey">
+<p>I'm a div with some attributes.</p>
+<p>And I'm a <span class="info">span</span> with some attributes.</p>
+</div>
+````````````````````````````````
