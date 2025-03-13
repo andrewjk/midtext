@@ -39,6 +39,8 @@ A lightweight text markup language, inspired by Markdown, CommonMark, GFM and Dj
 
 - Task items are like GFM, but with an indeterminate state.
 
+- Comments start with `//` and continue to the end of the line.
+
 - Plus asides (`@`), details (`?`) and divs (`:::`)
 
 ### Inline structure
@@ -52,7 +54,8 @@ A lightweight text markup language, inspired by Markdown, CommonMark, GFM and Dj
 - Highlight between `=` or `==`
 - Spans between `:` or `::`
 - Links between `[` and `]`
-- Raw links between `<` and `>`
+- TODO: Raw links between `<` and `>`
+- Comments between `/*` and `*/`
 
 Code spans take precedence over all other inlines.
 

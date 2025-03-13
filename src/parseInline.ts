@@ -21,10 +21,8 @@ export default function parseInline(state: InlineParserState, parent: MarkdownNo
 
 		for (let rule of inlineRules.values()) {
 			let handled = rule.test(state, parent, inlineEnd);
-			//console.log("Rule:", rule.name, handled);
 			if (handled) {
 				// TODO: Make sure that state.i has been incremented to prevent infinite loops
-				//console.log(`Found ${rule.name}`);
 				break;
 			}
 		}
@@ -115,11 +113,15 @@ function processDelimiters(
 		// HACK:
 		delimiterNode.info = delimiter.info;
 		delimiterNode.attributes = delimiter.attributes;
-		parent.children!.push(delimiterNode);
+		if (!delimiter.hidden) {
+			parent.children!.push(delimiterNode);
+		}
 
 		start = delimiter.start + delimiter.length;
 
-		if (delimiter.content) {
+		if (delimiter.hidden) {
+			start = delimiter.end + delimiter.length;
+		} else if (delimiter.content) {
 			let text = formatText(delimiter.content);
 			let textNode = newNode("text", false, state.i, state.line, 1, text, 0);
 			delimiterNode.children!.push(textNode);

@@ -21,4 +21,6 @@ export default interface Delimiter {
 	 * on the END delimiter
 	 */
 	skip?: number;
+	/** If set to true, this delimiter will not be included in rendered output */
+	hidden?: boolean;
 }

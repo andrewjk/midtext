@@ -2,6 +2,7 @@ import asideRule from "./blocks/asideRule";
 import blockAttributesRule from "./blocks/blockAttributesRule";
 import blockQuoteRule from "./blocks/blockQuoteRule";
 import codeBlockRule from "./blocks/codeBlockRule";
+import commentRule from "./blocks/commentRule";
 import displayRule from "./blocks/detailsRule";
 import divRule from "./blocks/divRule";
 import headingRule from "./blocks/headingRule";
@@ -15,6 +16,7 @@ import sectionBreakRule from "./blocks/sectionBreakRule";
 import tableRule from "./blocks/tableRule";
 import taskItemRule from "./blocks/taskItemRule";
 import codeSpanRule from "./inlines/codeSpanRule";
+import commentSpanRule from "./inlines/commentSpanRule";
 import emphasisRule from "./inlines/emphasisRule";
 import hardBreakRule from "./inlines/hardBreakRule";
 import highlightRule from "./inlines/highlightRule";
@@ -53,6 +55,7 @@ export default function parse(src: string): MarkdownNode {
 	blockRules.set(tableRule.name, tableRule);
 	blockRules.set(divRule.name, divRule);
 	blockRules.set(linkReferenceRule.name, linkReferenceRule);
+	blockRules.set(commentRule.name, commentRule);
 	blockRules.set(paragraphRule.name, paragraphRule);
 
 	inlineRules.set(spanAttributesRule.name, spanAttributesRule);
@@ -65,6 +68,7 @@ export default function parse(src: string): MarkdownNode {
 	inlineRules.set(linkRule.name, linkRule);
 	inlineRules.set(spanRule.name, spanRule);
 	inlineRules.set(hardBreakRule.name, hardBreakRule);
+	inlineRules.set(commentSpanRule.name, commentSpanRule);
 	inlineRules.set(textRule.name, textRule);
 
 	let state: BlockParserState = {

@@ -732,10 +732,32 @@ I'm some :inline content:!
 <p>I'm some <span>inline content</span>!</p>
 ````````````````````````````````
 
+Comments
+--------
+
+Start a line with `//` to create a comment until the end of the line.
+
+Put inline comments between `/*` and `*/`.
+
+Comments will be included in the AST that is generated from the `parse` method
+but not rendered to output such as HTML.
+
+```````````````````````````````` example
+# FAQ
+
+// Should flesh this out!
+
+## What /* is the best */ thing?
+.
+<h1>FAQ</h1>
+<h2>What  thing?</h2>
+````````````````````````````````
+
 Attributes
 ----------
 
-Like djot, we allow {} before any block element and after any inline element to add attributes:
+Like djot, we allow {} before any block element and after any inline element
+to add attributes:
 
 ```````````````````````````````` example
 {#id.class attribute=hey}
