@@ -1,9 +1,9 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import renderTag from "./renderTag";
 
 export default function renderNode(
-	node: MarkdownNode,
+	node: MidtextNode,
 	state: RenderState,
 	first = false,
 	last = false,

@@ -1,4 +1,4 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
@@ -6,7 +6,7 @@ import startNewLine from "./startNewLine";
 
 const name = "image";
 
-function render(node: MarkdownNode, state: RenderState) {
+function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	let alt = getChildText(node);
 	let title = /*node.title ? ` title="${node.title}"` :*/ "";
@@ -14,7 +14,7 @@ function render(node: MarkdownNode, state: RenderState) {
 	endNewLine(node, state);
 }
 
-function getChildText(node: MarkdownNode) {
+function getChildText(node: MidtextNode) {
 	let text = "";
 	if (node.children) {
 		for (let child of node.children) {

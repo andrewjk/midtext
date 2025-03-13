@@ -1,8 +1,8 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import renderNode from "./renderNode";
 
-export default function renderChildren(node: MarkdownNode, state: RenderState) {
+export default function renderChildren(node: MidtextNode, state: RenderState) {
 	let children = node.children;
 	if (children && children.length) {
 		let trim =

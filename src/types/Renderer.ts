@@ -1,7 +1,7 @@
-import type MarkdownNode from "./MarkdownNode";
+import type MidtextNode from "./MidtextNode";
 import type RenderState from "./RenderState";
 
 export default interface Renderer {
 	name: string;
-	render: (node: MarkdownNode, state: RenderState, first?: boolean, last?: boolean) => void;
+	render: (node: MidtextNode, state: RenderState, first?: boolean, last?: boolean) => void;
 }

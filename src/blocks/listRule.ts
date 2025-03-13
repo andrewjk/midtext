@@ -1,7 +1,7 @@
 import parseBlock from "../parse/parseBlock";
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
 import isNewLine from "../utils/isNewLine";
@@ -14,7 +14,7 @@ export interface ListInfo {
 	type: string;
 }
 
-function testStart(state: BlockParserState, parent: MarkdownNode, info?: ListInfo) {
+function testStart(state: BlockParserState, parent: MidtextNode, info?: ListInfo) {
 	if (info) {
 		const name = info.type;
 
@@ -82,7 +82,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode, info?: ListInf
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode, info?: ListInfo) {
+function testContinue(state: BlockParserState, node: MidtextNode, info?: ListInfo) {
 	let level = state.openNodes.indexOf(node);
 	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 

@@ -1,5 +1,5 @@
 import type BlockParserState from "./BlockParserState";
-import type MarkdownNode from "./MarkdownNode";
+import type MidtextNode from "./MidtextNode";
 
 export default interface BlockRule {
 	/**
@@ -14,7 +14,7 @@ export default interface BlockRule {
 	 * @param parent
 	 * @returns
 	 */
-	testStart: (state: BlockParserState, parent: MarkdownNode) => boolean;
+	testStart: (state: BlockParserState, parent: MidtextNode) => boolean;
 	/**
 	 * Creates a node for this rule.
 	 * @param state
@@ -29,14 +29,14 @@ export default interface BlockRule {
 	 * @param parent
 	 * @returns
 	 */
-	testContinue: (state: BlockParserState, parent: MarkdownNode) => boolean;
+	testContinue: (state: BlockParserState, parent: MidtextNode) => boolean;
 	/**
 	 * Does any cleanup for this rule's node when it is closed.
 	 * @param state
 	 * @param parent
 	 * @returns
 	 */
-	closeNode?: (state: BlockParserState, parent: MarkdownNode) => void;
+	closeNode?: (state: BlockParserState, parent: MidtextNode) => void;
 	/**
 	 * Whether the block created by this rule accepts plain content for e.g.
 	 * code blocks and raw blocks

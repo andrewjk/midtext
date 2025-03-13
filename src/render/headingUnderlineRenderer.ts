@@ -1,4 +1,4 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
@@ -8,7 +8,7 @@ import startNewLine from "./startNewLine";
 
 const name = "heading_underline";
 
-function render(node: MarkdownNode, state: RenderState) {
+function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	let level = node.markup.includes("=") ? 1 : 2;
 	state.output += `<h${level}>`;

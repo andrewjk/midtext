@@ -1,7 +1,7 @@
 import type Delimiter from "../types/Delimiter";
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
@@ -10,7 +10,7 @@ import normalizeLabel from "../utils/normalizeLabel";
 // TODO: Split this into link and image
 const name = "link";
 
-function test(state: InlineParserState, parent: MarkdownNode, end: number) {
+function test(state: InlineParserState, parent: MidtextNode, end: number) {
 	let char = state.src[state.i];
 
 	if (!isEscaped(state.src, state.i)) {
@@ -37,7 +37,7 @@ export default {
 
 // TODO: Just take everything inside the () as a URL
 
-function testLinkOpen(state: InlineParserState, parent: MarkdownNode) {
+function testLinkOpen(state: InlineParserState, parent: MidtextNode) {
 	let markup = "[";
 
 	state.delimiters.push({
@@ -55,7 +55,7 @@ function testLinkOpen(state: InlineParserState, parent: MarkdownNode) {
 	return true;
 }
 
-function testImageOpen(state: InlineParserState, parent: MarkdownNode) {
+function testImageOpen(state: InlineParserState, parent: MidtextNode) {
 	let markup = "![";
 
 	state.delimiters.push({
@@ -73,7 +73,7 @@ function testImageOpen(state: InlineParserState, parent: MarkdownNode) {
 	return true;
 }
 
-function testLinkClose(state: InlineParserState, parent: MarkdownNode) {
+function testLinkClose(state: InlineParserState, parent: MidtextNode) {
 	// TODO: Standardize precedence
 	// For now the link takes precedence over anything else
 	let startDelimiter: Delimiter | undefined;

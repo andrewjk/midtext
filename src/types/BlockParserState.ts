@@ -1,6 +1,6 @@
 import type Attribute from "./Attribute";
 import type BlockRule from "./BlockRule";
-import type MarkdownNode from "./MarkdownNode";
+import type MidtextNode from "./MidtextNode";
 
 export default interface BlockParserState {
 	src: string;
@@ -9,7 +9,7 @@ export default interface BlockParserState {
 	line: number;
 	lineStart: number;
 	indent: number;
-	openNodes: MarkdownNode[];
+	openNodes: MidtextNode[];
 	atLineEnd: boolean;
 	blankLevel: number;
 	refs: Record<string, string>;

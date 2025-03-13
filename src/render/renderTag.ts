@@ -1,11 +1,11 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import endNewLine from "./endNewLine";
 import innerNewLine from "./innerNewLine";
 import renderChildren from "./renderChildren";
 import startNewLine from "./startNewLine";
 
-export default function renderTag(node: MarkdownNode, state: RenderState, tag: string) {
+export default function renderTag(node: MidtextNode, state: RenderState, tag: string) {
 	startNewLine(node, state);
 	state.output += `<${tag}`;
 	if (node.attributes) {

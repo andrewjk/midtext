@@ -1,4 +1,4 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
@@ -9,7 +9,7 @@ import startNewLine from "./startNewLine";
 
 const name = "list_ordered";
 
-function render(node: MarkdownNode, state: RenderState) {
+function render(node: MidtextNode, state: RenderState) {
 	// TODO: Can we remove paragraphs when parsing instead?
 
 	let start = "";

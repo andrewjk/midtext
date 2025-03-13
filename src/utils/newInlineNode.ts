@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type InlineParserState from "../types/InlineParserState";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 
 // TODO: Move a lot of functionality into here
 // e.g. checking maybeContinue, checking if last node needs closing etc
@@ -10,8 +10,8 @@ export default function newInlineNode(
 	state: BlockParserState | InlineParserState,
 	markup: string,
 	indent: number,
-	children?: MarkdownNode[],
-): MarkdownNode {
+	children?: MidtextNode[],
+): MidtextNode {
 	return {
 		type,
 		block: false,

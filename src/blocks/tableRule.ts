@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
@@ -9,7 +9,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "table";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let lastNode = state.openNodes.at(-1)!;
 
 	let char = state.src[state.i];
@@ -126,7 +126,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	if (state.src[state.i] === "|") {
 		return true;
 	}

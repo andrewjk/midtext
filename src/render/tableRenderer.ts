@@ -1,4 +1,4 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
@@ -8,7 +8,7 @@ import startNewLine from "./startNewLine";
 
 const name = "table";
 
-function render(node: MarkdownNode, state: RenderState) {
+function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	state.output += "<table>\n<thead>\n<tr>\n";
 	for (let cell of node.children![0].children!) {
@@ -30,7 +30,7 @@ function render(node: MarkdownNode, state: RenderState) {
 	endNewLine(node, state);
 }
 
-function renderTableCell(node: MarkdownNode, state: RenderState, tag: string) {
+function renderTableCell(node: MidtextNode, state: RenderState, tag: string) {
 	startNewLine(node, state);
 	let align = node.info ? ` align="${node.info}"` : "";
 	state.output += `<${tag}${align}>`;

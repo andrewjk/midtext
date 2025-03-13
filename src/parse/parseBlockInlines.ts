@@ -1,12 +1,12 @@
 import type BlockParserState from "../types/BlockParserState";
 import type InlineRule from "../types/InlineRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import newInlineNode from "../utils/newInlineNode";
 import parseInline from "./parseInline";
 
 export default function parseBlockInlines(
 	state: BlockParserState,
-	parent: MarkdownNode,
+	parent: MidtextNode,
 	rules: Map<string, InlineRule>,
 ) {
 	// Rules that need special text processing can add the text node directly

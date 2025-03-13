@@ -1,12 +1,12 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 
 const name = "comment";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let char = state.src[state.i];
 	if (char === "/" && state.src[state.i + 1] === "/" && !isEscaped(state.src, state.i)) {
 		state.i += 2;
@@ -18,7 +18,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	return false;
 }
 

@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import getEndOfLine from "../utils/getEndOfLine";
 import newBlockNode from "../utils/newBlockNode";
@@ -15,7 +15,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "paragraph";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let lastNode = state.openNodes.at(-1)!;
 
 	let endOfLine = getEndOfLine(state);
@@ -59,7 +59,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return true;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	let level = state.openNodes.indexOf(node);
 	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 

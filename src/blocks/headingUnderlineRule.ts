@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 
@@ -30,7 +30,7 @@ import isSpace from "../utils/isSpace";
 
 const name = "heading_underline";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	// An underlined heading requires a paragraph
 	if (parent.type !== "paragraph") {
 		return false;
@@ -78,7 +78,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	return false;
 }
 

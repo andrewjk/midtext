@@ -1,8 +1,8 @@
 import type BlockParserState from "../types/BlockParserState";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import parseIndent from "./parseIndent";
 
-export default function parseBlock(state: BlockParserState, parent: MarkdownNode) {
+export default function parseBlock(state: BlockParserState, parent: MidtextNode) {
 	parseIndent(state, state.openNodes.indexOf(parent));
 
 	for (let rule of state.rules.values()) {

@@ -1,7 +1,7 @@
 import type InlineParserState from "./InlineParserState";
-import type MarkdownNode from "./MarkdownNode";
+import type MidtextNode from "./MidtextNode";
 
 export default interface InlineRule {
 	name: string;
-	test: (state: InlineParserState, parent: MarkdownNode, end: number) => boolean;
+	test: (state: InlineParserState, parent: MidtextNode, end: number) => boolean;
 }

@@ -1,7 +1,7 @@
 import parseBlock from "../parse/parseBlock";
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
 import isNewLine from "../utils/isNewLine";
@@ -38,7 +38,7 @@ const name = "block_quote";
 // Otherwise, they depend on the number of >
 // But you can lazily continue any number of >...
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let char = state.src[state.i];
 	if (char === ">") {
 		let spaces = countSpaces(state.src, state.i + 1);
@@ -84,7 +84,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	let level = state.openNodes.indexOf(node);
 	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 

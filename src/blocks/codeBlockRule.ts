@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import { getBlockFence } from "../utils/getBlockFence";
@@ -49,7 +49,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "code_block";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let markup = getBlockFence(state.src, "`", state.i, true);
 	if (markup && markup.length >= 3) {
 		let end = state.i + markup.length;
@@ -97,7 +97,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	let level = state.openNodes.indexOf(node);
 	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 

@@ -1,5 +1,5 @@
 import type BlockParserState from "../types/BlockParserState";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 
 export default function newBlockNode(
 	type: string,
@@ -7,7 +7,7 @@ export default function newBlockNode(
 	markup: string,
 	indent: number,
 	subindent: number,
-): MarkdownNode {
+): MidtextNode {
 	let node = {
 		type,
 		block: true,

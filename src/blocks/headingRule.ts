@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 import isSpace from "../utils/isSpace";
@@ -20,7 +20,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "heading";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	// TODO: Remove trimEnd everywhere
 	if (parent.children?.length) {
 		const lastChild = parent.children.at(-1)!;
@@ -86,7 +86,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	return false;
 }
 

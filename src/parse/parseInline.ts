@@ -1,9 +1,9 @@
 import type InlineParserState from "../types/InlineParserState";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import newInlineNode from "../utils/newInlineNode";
 
-export default function parseInline(state: InlineParserState, parent: MarkdownNode, end = -1) {
+export default function parseInline(state: InlineParserState, parent: MidtextNode, end = -1) {
 	// Parse inlines and get the delimiters
 	let inlineEnd = end === -1 ? state.src.length : end;
 	while (state.i < inlineEnd) {
@@ -83,7 +83,7 @@ export default function parseInline(state: InlineParserState, parent: MarkdownNo
 
 function processDelimiters(
 	state: InlineParserState,
-	parent: MarkdownNode,
+	parent: MidtextNode,
 	index: number,
 	start: number,
 	end: number,

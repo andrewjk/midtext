@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import newInlineNode from "../utils/newInlineNode";
 
 /**
@@ -29,7 +29,7 @@ import newInlineNode from "../utils/newInlineNode";
 
 const name = "task_item";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	if (parent.type === "list_item") {
 		let start = state.i;
 		if (state.src[start] === "[" && state.src[start + 2] === "]") {
@@ -44,7 +44,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	return false;
 }
 

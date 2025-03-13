@@ -1,12 +1,12 @@
 import parseAttributes from "../parse/parseAttributes";
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import consumeAttributes from "../utils/consumeAttributes";
 
 const name = "block_attributes";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let char = state.src[state.i];
 	if (char === "{") {
 		// If there's an open paragraph, close it
@@ -26,7 +26,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	return false;
 }
 

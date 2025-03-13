@@ -5,14 +5,14 @@ import parseLine from "./parse/parseLine";
 import type BlockParserState from "./types/BlockParserState";
 import type BlockRule from "./types/BlockRule";
 import type InlineRule from "./types/InlineRule";
-import type MarkdownNode from "./types/MarkdownNode";
+import type MidtextNode from "./types/MidtextNode";
 import newBlockNode from "./utils/newBlockNode";
 
 export default function parse(
 	src: string,
 	blockRules?: Map<string, BlockRule>,
 	inlineRules?: Map<string, InlineRule>,
-): MarkdownNode {
+): MidtextNode {
 	blockRules ??= defaultBlockRules();
 	inlineRules ??= defaultInlineRules();
 

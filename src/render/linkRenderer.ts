@@ -1,4 +1,4 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
@@ -7,7 +7,7 @@ import startNewLine from "./startNewLine";
 
 const name = "link";
 
-function render(node: MarkdownNode, state: RenderState) {
+function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	let title = /* node.title ? ` title="${node.title}"` :*/ "";
 	state.output += `<a href="${node.info}"${title}>`;

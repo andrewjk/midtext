@@ -1,11 +1,11 @@
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import escapeHtml from "../utils/escapeHtml";
 
 const name = "text";
 
-function render(node: MarkdownNode, state: RenderState, first?: boolean) {
+function render(node: MidtextNode, state: RenderState, first?: boolean) {
 	let markup = node.markup;
 	if (first) {
 		markup = markup.trimStart();

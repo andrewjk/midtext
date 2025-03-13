@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 import listRule, { type ListInfo } from "./listRule";
@@ -23,12 +23,12 @@ function getMarkup(state: BlockParserState): ListInfo | undefined {
 	}
 }
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let info = getMarkup(state);
 	return listRule.testStart(state, parent, info);
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	let info = getMarkup(state);
 	return listRule.testContinue(state, node, info);
 }

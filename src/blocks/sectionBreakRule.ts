@@ -1,6 +1,6 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
@@ -14,7 +14,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "section_break";
 
-function testStart(state: BlockParserState, parent: MarkdownNode) {
+function testStart(state: BlockParserState, parent: MidtextNode) {
 	let char = state.src[state.i];
 	if (char === "-" || char === "_" || char === "*") {
 		let matched = 1;
@@ -63,7 +63,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MarkdownNode) {
+function testContinue(state: BlockParserState, node: MidtextNode) {
 	return false;
 }
 

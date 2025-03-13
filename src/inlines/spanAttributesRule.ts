@@ -1,12 +1,12 @@
 import parseAttributes from "../parse/parseAttributes";
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 import consumeAttributes from "../utils/consumeAttributes";
 
 const name = "span_attributes";
 
-function test(state: InlineParserState, parent: MarkdownNode, end: number) {
+function test(state: InlineParserState, parent: MidtextNode, end: number) {
 	let char = state.src[state.i];
 	if (char === "{") {
 		const lastDelimiter = state.delimiters.at(-1);

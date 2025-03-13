@@ -5,7 +5,7 @@ export const LEAF_NODE = 1;
 export const PARAGRAPH_NODE = 2;
 export const INLINE_NODE = 3;
 
-export default interface MarkdownNode {
+export default interface MidtextNode {
 	type: string;
 	block: boolean;
 	offset: number;
@@ -30,7 +30,7 @@ export default interface MarkdownNode {
 	/** Whether this node contains plain text content, rather than parsed Markdown */
 	acceptsContent?: boolean;
 	/** The node's children, if applicable */
-	children?: MarkdownNode[];
+	children?: MidtextNode[];
 	/** The node's attributes, if applicable */
 	attributes?: Attribute[];
 	/** Additional info for the node */

@@ -1,6 +1,6 @@
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MarkdownNode from "../types/MarkdownNode";
+import type MidtextNode from "../types/MidtextNode";
 
 const name = "text";
 
@@ -8,7 +8,7 @@ const name = "text";
  * The text inline rule handles any character that hasn't been handled by a
  * previous rule
  */
-function test(state: InlineParserState, parent: MarkdownNode) {
+function test(state: InlineParserState, parent: MidtextNode) {
 	state.i++;
 	return true;
 }
