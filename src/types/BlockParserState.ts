@@ -13,7 +13,4 @@ export default interface BlockParserState {
 	blankLevel: number;
 	refs: Record<string, string>;
 	attributes?: Attribute[];
-
-	// HACK:
-	debug?: boolean;
 }

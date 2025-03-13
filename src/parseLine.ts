@@ -8,14 +8,6 @@ export default function parseLine(state: BlockParserState) {
 	state.line++;
 	state.lineStart = state.i;
 
-	if (state.debug) {
-		console.log(
-			`Parsing line ${state.line} at ${state.i} with open nodes [${state.openNodes
-				.map((n) => n.type)
-				.join(", ")}]`,
-		);
-	}
-
 	parseIndent(state, 0);
 
 	// Check whether we should continue with the nodes that are open
@@ -30,21 +22,11 @@ export default function parseLine(state: BlockParserState) {
 
 		// TODO: Fallback rule??
 		let rule = blockRules.get(node.type)!;
-		if (state.debug && !rule) {
-			if (node.type !== "list_item") {
-				console.log("RULE NOT FOUND:", node.type);
-			}
-		}
-
 		if (rule) {
 			if (rule.testContinue(state, node)) {
 				// TODO: Is there a rule that shouldn't do this?
 				parseIndent(state, i);
 			} else {
-				if (state.debug) {
-					console.log("Not continuing:", node.type);
-				}
-
 				state.openNodes.length = i;
 				break;
 			}

@@ -8,7 +8,4 @@ export default interface InlineParserState {
 	indent: number;
 	delimiters: Delimiter[];
 	refs: Record<string, string>;
-
-	// HACK:
-	debug?: boolean;
 }

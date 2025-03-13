@@ -37,7 +37,7 @@ import newBlockNode from "./utils/newBlockNode";
 export let blockRules = new Map<string, BlockRule>();
 export let inlineRules = new Map<string, InlineRule>();
 
-export default function parse(src: string, debug: boolean): MarkdownNode {
+export default function parse(src: string): MarkdownNode {
 	blockRules.set(blockAttributesRule.name, blockAttributesRule);
 	blockRules.set(headingRule.name, headingRule);
 	blockRules.set(headingUnderlineRule.name, headingUnderlineRule);
@@ -77,7 +77,6 @@ export default function parse(src: string, debug: boolean): MarkdownNode {
 		hadBlankLine: false,
 		openNodes: [],
 		refs: {},
-		debug,
 		blankLevel: -1,
 	};
 

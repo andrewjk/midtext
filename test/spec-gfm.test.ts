@@ -2,6 +2,10 @@ import fs from "node:fs";
 import { describe, expect, it } from "vitest";
 import parse from "../src/parse";
 import renderHtml from "../src/renderHtml";
+import { tidyFields } from "./tidyFields";
+
+const ONLY_TEST = 0;
+const OUTPUT_FIELDS = ["type", "markup", "content", "children", "indent", "subindent"];
 
 describe("spec: github flavored markdown", () => {
 	// Could do this more efficiently
@@ -43,9 +47,9 @@ describe("spec: github flavored markdown", () => {
 	}
 
 	for (let test of tests) {
-		// To only do a certain test, edit the line below
-		let ONLY_TEST = 0;
-		if (ONLY_TEST && !test.header.includes(`Example ${ONLY_TEST},`)) continue;
+		if (ONLY_TEST && !test.header.includes(`Example ${ONLY_TEST},`)) {
+			continue;
+		}
 
 		// To diagnose infinite loops; run with `npx vitest --disable-console-intercept`
 		//console.log("DOING", test.header);
@@ -54,16 +58,10 @@ describe("spec: github flavored markdown", () => {
 		let failed = false;
 
 		try {
-			let debug = ONLY_TEST !== 0;
-			const root = parse(test.input, debug);
+			const root = parse(test.input);
 			// TODO: Remove the trimEnd -- only output a newline if there is one in the source
 			html = renderHtml(root).trimEnd();
-
 			failed = html !== test.expected;
-			if (failed && ONLY_TEST === 0) {
-				// Do it again with debugging
-				parse(test.input, true);
-			}
 		} catch {
 			console.log("ERROR:", test.header);
 			failed = true;
@@ -84,7 +82,7 @@ describe("spec: github flavored markdown", () => {
 			console.log("\nACTUAL");
 			console.log(html.replaceAll(" ", "•"));
 			console.log("\nAST");
-			console.log(JSON.stringify(removeStuff(parse(test.input, false)), null, 2));
+			console.log(JSON.stringify(tidyFields(parse(test.input), OUTPUT_FIELDS), null, 2));
 			console.log("\n");
 			break;
 		} else if (ONLY_TEST) {
@@ -94,25 +92,9 @@ describe("spec: github flavored markdown", () => {
 			console.log("\nOUTPUT");
 			console.log(html.replaceAll(" ", "•"));
 			console.log("\nAST");
-			console.log(JSON.stringify(removeStuff(parse(test.input, false)), null, 2));
+			console.log(JSON.stringify(tidyFields(parse(test.input), OUTPUT_FIELDS), null, 2));
 			console.log("\n");
 			break;
 		}
 	}
 });
-
-function removeStuff(obj: any) {
-	for (let key in obj) {
-		if (!["type", "markup", "content", "children", "indent", "subindent", "loose"].includes(key)) {
-			delete obj[key];
-		}
-		if (Array.isArray(obj[key])) {
-			for (let child of obj[key]) {
-				removeStuff(child);
-			}
-		} else if (typeof obj[key] === "object") {
-			removeStuff(obj[key]);
-		}
-	}
-	return obj;
-}

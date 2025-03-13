@@ -39,26 +39,10 @@ Here is some text
 </li>
 </ul>
 `.trimStart();
-	const root = parse(input, false);
+	const root = parse(input);
 	//console.log(JSON.stringify(root, null, 2));
 	const html = renderHtml(root);
 	console.log(html);
 	//console.log(JSON.stringify(removeStuff(root), null, 2));
 	expect(html).toBe(expected);
 });
-
-function removeStuff(obj: any) {
-	for (let key in obj) {
-		if (!["type", "markup", "content", "children", "block"].includes(key)) {
-			delete obj[key];
-		}
-		if (Array.isArray(obj[key])) {
-			for (let child of obj[key]) {
-				removeStuff(child);
-			}
-		} else if (typeof obj[key] === "object") {
-			removeStuff(obj[key]);
-		}
-	}
-	return obj;
-}

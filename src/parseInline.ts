@@ -30,10 +30,6 @@ export default function parseInline(state: InlineParserState, parent: MarkdownNo
 		}
 	}
 
-	if (state.debug) {
-		console.log(JSON.stringify(state.delimiters, null, 2));
-	}
-
 	// Match the delimiters
 	// TODO: Do this while parsing, so that we don't have to check end !== -1 all the time??
 	for (let i = 0; i < state.delimiters.length; i++) {
