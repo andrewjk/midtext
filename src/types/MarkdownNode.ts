@@ -20,9 +20,9 @@ export default interface MarkdownNode {
 	/** The text content for this node */
 	content: string;
 	/** The number of (logical, not physical) spaces this node starts after */
-	indent: number; // TODO: Just use indent?
+	indent: number; // TODO: Just use column?
 	/** For list item nodes, the number of (logical, not physical) spaces its content starts after */
-	subindent: number; // TODO: Rename this to contentIndent, or just use subindent?
+	subindent: number;
 	/** Whether this node has a blank line before it */
 	blankBefore?: boolean;
 	/** Whether this node is a loose list */

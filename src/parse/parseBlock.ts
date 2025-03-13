@@ -10,9 +10,7 @@ export default function parseBlock(state: BlockParserState, parent: MarkdownNode
 			let handled = rule.testStart(state, parent);
 
 			if (handled) {
-				if (state.atLineEnd) {
-					state.atLineEnd = false;
-				}
+				state.atLineEnd = false;
 
 				// TODO: Should we make sure we are AFTER the line end?
 

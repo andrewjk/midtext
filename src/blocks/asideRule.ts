@@ -2,6 +2,7 @@ import parseBlock from "../parse/parseBlock";
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";
+import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
 import newBlockNode from "../utils/newBlockNode";
 
@@ -30,16 +31,8 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 		// Create the node
 		let lastNode = state.openNodes.at(-1)!;
 
-		let asideNode = newBlockNode(name, state.i, state.line, state.indent, char, state.indent);
-		asideNode.subindent = contentColumn;
-		asideNode.attributes = state.attributes;
-		delete state.attributes;
-
-		let level = state.openNodes.indexOf(parent);
-		if (state.blankLevel !== -1 && state.blankLevel <= level) {
-			asideNode.blankBefore = true;
-			state.blankLevel = -1;
-		}
+		let asideNode = newBlockNode(name, state, char, state.indent, contentColumn);
+		checkBlankLineBefore(state, asideNode, parent);
 
 		lastNode.children!.push(asideNode);
 		state.openNodes.push(asideNode);

@@ -1,6 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";
+import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
 import getEndOfLine from "../utils/getEndOfLine";
 import newBlockNode from "../utils/newBlockNode";
@@ -29,29 +30,13 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 
 		// Create the node
 		let lastNode = state.openNodes.at(-1)!;
+		let detailsNode = newBlockNode(name, state, char, state.indent, contentColumn);
+		checkBlankLineBefore(state, detailsNode, parent);
 
 		let end = getEndOfLine(state);
 		let content = state.src.substring(contentColumn, end);
-		let summaryNode = newBlockNode(
-			"summary",
-			state.i,
-			state.line,
-			state.indent,
-			char,
-			state.indent,
-		);
+		let summaryNode = newBlockNode("summary", state, char, state.indent, contentColumn);
 		summaryNode.content = content;
-
-		let detailsNode = newBlockNode(name, state.i, state.line, state.indent, char, state.indent);
-		detailsNode.subindent = contentColumn;
-		detailsNode.attributes = state.attributes;
-		delete state.attributes;
-
-		let level = state.openNodes.indexOf(parent);
-		if (state.blankLevel !== -1 && state.blankLevel <= level) {
-			detailsNode.blankBefore = true;
-			state.blankLevel = -1;
-		}
 
 		detailsNode.children!.push(summaryNode);
 

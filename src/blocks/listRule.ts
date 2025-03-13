@@ -2,6 +2,7 @@ import parseBlock from "../parse/parseBlock";
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";
+import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
 import isNewLine from "../utils/isNewLine";
 import newBlockNode from "../utils/newBlockNode";
@@ -45,22 +46,12 @@ function testStart(state: BlockParserState, parent: MarkdownNode, info?: ListInf
 		let haveNode = lastNode.type === name;
 
 		// Create the new item
-		let itemNode = newBlockNode(
-			"list_item",
-			state.i,
-			state.line,
-			state.indent,
-			info.markup,
-			state.indent,
-		);
-		itemNode.attributes = state.attributes;
-		delete state.attributes;
+		let itemNode = newBlockNode("list_item", state, info.markup, state.indent, contentColumn);
 
 		// Create or continue the list
 		let listNode = haveNode
 			? lastNode
-			: newBlockNode(name, state.i, state.line, state.indent, info.markup, state.indent);
-		listNode.subindent = itemNode.subindent = contentColumn;
+			: newBlockNode(name, state, info.markup, state.indent, contentColumn);
 		listNode.delimiter = itemNode.delimiter = info.delimiter;
 		listNode.children!.push(itemNode);
 		if (!haveNode) {
@@ -72,23 +63,16 @@ function testStart(state: BlockParserState, parent: MarkdownNode, info?: ListInf
 		}
 
 		if (haveNode) {
-			let level = state.openNodes.indexOf(listNode);
-			if (state.blankLevel !== -1 && state.blankLevel <= level) {
-				itemNode.blankBefore = true;
+			checkBlankLineBefore(state, itemNode, listNode);
+			if (itemNode.blankBefore) {
 				lastNode.loose = true;
-				state.blankLevel = -1;
 			}
 		} else {
-			let level = state.openNodes.indexOf(parent);
-			if (state.blankLevel !== -1 && state.blankLevel <= level) {
-				listNode.blankBefore = true;
-				state.blankLevel = -1;
-			}
+			checkBlankLineBefore(state, listNode, parent);
 		}
 
 		// Reset the state and parse inside the item
 		state.i += info.markup.length + spaces;
-		state.atLineEnd = false;
 		state.indent = contentColumn;
 		parseBlock(state, itemNode);
 

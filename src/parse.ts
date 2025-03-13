@@ -29,7 +29,7 @@ export default function parse(
 		refs: {},
 	};
 
-	let document = newBlockNode("document", 0, 1, 0, "", 0);
+	let document = newBlockNode("document", state, "", 0, 0);
 	state.openNodes.push(document);
 
 	if (!state.src.endsWith("\n")) {

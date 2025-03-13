@@ -55,9 +55,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 			// Create the node
 			let lastNode = state.openNodes.at(-1)!;
 
-			let headingNode = newBlockNode(name, state.i, state.line, 1, "#".repeat(level), 0);
-			headingNode.attributes = state.attributes;
-			delete state.attributes;
+			let headingNode = newBlockNode(name, state, "#".repeat(level), state.indent, state.indent);
 
 			lastNode.children!.push(headingNode);
 

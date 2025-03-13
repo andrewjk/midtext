@@ -1,7 +1,7 @@
 import type InlineParserState from "../types/InlineParserState";
 import type MarkdownNode from "../types/MarkdownNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
-import newNode from "../utils/newNode";
+import newInlineNode from "../utils/newInlineNode";
 
 export default function parseInline(state: InlineParserState, parent: MarkdownNode, end = -1) {
 	// Parse inlines and get the delimiters
@@ -64,7 +64,7 @@ export default function parseInline(state: InlineParserState, parent: MarkdownNo
 	let i = processDelimiters(state, parent, -1, 0, state.src.length);
 	if (i === -1) {
 		let text = formatText(state.src);
-		let textNode = newNode("text", false, state.i, state.line, 1, text, 0);
+		let textNode = newInlineNode("text", state, text, 0);
 		parent.children?.push(textNode);
 	} else {
 		let start = 0;
@@ -75,7 +75,7 @@ export default function parseInline(state: InlineParserState, parent: MarkdownNo
 		if (start < state.src.length) {
 			let text = state.src.substring(start, state.src.length);
 			text = formatText(text);
-			let textNode = newNode("text", false, state.i, state.line, 1, text, 0);
+			let textNode = newInlineNode("text", state, text, 0);
 			parent.children?.push(textNode);
 		}
 	}
@@ -102,13 +102,13 @@ function processDelimiters(
 		if (delimiter.start > start) {
 			let text = state.src.substring(start, delimiter.start);
 			text = formatText(text);
-			let textNode = newNode("text", false, state.i, state.line, 1, text, 0);
+			let textNode = newInlineNode("text", state, text, 0);
 			parent.children!.push(textNode);
 		}
 
 		// Add the delimiter
 		let markup = delimiter.markup.repeat(delimiter.length);
-		let delimiterNode = newNode(delimiter.name, false, state.i, state.line, 1, markup, 0, []);
+		let delimiterNode = newInlineNode(delimiter.name, state, markup, 0, []);
 		// HACK:
 		delimiterNode.info = delimiter.info;
 		delimiterNode.attributes = delimiter.attributes;
@@ -122,7 +122,7 @@ function processDelimiters(
 			start = delimiter.end + delimiter.length;
 		} else if (delimiter.content) {
 			let text = formatText(delimiter.content);
-			let textNode = newNode("text", false, state.i, state.line, 1, text, 0);
+			let textNode = newInlineNode("text", state, text, 0);
 			delimiterNode.children!.push(textNode);
 			start = delimiter.end + delimiter.length;
 		} else {
@@ -147,7 +147,7 @@ function processDelimiters(
 			if (!found) {
 				let text = state.src.substring(start, delimiter.end - (delimiter.skip ?? 0));
 				text = formatText(text);
-				let textNode = newNode("text", false, state.i, state.line, 1, text, 0);
+				let textNode = newInlineNode("text", state, text, 0);
 				delimiterNode.children!.push(textNode);
 
 				start = delimiter.end + delimiter.length;
@@ -158,7 +158,7 @@ function processDelimiters(
 		if (delimiter.end > start) {
 			let text = state.src.substring(start, delimiter.end - (delimiter.skip ?? 0));
 			text = formatText(text);
-			let textNode = newNode("text", false, state.i, state.line, 1, text, 0);
+			let textNode = newInlineNode("text", state, text, 0);
 			delimiterNode.children!.push(textNode);
 			//start = delimiter.start;
 		}

@@ -1,6 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";
+import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 import newBlockNode from "../utils/newBlockNode";
@@ -50,15 +51,8 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 			}
 
 			let markup = state.src.substring(state.i, end);
-			let breakNode = newBlockNode(name, state.i, state.line, 1, markup, 0);
-			breakNode.attributes = state.attributes;
-			delete state.attributes;
-
-			let level = state.openNodes.indexOf(parent);
-			if (state.blankLevel !== -1 && state.blankLevel <= level) {
-				breakNode.blankBefore = true;
-				state.blankLevel = -1;
-			}
+			let breakNode = newBlockNode(name, state, markup, state.indent, state.indent);
+			checkBlankLineBefore(state, breakNode, parent);
 
 			parent.children!.push(breakNode);
 			state.i = end;

@@ -1,6 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";
+import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import { getBlockFence } from "../utils/getBlockFence";
 import getEndOfLine from "../utils/getEndOfLine";
@@ -53,7 +54,6 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	if (markup && markup.length >= 3) {
 		let end = state.i + markup.length;
 
-		let attributes = state.attributes ?? [];
 		if (!isNewLine(state.src[state.i + markup.length])) {
 			end = getEndOfLine(state);
 			let info = state.src.substring(state.i + markup.length, end).trim();
@@ -64,7 +64,8 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 					return false;
 				}
 				info = escapeBackslashes(info);
-				attributes.push({ name: "class", value: `language-${info}` });
+				state.attributes ??= [];
+				state.attributes.push({ name: "class", value: `language-${info}` });
 			}
 		} else {
 			end++;
@@ -81,19 +82,9 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 		}
 		parent = state.openNodes.at(-1)!;
 
-		let rawNode = newBlockNode(name, state.i, state.line, 1, markup, state.indent);
-		rawNode.subindent = state.indent;
+		let rawNode = newBlockNode(name, state, markup, state.indent, state.indent);
+		checkBlankLineBefore(state, rawNode, parent);
 		rawNode.acceptsContent = true;
-		if (attributes.length) {
-			rawNode.attributes = attributes;
-		}
-		delete state.attributes;
-
-		let level = state.openNodes.indexOf(parent);
-		if (state.blankLevel !== -1 && state.blankLevel <= level) {
-			rawNode.blankBefore = true;
-			state.blankLevel = -1;
-		}
 
 		parent.children!.push(rawNode);
 		state.openNodes.push(rawNode);

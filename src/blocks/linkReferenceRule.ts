@@ -5,7 +5,7 @@ import escapeBackslashes from "../utils/escapeBackslashes";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
-import newNode from "../utils/newNode";
+import newInlineNode from "../utils/newInlineNode";
 import normalizeLabel from "../utils/normalizeLabel";
 
 /**
@@ -129,7 +129,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 
 		state.refs[label] = url;
 
-		let ref = newNode(name, false, state.i, state.line, 1, "", 0, []);
+		let ref = newInlineNode(name, state, "", 0, []);
 
 		parent.children!.push(ref);
 

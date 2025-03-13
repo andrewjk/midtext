@@ -2,6 +2,7 @@ import parseBlock from "../parse/parseBlock";
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";
+import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
 import isNewLine from "../utils/isNewLine";
 import newBlockNode from "../utils/newBlockNode";
@@ -66,23 +67,14 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 		// Create the node
 		let lastNode = state.openNodes.at(-1)!;
 
-		let quoteNode = newBlockNode(name, state.i, state.line, state.indent, char, state.indent);
-		quoteNode.subindent = contentColumn;
-		quoteNode.attributes = state.attributes;
-		delete state.attributes;
-
-		let level = state.openNodes.indexOf(parent);
-		if (state.blankLevel !== -1 && state.blankLevel <= level) {
-			quoteNode.blankBefore = true;
-			state.blankLevel = -1;
-		}
+		let quoteNode = newBlockNode(name, state, char, state.indent, contentColumn);
+		checkBlankLineBefore(state, quoteNode, parent);
 
 		lastNode.children!.push(quoteNode);
 		state.openNodes.push(quoteNode);
 
 		// Reset the state and parse inside the item
 		state.i += 1 + spaces;
-		state.atLineEnd = false;
 		state.indent = contentColumn;
 		parseBlock(state, quoteNode);
 

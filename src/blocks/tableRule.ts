@@ -29,7 +29,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 
 		let headers = lastNode.children![0].children!.map((c) => c.info);
 
-		let row = newBlockNode("table_row", state.i, state.line, 1, "", 0);
+		let row = newBlockNode("table_row", state, "", 0, 0);
 		lastNode.children!.push(row);
 
 		let rowContent = state.src
@@ -41,7 +41,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 
 		let ri = 0;
 		for (let text of rowParts) {
-			let cell = newBlockNode("table_cell", state.i, state.line, 1, "", 0);
+			let cell = newBlockNode("table_cell", state, "", 0, 0);
 			cell.content = (text ?? "").trim().replaceAll("\\\|", "|");
 			cell.info = headers[ri++];
 			row.children!.push(cell);
@@ -102,13 +102,13 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 				return false;
 			}
 
-			let header = newBlockNode("table_header", state.i, state.line, 1, "", 0);
+			let header = newBlockNode("table_header", state, "", 0, 0);
 			parent.children!.push(header);
 
 			let headerParts = headerContent.split(/(?<!\\)\|/);
 			let hi = 0;
 			for (let text of headerParts) {
-				let cell = newBlockNode("table_cell", state.i, state.line, 1, "", 0);
+				let cell = newBlockNode("table_cell", state, "", 0, 0);
 				cell.content = text.trim().replaceAll("\\\|", "|");
 				cell.info = cells[hi++];
 				header.children!.push(cell);

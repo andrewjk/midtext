@@ -1,6 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";
+import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import getEndOfLine from "../utils/getEndOfLine";
 import newBlockNode from "../utils/newBlockNode";
 
@@ -44,17 +45,9 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 
 	let paragraph = haveParagraph
 		? lastNode
-		: newBlockNode(name, state.i, state.line, state.i - state.lineStart, "", 0);
+		: newBlockNode(name, state, "", state.indent, state.indent);
 	paragraph.content += content;
-	paragraph.subindent = paragraph.column;
-	paragraph.attributes = state.attributes;
-	delete state.attributes;
-
-	let level = state.openNodes.indexOf(parent);
-	if (state.blankLevel !== -1 && state.blankLevel <= level) {
-		paragraph.blankBefore = true;
-		state.blankLevel = -1;
-	}
+	checkBlankLineBefore(state, paragraph, parent);
 
 	if (!haveParagraph) {
 		lastNode.children!.push(paragraph);
