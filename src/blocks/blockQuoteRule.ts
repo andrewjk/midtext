@@ -4,6 +4,7 @@ import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
+import evictBlocksForNestableNode from "../utils/evictBlocksForNestableNode";
 import isNewLine from "../utils/isNewLine";
 import newBlockNode from "../utils/newBlockNode";
 
@@ -50,19 +51,8 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 			contentColumn = state.indent + 1;
 		}
 
-		// Close blocks that this block shouldn't be nested under
-		let i = state.openNodes.length;
-		while (i-- > 1) {
-			let node = state.openNodes[i];
-			if (state.indent < node.subindent && node.line !== state.line && node.type !== name) {
-				state.openNodes.length = i;
-			}
-		}
-
-		// If there's an open paragraph, close it
-		if (state.openNodes.at(-1)!.type === "paragraph") {
-			state.openNodes.pop();
-		}
+		// Close blocks that this node shouldn't be nested under
+		evictBlocksForNestableNode(state, name);
 
 		// Create the node
 		let lastNode = state.openNodes.at(-1)!;

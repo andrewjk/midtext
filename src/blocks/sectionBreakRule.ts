@@ -2,6 +2,7 @@ import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
+import evictBlocks from "../utils/evictBlocks";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 import newBlockNode from "../utils/newBlockNode";
@@ -34,21 +35,11 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 			}
 		}
 		if (matched >= 3) {
-			// Remove any open nodes that start further to the right than this one
-			let i = state.openNodes.length;
-			while (i-- > 1) {
-				let node = state.openNodes[i];
-				if (node.column >= state.indent) {
-					state.openNodes.length = i;
-				}
-			}
-			parent = state.openNodes.at(-1)!;
+			// Close blocks that this node shouldn't be nested under
+			evictBlocks(state);
 
-			// If there's an open paragraph, close it
-			if (parent.type === "paragraph") {
-				state.openNodes.pop();
-				parent = state.openNodes.at(-1)!;
-			}
+			// Create the node
+			parent = state.openNodes.at(-1)!;
 
 			let markup = state.src.substring(state.i, end);
 			let breakNode = newBlockNode(name, state, markup, state.indent, state.indent);

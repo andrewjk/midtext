@@ -3,6 +3,7 @@ import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import escapeBackslashes from "../utils/escapeBackslashes";
+import evictBlocks from "../utils/evictBlocks";
 import { getBlockFence } from "../utils/getBlockFence";
 import getEndOfLine from "../utils/getEndOfLine";
 import isNewLine from "../utils/isNewLine";
@@ -71,15 +72,10 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 			end++;
 		}
 
-		// Remove any open nodes that start further to the right than this one,
-		// as well as any open paragraphs
-		let i = state.openNodes.length;
-		while (i-- > 1) {
-			let node = state.openNodes[i];
-			if (node.subindent > state.indent || node.type === "paragraph") {
-				state.openNodes.length = i;
-			}
-		}
+		// Close blocks that this node shouldn't be nested under
+		evictBlocks(state);
+
+		// Create the node
 		parent = state.openNodes.at(-1)!;
 
 		let divNode = newBlockNode(name, state, markup, state.indent, state.indent);
