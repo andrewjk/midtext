@@ -1,6 +1,6 @@
 import type MarkdownNode from "../types/MarkdownNode";
-import type RenderRule from "../types/RenderRule";
 import type RenderState from "../types/RenderState";
+import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
 import startNewLine from "./startNewLine";
 
@@ -31,4 +31,4 @@ function getChildText(node: MarkdownNode) {
 export default {
 	name,
 	render,
-} satisfies RenderRule;
+} satisfies Renderer;

@@ -1,5 +1,5 @@
 import type BlockParserState from "../types/BlockParserState";
-import type InlineParserState from "../types/InlineParserState";
+import type InlineRule from "../types/InlineRule";
 import type MarkdownNode from "../types/MarkdownNode";
 import newNode from "../utils/newNode";
 import parseInline from "./parseInline";
@@ -7,7 +7,7 @@ import parseInline from "./parseInline";
 export default function parseBlockInlines(
 	state: BlockParserState,
 	parent: MarkdownNode,
-	refs: Record<string, string>,
+	rules: Map<string, InlineRule>,
 ) {
 	// Rules that need special text processing can add the text node directly
 	// and it won't be processed for inlines
@@ -19,22 +19,23 @@ export default function parseBlockInlines(
 
 	// Recurse through children first, while there are only blocks
 	for (let child of parent.children!) {
-		parseBlockInlines(state, child, refs);
+		parseBlockInlines(state, child, rules);
 	}
 
 	// Now add the inlines
 	if (parent.content.length) {
-		let state: InlineParserState = {
+		let inlineState = {
 			// Strip final spaces before inline parsing
 			src: parent.content.trimEnd(),
+			rules,
 			i: 0,
 			line: parent.line,
 			lineStart: 0,
 			indent: 0,
 			delimiters: [],
-			refs,
+			refs: state.refs,
 		};
 
-		parseInline(state, parent);
+		parseInline(inlineState, parent);
 	}
 }

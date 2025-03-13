@@ -1,0 +1,40 @@
+import asideRule from "./blocks/asideRule";
+import blockAttributesRule from "./blocks/blockAttributesRule";
+import blockQuoteRule from "./blocks/blockQuoteRule";
+import codeBlockRule from "./blocks/codeBlockRule";
+import commentRule from "./blocks/commentRule";
+import displayRule from "./blocks/detailsRule";
+import divRule from "./blocks/divRule";
+import headingRule from "./blocks/headingRule";
+import headingUnderlineRule from "./blocks/headingUnderlineRule";
+import linkReferenceRule from "./blocks/linkReferenceRule";
+import listBulletedRule from "./blocks/listBulletedRule";
+import listOrderedRule from "./blocks/listOrderedRule";
+import paragraphRule from "./blocks/paragraphRule";
+import rawBlockRule from "./blocks/rawBlockRule";
+import sectionBreakRule from "./blocks/sectionBreakRule";
+import tableRule from "./blocks/tableRule";
+import taskItemRule from "./blocks/taskItemRule";
+import type BlockRule from "./types/BlockRule";
+
+export default function defaultBlockRules() {
+	let rules = new Map<string, BlockRule>();
+	rules.set(blockAttributesRule.name, blockAttributesRule);
+	rules.set(headingRule.name, headingRule);
+	rules.set(headingUnderlineRule.name, headingUnderlineRule);
+	rules.set(sectionBreakRule.name, sectionBreakRule);
+	rules.set(listBulletedRule.name, listBulletedRule);
+	rules.set(listOrderedRule.name, listOrderedRule);
+	rules.set(taskItemRule.name, taskItemRule);
+	rules.set(blockQuoteRule.name, blockQuoteRule);
+	rules.set(displayRule.name, displayRule);
+	rules.set(asideRule.name, asideRule);
+	rules.set(codeBlockRule.name, codeBlockRule);
+	rules.set(rawBlockRule.name, rawBlockRule);
+	rules.set(tableRule.name, tableRule);
+	rules.set(divRule.name, divRule);
+	rules.set(linkReferenceRule.name, linkReferenceRule);
+	rules.set(commentRule.name, commentRule);
+	rules.set(paragraphRule.name, paragraphRule);
+	return rules;
+}

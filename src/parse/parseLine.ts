@@ -1,4 +1,3 @@
-import { blockRules } from "../parse";
 import type BlockParserState from "../types/BlockParserState";
 import parseBlock from "./parseBlock";
 import parseIndent from "./parseIndent";
@@ -21,7 +20,7 @@ export default function parseLine(state: BlockParserState) {
 		}
 
 		// TODO: Fallback rule??
-		let rule = blockRules.get(node.type)!;
+		let rule = state.rules.get(node.type)!;
 		if (rule) {
 			if (rule.testContinue(state, node)) {
 				// TODO: Is there a rule that shouldn't do this?

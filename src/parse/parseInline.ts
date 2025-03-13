@@ -1,4 +1,3 @@
-import { inlineRules } from "../parse";
 import type InlineParserState from "../types/InlineParserState";
 import type MarkdownNode from "../types/MarkdownNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
@@ -19,7 +18,7 @@ export default function parseInline(state: InlineParserState, parent: MarkdownNo
 			state.lineStart = state.i;
 		}
 
-		for (let rule of inlineRules.values()) {
+		for (let rule of state.rules.values()) {
 			let handled = rule.test(state, parent, inlineEnd);
 			if (handled) {
 				// TODO: Make sure that state.i has been incremented to prevent infinite loops

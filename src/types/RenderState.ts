@@ -1,6 +1,6 @@
-import type RenderRule from "./RenderRule";
+import type Renderer from "./Renderer";
 
 export default interface RenderState {
 	output: string;
-	rules: Map<string, RenderRule>;
+	renderers: Map<string, Renderer>;
 }

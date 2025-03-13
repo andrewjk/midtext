@@ -8,7 +8,7 @@ export default function renderNode(
 	first = false,
 	last = false,
 ) {
-	let rule = state.rules.get(node.type);
+	let rule = state.renderers.get(node.type);
 	if (rule) {
 		rule.render(node, state, first, last);
 	} else {

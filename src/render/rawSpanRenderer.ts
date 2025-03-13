@@ -1,6 +1,6 @@
 import type MarkdownNode from "../types/MarkdownNode";
-import type RenderRule from "../types/RenderRule";
 import type RenderState from "../types/RenderState";
+import type Renderer from "../types/Renderer";
 
 const name = "raw_span";
 
@@ -11,4 +11,4 @@ function render(node: MarkdownNode, state: RenderState) {
 export default {
 	name,
 	render,
-} satisfies RenderRule;
+} satisfies Renderer;
