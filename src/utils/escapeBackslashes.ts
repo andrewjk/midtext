@@ -1,5 +1,5 @@
-import isPunctuation from "../utils/isPunctuation";
 import { isNumeric } from "./isAlphaNumeric";
+import isPunctuation from "./isPunctuation";
 
 export default function escapeBackslashes(text: string) {
 	let result = "";

@@ -1,7 +1,7 @@
-import { blockRules } from "./parse";
+import { blockRules } from "../parse";
+import type BlockParserState from "../types/BlockParserState";
+import type MarkdownNode from "../types/MarkdownNode";
 import parseIndent from "./parseIndent";
-import type BlockParserState from "./types/BlockParserState";
-import type MarkdownNode from "./types/MarkdownNode";
 
 export default function parseBlock(state: BlockParserState, parent: MarkdownNode) {
 	parseIndent(state, state.openNodes.indexOf(parent));

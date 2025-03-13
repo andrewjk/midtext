@@ -1,4 +1,4 @@
-import parseAttributes from "../parseAttributes";
+import parseAttributes from "../parse/parseAttributes";
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
 import type MarkdownNode from "../types/MarkdownNode";

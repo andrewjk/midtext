@@ -1,7 +1,7 @@
-import { blockRules } from "./parse";
+import { blockRules } from "../parse";
+import type BlockParserState from "../types/BlockParserState";
 import parseBlock from "./parseBlock";
 import parseIndent from "./parseIndent";
-import type BlockParserState from "./types/BlockParserState";
 
 export default function parseLine(state: BlockParserState) {
 	state.indent = 0;

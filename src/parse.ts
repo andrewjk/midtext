@@ -27,8 +27,8 @@ import spanRule from "./inlines/spanRule";
 import strikethroughRule from "./inlines/strikethroughRule";
 import superscriptRule from "./inlines/superscriptRule";
 import textRule from "./inlines/textRule";
-import parseBlockInlines from "./parseBlockInlines";
-import parseLine from "./parseLine";
+import parseBlockInlines from "./parse/parseBlockInlines";
+import parseLine from "./parse/parseLine";
 import type BlockParserState from "./types/BlockParserState";
 import type BlockRule from "./types/BlockRule";
 import type InlineRule from "./types/InlineRule";
@@ -91,7 +91,7 @@ export default function parse(src: string): MarkdownNode {
 		state.src += "\n";
 	}
 
-	// Stage 1 -- parse the line into blocks
+	// Stage 1 -- parse each line into blocks
 	while (state.i < state.src.length) {
 		parseLine(state);
 	}

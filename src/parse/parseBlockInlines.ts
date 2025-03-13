@@ -1,8 +1,8 @@
+import type BlockParserState from "../types/BlockParserState";
+import type InlineParserState from "../types/InlineParserState";
+import type MarkdownNode from "../types/MarkdownNode";
+import newNode from "../utils/newNode";
 import parseInline from "./parseInline";
-import type BlockParserState from "./types/BlockParserState";
-import type InlineParserState from "./types/InlineParserState";
-import type MarkdownNode from "./types/MarkdownNode";
-import newNode from "./utils/newNode";
 
 export default function parseBlockInlines(
 	state: BlockParserState,

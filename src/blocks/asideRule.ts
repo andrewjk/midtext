@@ -1,4 +1,4 @@
-import parseBlock from "../parseBlock";
+import parseBlock from "../parse/parseBlock";
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MarkdownNode from "../types/MarkdownNode";

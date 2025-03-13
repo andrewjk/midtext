@@ -1,6 +1,6 @@
-import type BlockParserState from "./types/BlockParserState";
-import isNewLine from "./utils/isNewLine";
-import isSpace from "./utils/isSpace";
+import type BlockParserState from "../types/BlockParserState";
+import isNewLine from "../utils/isNewLine";
+import isSpace from "../utils/isSpace";
 
 export default function parseIndent(state: BlockParserState, index: number) {
 	if (isSpace(state.src.charCodeAt(state.i))) {

@@ -1,8 +1,8 @@
-import { inlineRules } from "./parse";
-import type InlineParserState from "./types/InlineParserState";
-import type MarkdownNode from "./types/MarkdownNode";
-import escapeBackslashes from "./utils/escapeBackslashes";
-import newNode from "./utils/newNode";
+import { inlineRules } from "../parse";
+import type InlineParserState from "../types/InlineParserState";
+import type MarkdownNode from "../types/MarkdownNode";
+import escapeBackslashes from "../utils/escapeBackslashes";
+import newNode from "../utils/newNode";
 
 export default function parseInline(state: InlineParserState, parent: MarkdownNode, end = -1) {
 	// Parse inlines and get the delimiters

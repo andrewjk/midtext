@@ -1,4 +1,4 @@
-import type Attribute from "./types/Attribute";
+import type Attribute from "../types/Attribute";
 
 export default function parseAttributes(content: string): Attribute[] | undefined {
 	// TODO: Ignore comments, proper parsing etc
