@@ -1,0 +1,24 @@
+{
+	"name": "bench",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"bench": "tsx bench.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.6.2",
+	"devDependencies": {
+		"@types/markdown-it": "^14.1.2",
+		"tinybench": "^3.1.1",
+		"tsx": "^4.19.3"
+	},
+	"dependencies": {
+		"markdown-it": "^14.1.0",
+		"micromark": "^4.0.2",
+		"micromark-extension-gfm": "^3.0.0"
+	}
+}
