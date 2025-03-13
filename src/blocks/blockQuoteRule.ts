@@ -38,27 +38,6 @@ const name = "block_quote";
 // But you can lazily continue any number of >...
 
 function testStart(state: BlockParserState, parent: MarkdownNode) {
-	//if (state.hasBlankLine) {
-	//	let lastNode = state.openNodes.at(-1)!;
-	//	if (lastNode.type === name) {
-	//		state.openNodes.length -= 1;
-	//	}
-	//}
-
-	//if (state.openNodes[state.ni].type === name) {
-	//	let lastNode = state.openNodes[state.ni];
-	//	// Continue if there's a blank line, or the indent is past the subindent
-	//	if (
-	//		state.hasBlankLine ||
-	//		state.indent >= lastNode.subindent ||
-	//		state.openNodes.length - 1 === state.ni ||
-	//		state.openNodes[state.ni + 1].type === "paragraph"
-	//	) {
-	//	} else {
-	//		state.openNodes.length = state.ni;
-	//	}
-	//}
-
 	let char = state.src[state.i];
 	if (char === ">") {
 		let spaces = countSpaces(state.src, state.i + 1);
@@ -92,12 +71,18 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 		quoteNode.attributes = state.attributes;
 		delete state.attributes;
 
+		let level = state.openNodes.indexOf(parent);
+		if (state.blankLevel !== -1 && state.blankLevel <= level) {
+			quoteNode.blankBefore = true;
+			state.blankLevel = -1;
+		}
+
 		lastNode.children!.push(quoteNode);
 		state.openNodes.push(quoteNode);
 
 		// Reset the state and parse inside the item
 		state.i += 1 + spaces;
-		state.hasBlankLine = false;
+		state.atLineEnd = false;
 		state.indent = contentColumn;
 		parseBlock(state, quoteNode);
 
@@ -108,38 +93,27 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 }
 
 function testContinue(state: BlockParserState, node: MarkdownNode) {
-	if (state.hasBlankLine) {
-		node.loose = true;
-	}
+	let level = state.openNodes.indexOf(node);
+	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 
-	if (!node.loose && state.src[state.i] === ">") {
-		let spaces = countSpaces(state.src, state.i);
-		state.i += 1 + spaces;
-		state.indent = state.indent + 1 + spaces;
-		return true;
-	}
-
-	if (state.hasBlankLine) {
-		return true;
+	if (state.src[state.i] === ">") {
+		if (hadBlankLine) {
+			return false;
+		} else {
+			let spaces = countSpaces(state.src, state.i);
+			state.i += 1 + spaces;
+			state.indent = state.indent + 1 + spaces;
+			return true;
+		}
 	}
 
 	if (state.indent >= node.subindent) {
 		return true;
 	}
 
-	if (
-		!state.hadBlankLine &&
-		//state.indent >= node.column &&
-		//state.indent < node.subindent &&
-		state.openNodes.at(-1)!.type === "paragraph"
-		//state.openNodes.at(state.openNodes.indexOf(node) + 1)!.column >= node.subindent
-	) {
+	if (state.openNodes.at(-1)!.type === "paragraph") {
 		return true;
 	}
-
-	//if (!state.hadBlankLine) {
-	//	return true;
-	//}
 
 	return false;
 }

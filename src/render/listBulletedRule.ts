@@ -21,16 +21,12 @@ function render(node: MarkdownNode, state: RenderState) {
 	// block-level elements with a blank line between them. Otherwise a list is
 	// tight."
 
-	let loose = false;
-	if (node.children?.length) {
-		let firstItem = node.children[0];
-		if (firstItem.children?.length) {
-			if (
-				(node.children.length > 1 || firstItem.children.length > 1) &&
-				firstItem.children[0].loose
-			) {
-				loose = true;
-			}
+	// HACK: We need to be closing stuff
+	let loose = node.loose;
+	if (node.children!.length === 1) {
+		let item = node.children![0];
+		if (item.children!.length > 1) {
+			loose = item.children?.at(-1)!.blankBefore;
 		}
 	}
 

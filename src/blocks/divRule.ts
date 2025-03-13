@@ -88,6 +88,12 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 		}
 		delete state.attributes;
 
+		let level = state.openNodes.indexOf(parent);
+		if (state.blankLevel !== -1 && state.blankLevel <= level) {
+			divNode.blankBefore = true;
+			state.blankLevel = -1;
+		}
+
 		parent.children!.push(divNode);
 		state.openNodes.push(divNode);
 
@@ -100,7 +106,10 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 }
 
 function testContinue(state: BlockParserState, node: MarkdownNode) {
-	if (!state.hasBlankLine && state.indent < node.subindent) {
+	let level = state.openNodes.indexOf(node);
+	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
+
+	if (!hadBlankLine && state.indent < node.subindent) {
 		return false;
 	}
 

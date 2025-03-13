@@ -7,7 +7,6 @@ export default function parseLine(state: BlockParserState) {
 	state.indent = 0;
 	state.line++;
 	state.lineStart = state.i;
-	state.maybeContinue = false;
 
 	if (state.debug) {
 		console.log(
@@ -17,7 +16,7 @@ export default function parseLine(state: BlockParserState) {
 		);
 	}
 
-	parseIndent(state);
+	parseIndent(state, 0);
 
 	// Check whether we should continue with the nodes that are open
 	// Skip document -- it's always going to continue
@@ -40,8 +39,12 @@ export default function parseLine(state: BlockParserState) {
 		if (rule) {
 			if (rule.testContinue(state, node)) {
 				// TODO: Is there a rule that shouldn't do this?
-				parseIndent(state);
+				parseIndent(state, i);
 			} else {
+				if (state.debug) {
+					console.log("Not continuing:", node.type);
+				}
+
 				state.openNodes.length = i;
 				break;
 			}

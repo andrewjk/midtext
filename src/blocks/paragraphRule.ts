@@ -20,10 +20,11 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	let endOfLine = getEndOfLine(state);
 
 	if (lastNode.acceptsContent) {
-		let startOfLine = state.hasBlankLine ? state.lineStart : state.lineStart + lastNode.indent;
+		let startOfLine = state.atLineEnd ? state.lineStart : state.lineStart + lastNode.indent;
 		let content = state.src.substring(startOfLine, endOfLine);
 		lastNode.content += content;
 		state.i = endOfLine;
+		state.blankLevel = -1;
 		return true;
 	}
 
@@ -32,7 +33,7 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 
 	// TODO: Proper blank checking
 	// TODO: Move this to parseindent too
-	// TODO: Can we just do this as a state.hasBlankLine test??
+	// TODO: Can we just do this as a hasBlankLine test??
 	if (!/[^\s]/.test(content)) {
 		state.i += content.length;
 		if (haveParagraph) {
@@ -49,6 +50,12 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 	paragraph.attributes = state.attributes;
 	delete state.attributes;
 
+	let level = state.openNodes.indexOf(parent);
+	if (state.blankLevel !== -1 && state.blankLevel <= level) {
+		paragraph.blankBefore = true;
+		state.blankLevel = -1;
+	}
+
 	if (!haveParagraph) {
 		lastNode.children!.push(paragraph);
 		state.openNodes.push(paragraph);
@@ -60,7 +67,10 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 }
 
 function testContinue(state: BlockParserState, node: MarkdownNode) {
-	if (!state.hadBlankLine) {
+	let level = state.openNodes.indexOf(node);
+	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
+
+	if (!hadBlankLine) {
 		return true;
 	}
 

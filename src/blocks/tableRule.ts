@@ -19,7 +19,10 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 		return false;
 	}
 
-	if (!state.hasBlankLine && lastNode.type === name && char === "|") {
+	let level = state.openNodes.indexOf(parent);
+	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
+
+	if (!hadBlankLine && lastNode.type === name && char === "|") {
 		// We may already have a table
 		//lastNode = lastNode?.children ? lastNode.children[0] : undefined;
 		let endOfLine = getEndOfLine(state);

@@ -14,28 +14,6 @@ export interface ListInfo {
 }
 
 function testStart(state: BlockParserState, parent: MarkdownNode, info?: ListInfo) {
-	// HACK: Special blank line check for loose lists and empty lists
-	if (state.hasBlankLine) {
-		if (state.openNodes.length > 3) {
-			const [listNode, itemNode, paragraphNode] = state.openNodes.slice(
-				state.openNodes.length - 3,
-				state.openNodes.length,
-			);
-			if (itemNode.type === "list_item" && paragraphNode.block) {
-				paragraphNode.loose = true;
-				if (listNode.children!.length === 1) {
-					// If there's a list with one child, mark it as loose
-					listNode.loose = true;
-				} else if (!listNode.loose) {
-					// If there's a tight list with more than one child, remove it,
-					// it's done
-					state.openNodes.length -= 3;
-					state.hasBlankLine = false;
-				}
-			}
-		}
-	}
-
 	if (info) {
 		const name = info.type;
 
@@ -93,9 +71,24 @@ function testStart(state: BlockParserState, parent: MarkdownNode, info?: ListInf
 			state.openNodes.push(itemNode);
 		}
 
+		if (haveNode) {
+			let level = state.openNodes.indexOf(listNode);
+			if (state.blankLevel !== -1 && state.blankLevel <= level) {
+				itemNode.blankBefore = true;
+				lastNode.loose = true;
+				state.blankLevel = -1;
+			}
+		} else {
+			let level = state.openNodes.indexOf(parent);
+			if (state.blankLevel !== -1 && state.blankLevel <= level) {
+				listNode.blankBefore = true;
+				state.blankLevel = -1;
+			}
+		}
+
 		// Reset the state and parse inside the item
 		state.i += info.markup.length + spaces;
-		state.hasBlankLine = false;
+		state.atLineEnd = false;
 		state.indent = contentColumn;
 		parseBlock(state, itemNode);
 
@@ -106,24 +99,11 @@ function testStart(state: BlockParserState, parent: MarkdownNode, info?: ListInf
 }
 
 function testContinue(state: BlockParserState, node: MarkdownNode, info?: ListInfo) {
-	// The list is loose if there is more than one item and the first item's
-	// first item is loose
-	let loose = false;
-	if (node.children?.length) {
-		let firstItem = node.children[0];
-		if (firstItem.children?.length) {
-			if (
-				(node.children.length > 1 || firstItem.children.length > 1) &&
-				firstItem.children[0].loose
-			) {
-				loose = true;
-			}
-		}
-	}
-	node.loose = loose;
+	let level = state.openNodes.indexOf(node);
+	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 
 	// You can't start a list with an empty first item
-	if (state.hasBlankLine && node.children!.length === 1) {
+	if (state.atLineEnd && node.children!.length === 1) {
 		let itemNode = node.children![0];
 		if (itemNode.children!.length === 0) {
 			return false;
@@ -134,7 +114,7 @@ function testContinue(state: BlockParserState, node: MarkdownNode, info?: ListIn
 	// finish it up
 	if (
 		!state.openNodes.at(-1)!.acceptsContent &&
-		state.hasBlankLine &&
+		state.atLineEnd &&
 		node.children!.length > 1 &&
 		!node.loose
 	) {
@@ -163,7 +143,7 @@ function testContinue(state: BlockParserState, node: MarkdownNode, info?: ListIn
 		return true;
 	}
 
-	if (state.hasBlankLine) {
+	if (state.atLineEnd) {
 		return true;
 	}
 
@@ -171,7 +151,7 @@ function testContinue(state: BlockParserState, node: MarkdownNode, info?: ListIn
 		return true;
 	}
 
-	if (!state.hadBlankLine) {
+	if (!hadBlankLine) {
 		return true;
 	}
 

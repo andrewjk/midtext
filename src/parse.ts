@@ -73,12 +73,12 @@ export default function parse(src: string, debug: boolean): MarkdownNode {
 		line: 0,
 		lineStart: 0,
 		indent: 0,
-		maybeContinue: false,
-		hasBlankLine: false,
+		atLineEnd: false,
 		hadBlankLine: false,
 		openNodes: [],
 		refs: {},
 		debug,
+		blankLevel: -1,
 	};
 
 	let document = newBlockNode("document", 0, 1, 0, "", 0);

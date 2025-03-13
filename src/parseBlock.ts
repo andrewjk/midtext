@@ -4,7 +4,7 @@ import type BlockParserState from "./types/BlockParserState";
 import type MarkdownNode from "./types/MarkdownNode";
 
 export default function parseBlock(state: BlockParserState, parent: MarkdownNode) {
-	parseIndent(state);
+	parseIndent(state, state.openNodes.indexOf(parent));
 
 	for (let rule of blockRules.values()) {
 		let start = state.i;
@@ -16,11 +16,8 @@ export default function parseBlock(state: BlockParserState, parent: MarkdownNode
 					console.log(`Found ${rule.name}, at ${start}`);
 				}
 
-				if (state.hasBlankLine) {
-					state.hasBlankLine = false;
-					state.hadBlankLine = true;
-				} else {
-					state.hadBlankLine = false;
+				if (state.atLineEnd) {
+					state.atLineEnd = false;
 				}
 
 				// DEBUG: Make sure we are AFTER the line end?

@@ -23,10 +23,12 @@ export default interface MarkdownNode {
 	indent: number; // TODO: Just use indent?
 	/** For list item nodes, the number of (logical, not physical) spaces its content starts after */
 	subindent: number; // TODO: Rename this to contentIndent, or just use subindent?
-	/** Whether this node is followed by a blank line */
-	loose: boolean;
+	/** Whether this node has a blank line before it */
+	blankBefore?: boolean;
+	/** Whether this node is a loose list */
+	loose?: boolean;
 	/** Whether this node contains plain text content, rather than parsed Markdown */
-	acceptsContent: boolean;
+	acceptsContent?: boolean;
 	/** The node's children, if applicable */
 	children?: MarkdownNode[];
 	/** The node's attributes, if applicable */

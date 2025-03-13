@@ -54,6 +54,12 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 			breakNode.attributes = state.attributes;
 			delete state.attributes;
 
+			let level = state.openNodes.indexOf(parent);
+			if (state.blankLevel !== -1 && state.blankLevel <= level) {
+				breakNode.blankBefore = true;
+				state.blankLevel = -1;
+			}
+
 			parent.children!.push(breakNode);
 			state.i = end;
 			return true;

@@ -30,18 +30,24 @@ function testStart(state: BlockParserState, parent: MarkdownNode) {
 		// Create the node
 		let lastNode = state.openNodes.at(-1)!;
 
-		let node = newBlockNode(name, state.i, state.line, state.indent, char, state.indent);
-		node.subindent = contentColumn;
-		node.attributes = state.attributes;
+		let asideNode = newBlockNode(name, state.i, state.line, state.indent, char, state.indent);
+		asideNode.subindent = contentColumn;
+		asideNode.attributes = state.attributes;
 		delete state.attributes;
 
-		lastNode.children!.push(node);
-		state.openNodes.push(node);
+		let level = state.openNodes.indexOf(parent);
+		if (state.blankLevel !== -1 && state.blankLevel <= level) {
+			asideNode.blankBefore = true;
+			state.blankLevel = -1;
+		}
+
+		lastNode.children!.push(asideNode);
+		state.openNodes.push(asideNode);
 
 		// Parse children
 		state.i += 1 + spaces;
 		state.indent = contentColumn;
-		parseBlock(state, node);
+		parseBlock(state, asideNode);
 
 		return true;
 	}

@@ -19,8 +19,6 @@ export default function newBlockNode(
 		content: "",
 		indent,
 		subindent: 0,
-		loose: false,
-		acceptsContent: false,
 		children: [],
 	};
 }

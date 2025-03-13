@@ -2,8 +2,7 @@ import type BlockParserState from "./types/BlockParserState";
 import isNewLine from "./utils/isNewLine";
 import isSpace from "./utils/isSpace";
 
-export default function parseIndent(state: BlockParserState) {
-	let start = state.i - state.lineStart;
+export default function parseIndent(state: BlockParserState, index: number) {
 	if (isSpace(state.src.charCodeAt(state.i))) {
 		for (; state.i < state.src.length; state.i++) {
 			let char = state.src[state.i];
@@ -15,14 +14,10 @@ export default function parseIndent(state: BlockParserState) {
 				// the spaces to 4)
 				state.indent += 4 - (state.indent % 4);
 			} else if (isNewLine(char)) {
-				let lastNode = state.openNodes.at(-1)!;
-				//if (lastNode.children?.length) {
-				//	lastNode = lastNode.children.at(-1)!;
-				//}
-				if (start <= lastNode.column) {
-					//lastNode.loose = true;
+				state.atLineEnd = true;
+				if (state.blankLevel === -1) {
+					state.blankLevel = index;
 				}
-				state.hasBlankLine = true;
 				break;
 			} else {
 				break;

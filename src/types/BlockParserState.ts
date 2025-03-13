@@ -8,9 +8,9 @@ export default interface BlockParserState {
 	lineStart: number;
 	indent: number;
 	openNodes: MarkdownNode[];
-	maybeContinue: boolean;
-	hasBlankLine: boolean;
 	hadBlankLine: boolean;
+	atLineEnd: boolean;
+	blankLevel: number;
 	refs: Record<string, string>;
 	attributes?: Attribute[];
 
