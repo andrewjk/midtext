@@ -368,12 +368,16 @@ spaces.)
 ```````````````````````````````` example
 →foo→baz→→bim
 .
+<p>foo→baz→→bim</p>
+.
 <pre><code>foo→baz→→bim
 </code></pre>
 ````````````````````````````````
 
 ```````````````````````````````` example
   →foo→baz→→bim
+.
+<p>foo→baz→→bim</p>
 .
 <pre><code>foo→baz→→bim
 </code></pre>
@@ -382,6 +386,9 @@ spaces.)
 ```````````````````````````````` example
     a→a
     ὐ→a
+.
+<p>a→a
+ὐ→a</p>
 .
 <pre><code>a→a
 ὐ→a
@@ -413,6 +420,13 @@ as indentation with four spaces would:
 <ul>
 <li>
 <p>foo</p>
+<p>bar</p>
+</li>
+</ul>
+.
+<ul>
+<li>
+<p>foo</p>
 <pre><code>  bar
 </code></pre>
 </li>
@@ -432,6 +446,10 @@ code block starting with two spaces.
 >→→foo
 .
 <blockquote>
+<p>foo</p>
+</blockquote>
+.
+<blockquote>
 <pre><code>  foo
 </code></pre>
 </blockquote>
@@ -439,6 +457,10 @@ code block starting with two spaces.
 
 ```````````````````````````````` example
 -→→foo
+.
+<ul>
+<li>foo</li>
+</ul>
 .
 <ul>
 <li>
@@ -452,6 +474,9 @@ code block starting with two spaces.
 ```````````````````````````````` example
     foo
 →bar
+.
+<p>foo
+bar</p>
 .
 <pre><code>foo
 bar
@@ -606,6 +631,8 @@ Four spaces is too many:
 ```````````````````````````````` example
     ***
 .
+<hr />
+.
 <pre><code>***
 </code></pre>
 ````````````````````````````````
@@ -614,6 +641,9 @@ Four spaces is too many:
 ```````````````````````````````` example
 Foo
     ***
+.
+<p>Foo</p>
+<hr />
 .
 <p>Foo
 ***</p>
@@ -870,6 +900,8 @@ Four spaces are too much:
 ```````````````````````````````` example
     # foo
 .
+<h1>foo</h1>
+.
 <pre><code># foo
 </code></pre>
 ````````````````````````````````
@@ -878,6 +910,9 @@ Four spaces are too much:
 ```````````````````````````````` example
 foo
     # bar
+.
+<p>foo</p>
+<h1>bar</h1>
 .
 <p>foo
 # bar</p>
@@ -1096,6 +1131,9 @@ Four spaces indent is too much:
     Foo
 ---
 .
+<h2>Foo</h2>
+<h2>Foo</h2>
+.
 <pre><code>Foo
 ---
 
@@ -1121,6 +1159,8 @@ Four spaces is too much:
 ```````````````````````````````` example
 Foo
     ---
+.
+<h2>Foo</h2>
 .
 <p>Foo
 ---</p>
@@ -1290,6 +1330,8 @@ in these examples gets interpreted as a thematic break:
     foo
 ---
 .
+<h2>foo</h2>
+.
 <pre><code>foo
 </code></pre>
 <hr />
@@ -1422,6 +1464,9 @@ paragraph.)
     a simple
       indented code block
 .
+<p>a simple
+indented code block</p>
+.
 <pre><code>a simple
   indented code block
 </code></pre>
@@ -1472,6 +1517,12 @@ as Markdown:
 
     - one
 .
+<p>&lt;a/&gt;
+<em>hi</em></p>
+<ul>
+<li>one</li>
+</ul>
+.
 <pre><code>&lt;a/&gt;
 *hi*
 
@@ -1491,6 +1542,10 @@ Here we have three chunks separated by blank lines:
  
     chunk3
 .
+<p>chunk1</p>
+<p>chunk2</p>
+<p>chunk3</p>
+.
 <pre><code>chunk1
 
 chunk2
@@ -1509,6 +1564,9 @@ in interior blank lines:
     chunk1
       
       chunk2
+.
+<p>chunk1</p>
+<p>chunk2</p>
 .
 <pre><code>chunk1
   
@@ -1538,6 +1596,9 @@ after indented code:
     foo
 bar
 .
+<p>foo
+bar</p>
+.
 <pre><code>foo
 </code></pre>
 <p>bar</p>
@@ -1556,6 +1617,11 @@ Heading
 ----
 .
 <h1>Heading</h1>
+<h2>foo
+Heading</h2>
+<h2>foo</h2>
+.
+<h1>Heading</h1>
 <pre><code>foo
 </code></pre>
 <h2>Heading</h2>
@@ -1570,6 +1636,9 @@ The first line can be indented more than four spaces:
 ```````````````````````````````` example
         foo
     bar
+.
+<p>foo
+bar</p>
 .
 <pre><code>    foo
 bar
@@ -1587,6 +1656,8 @@ are not included in it:
     
 
 .
+<p>foo</p>
+.
 <pre><code>foo
 </code></pre>
 ````````````````````````````````
@@ -1596,6 +1667,8 @@ Trailing spaces are included in the code block's content:
 
 ```````````````````````````````` example
     foo  
+.
+<p>foo</p>
 .
 <pre><code>foo  
 </code></pre>
@@ -1669,6 +1742,9 @@ With tildes:
  >
 ~~~
 .
+<
+ >
+.
 <pre><code>&lt;
  &gt;
 </code></pre>
@@ -1705,6 +1781,9 @@ aaa
 ```
 ~~~
 .
+aaa
+```
+.
 <pre><code>aaa
 ```
 </code></pre>
@@ -1730,6 +1809,9 @@ aaa
 aaa
 ~~~
 ~~~~
+.
+aaa
+~~~
 .
 <pre><code>aaa
 ~~~
@@ -1765,6 +1847,12 @@ aaa
 > aaa
 
 bbb
+.
+<blockquote>
+<pre><code>aaa
+</code></pre>
+</blockquote>
+<p>bbb</p>
 .
 <blockquote>
 <pre><code>aaa
@@ -1809,6 +1897,11 @@ aaa
 ```
 .
 <pre><code>aaa
+</code></pre>
+<p>aaa</p>
+<pre><code></code></pre>
+.
+<pre><code>aaa
 aaa
 </code></pre>
 ````````````````````````````````
@@ -1820,6 +1913,12 @@ aaa
   aaa
 aaa
   ```
+.
+<pre><code></code></pre>
+<p>aaa
+aaa
+aaa</p>
+<pre><code></code></pre>
 .
 <pre><code>aaa
 aaa
@@ -1837,6 +1936,12 @@ aaa
 .
 <pre><code>aaa
  aaa
+</code></pre>
+<p>aaa</p>
+<pre><code></code></pre>
+.
+<pre><code>aaa
+ aaa
 aaa
 </code></pre>
 ````````````````````````````````
@@ -1848,6 +1953,9 @@ Four spaces indentation produces an indented code block:
     ```
     aaa
     ```
+.
+<pre><code>aaa
+</code></pre>
 .
 <pre><code>```
 aaa
@@ -1874,6 +1982,10 @@ aaa
 aaa
   ```
 .
+<pre><code></code></pre>
+<p>aaa</p>
+<pre><code></code></pre>
+.
 <pre><code>aaa
 </code></pre>
 ````````````````````````````````
@@ -1885,6 +1997,9 @@ This is not a closing fence, because it is indented 4 spaces:
 ```
 aaa
     ```
+.
+<pre><code>aaa
+</code></pre>
 .
 <pre><code>aaa
     ```
@@ -1899,6 +2014,9 @@ Code fences (opening and closing) cannot contain internal spaces:
 ``` ```
 aaa
 .
+<p>``` ```
+aaa</p>
+.
 <p><code> </code>
 aaa</p>
 ````````````````````````````````
@@ -1906,6 +2024,9 @@ aaa</p>
 
 ```````````````````````````````` example
 ~~~~~~
+aaa
+~~~ ~~
+.
 aaa
 ~~~ ~~
 .
@@ -1944,6 +2065,10 @@ bar
 # baz
 .
 <h2>foo</h2>
+bar
+<h1>baz</h1>
+.
+<h2>foo</h2>
 <pre><code>bar
 </code></pre>
 <h1>baz</h1>
@@ -1978,6 +2103,11 @@ def foo(x)
 end
 ~~~~~~~
 .
+<p>~~~~    ruby startline=3 $%@#$
+def foo(x)
+return 3
+end</p>
+.
 <pre><code class="language-ruby">def foo(x)
   return 3
 end
@@ -1999,6 +2129,9 @@ end
 ``` aa ```
 foo
 .
+<p>``` aa ```
+foo</p>
+.
 <p><code>aa</code>
 foo</p>
 ````````````````````````````````
@@ -2010,6 +2143,9 @@ foo</p>
 ~~~ aa ``` ~~~
 foo
 ~~~
+.
+<p>~~~ aa ``` ~~~
+foo</p>
 .
 <pre><code class="language-aa">foo
 </code></pre>
@@ -2097,7 +2233,7 @@ For instance, `<pre>` within a HTML block started by `<table>` will not affect
 the parser state; as the HTML block was started in by start condition 6, it
 will end at any blank line. This can be surprising:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <table><tr><td>
 <pre>
 **Hello**,
@@ -2126,7 +2262,7 @@ of long tags inside a wrapped paragraph as starting HTML blocks.)
 Some simple examples follow.  Here are some basic HTML blocks
 of type 6:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <table>
   <tr>
     <td>
@@ -2148,7 +2284,7 @@ okay.
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
  <div>
   *hello*
          <foo><a>
@@ -2161,7 +2297,7 @@ okay.
 
 A block can also start with a closing tag:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 </div>
 *foo*
 .
@@ -2172,7 +2308,7 @@ A block can also start with a closing tag:
 
 Here we have two HTML blocks with a Markdown paragraph between them:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <DIV CLASS="foo">
 
 *Markdown*
@@ -2188,7 +2324,7 @@ Here we have two HTML blocks with a Markdown paragraph between them:
 The tag on the first line can be partial, as long
 as it is split where there would be whitespace:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div id="foo"
   class="bar">
 </div>
@@ -2199,7 +2335,7 @@ as it is split where there would be whitespace:
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div id="foo" class="bar
   baz">
 </div>
@@ -2211,7 +2347,7 @@ as it is split where there would be whitespace:
 
 
 An open tag need not be closed:
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div>
 *foo*
 
@@ -2227,7 +2363,7 @@ An open tag need not be closed:
 A partial tag need not even be completed (garbage
 in, garbage out):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div id="foo"
 *hi*
 .
@@ -2236,7 +2372,7 @@ in, garbage out):
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div class
 foo
 .
@@ -2248,7 +2384,7 @@ foo
 The initial tag doesn't even need to be a valid
 tag, as long as it starts like one:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div *???-&&&-<---
 *foo*
 .
@@ -2260,14 +2396,14 @@ tag, as long as it starts like one:
 In type 6 blocks, the initial tag need not be on a line by
 itself:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div><a href="bar">*foo*</a></div>
 .
 <div><a href="bar">*foo*</a></div>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <table><tr><td>
 foo
 </td></tr></table>
@@ -2284,7 +2420,7 @@ example, what looks like a Markdown code block
 is actually part of the HTML block, which continues until a blank
 line or the end of the document is reached:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div></div>
 ``` c
 int x = 33;
@@ -2301,7 +2437,7 @@ To start an [HTML block] with a tag that is *not* in the
 list of block-level tags in (6), you must put the tag by
 itself on the first line (and it must be complete):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href="foo">
 *bar*
 </a>
@@ -2314,7 +2450,7 @@ itself on the first line (and it must be complete):
 
 In type 7 blocks, the [tag name] can be anything:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <Warning>
 *bar*
 </Warning>
@@ -2325,7 +2461,7 @@ In type 7 blocks, the [tag name] can be anything:
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <i class="foo">
 *bar*
 </i>
@@ -2336,7 +2472,7 @@ In type 7 blocks, the [tag name] can be anything:
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 </ins>
 *bar*
 .
@@ -2351,7 +2487,7 @@ The `<del>` tag is a nice example.  We can surround content with
 `<del>` tags in three different ways.  In this case, we get a raw
 HTML block, because the `<del>` tag is on a line by itself:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <del>
 *foo*
 </del>
@@ -2366,7 +2502,7 @@ In this case, we get a raw HTML block that just includes
 the `<del>` tag (because it ends with the following blank
 line).  So the contents get interpreted as CommonMark:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <del>
 
 *foo*
@@ -2384,7 +2520,7 @@ as [raw HTML] *inside* the CommonMark paragraph.  (Because
 the tag is not on a line by itself, we get inline HTML
 rather than an [HTML block].)
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <del>*foo*</del>
 .
 <p><del><em>foo</em></del></p>
@@ -2400,7 +2536,7 @@ As a result, these blocks can contain blank lines:
 
 A pre tag (type 1):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <pre language="haskell"><code>
 import Text.HTML.TagSoup
 
@@ -2421,7 +2557,7 @@ main = print $ parseTags tags
 
 A script tag (type 1):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <script type="text/javascript">
 // JavaScript example
 
@@ -2440,7 +2576,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
 
 A style tag (type 1):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <style
   type="text/css">
 h1 {color:red;}
@@ -2463,7 +2599,7 @@ If there is no matching end tag, the block will end at the
 end of the document (or the enclosing [block quote][block quotes]
 or [list item][list items]):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <style
   type="text/css">
 
@@ -2476,7 +2612,7 @@ foo
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 > <div>
 > foo
 
@@ -2490,7 +2626,7 @@ foo
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 - <div>
 - foo
 .
@@ -2505,7 +2641,7 @@ foo
 
 The end tag can occur on the same line as the start tag:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <style>p{color:red;}</style>
 *foo*
 .
@@ -2514,7 +2650,7 @@ The end tag can occur on the same line as the start tag:
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <!-- foo -->*bar*
 *baz*
 .
@@ -2526,7 +2662,7 @@ The end tag can occur on the same line as the start tag:
 Note that anything on the last line after the
 end tag will be included in the [HTML block]:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <script>
 foo
 </script>1. *bar*
@@ -2539,7 +2675,7 @@ foo
 
 A comment (type 2):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <!-- Foo
 
 bar
@@ -2557,7 +2693,7 @@ bar
 
 A processing instruction (type 3):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <?php
 
   echo '>';
@@ -2576,7 +2712,7 @@ okay
 
 A declaration (type 4):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <!DOCTYPE html>
 .
 <!DOCTYPE html>
@@ -2585,7 +2721,7 @@ A declaration (type 4):
 
 CDATA (type 5):
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <![CDATA[
 function matchwo(a,b)
 {
@@ -2618,7 +2754,7 @@ function matchwo(a,b)
 
 The opening tag can be indented 1-3 spaces, but not 4:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
   <!-- foo -->
 
     <!-- foo -->
@@ -2629,7 +2765,7 @@ The opening tag can be indented 1-3 spaces, but not 4:
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
   <div>
 
     <div>
@@ -2643,7 +2779,7 @@ The opening tag can be indented 1-3 spaces, but not 4:
 An HTML block of types 1--6 can interrupt a paragraph, and need not be
 preceded by a blank line.
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 Foo
 <div>
 bar
@@ -2660,7 +2796,7 @@ However, a following blank line is needed, except at the end of
 a document, and except for blocks of types 1--5, [above][HTML
 block]:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div>
 bar
 </div>
@@ -2675,7 +2811,7 @@ bar
 
 HTML blocks of type 7 cannot interrupt a paragraph:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 Foo
 <a href="bar">
 baz
@@ -2716,7 +2852,7 @@ simply separate the Markdown from the HTML using blank lines:
 
 Compare:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div>
 
 *Emphasized* text.
@@ -2729,7 +2865,7 @@ Compare:
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <div>
 *Emphasized* text.
 </div>
@@ -2751,7 +2887,7 @@ blocks into Markdown documents with 100% reliability.  However,
 *in most cases* this will work fine, because the blank lines in
 HTML are usually followed by HTML block tags.  For example:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <table>
 
 <tr>
@@ -2778,7 +2914,7 @@ There are problems, however, if the inner tags are indented
 *and* separated by spaces, as then they will be interpreted as
 an indented code block:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <table>
 
   <tr>
@@ -2831,6 +2967,9 @@ them.
 
 [foo]
 .
+<p>&quot;title&quot;</p>
+<p><a href="/url">foo</a></p>
+.
 <p><a href="/url" title="title">foo</a></p>
 ````````````````````````````````
 
@@ -2842,6 +2981,9 @@ them.
 
 [foo]
 .
+<p>'the title'</p>
+<p><a href="/url">foo</a></p>
+.
 <p><a href="/url" title="the title">foo</a></p>
 ````````````````````````````````
 
@@ -2850,6 +2992,9 @@ them.
 [Foo*bar\]]:my_(url) 'title (with parens)'
 
 [Foo*bar\]]
+.
+<p>'title (with parens)'</p>
+<p><a href="my_(url)">Foo*bar]</a></p>
 .
 <p><a href="my_(url)" title="title (with parens)">Foo*bar]</a></p>
 ````````````````````````````````
@@ -2861,6 +3006,9 @@ them.
 'title'
 
 [Foo bar]
+.
+<p>'title'</p>
+<p><a href="my%20url">Foo bar</a></p>
 .
 <p><a href="my%20url" title="title">Foo bar</a></p>
 ````````````````````````````````
@@ -2876,6 +3024,13 @@ line2
 '
 
 [foo]
+.
+<p>'
+title
+line1
+line2
+'</p>
+<p><a href="/url">foo</a></p>
 .
 <p><a href="/url" title="
 title
@@ -2893,6 +3048,10 @@ However, it may not contain a [blank line]:
 with blank line'
 
 [foo]
+.
+<p>'title</p>
+<p>with blank line'</p>
+<p><a href="/url">foo</a></p>
 .
 <p>[foo]: /url 'title</p>
 <p>with blank line'</p>
@@ -2942,6 +3101,9 @@ whitespace:
 
 [foo]
 .
+<p>(baz)</p>
+<p><a href="bar">foo</a></p>
+.
 <p>[foo]: <bar>(baz)</p>
 <p>[foo]</p>
 ````````````````````````````````
@@ -2954,6 +3116,9 @@ and literal backslashes:
 [foo]: /url\bar\*baz "foo\"bar\baz"
 
 [foo]
+.
+<p>&quot;foo&quot;bar\baz&quot;</p>
+<p><a href="/url%5Cbar*baz">foo</a></p>
 .
 <p><a href="/url%5Cbar*baz" title="foo&quot;bar\baz">foo</a></p>
 ````````````````````````````````
@@ -3031,6 +3196,8 @@ This is not a link reference definition, because there are
 ```````````````````````````````` example
 [foo]: /url "title" ok
 .
+<p>&quot;title&quot; ok</p>
+.
 <p>[foo]: /url &quot;title&quot; ok</p>
 ````````````````````````````````
 
@@ -3052,6 +3219,9 @@ four spaces:
     [foo]: /url "title"
 
 [foo]
+.
+<p>&quot;title&quot;</p>
+<p><a href="/url">foo</a></p>
 .
 <pre><code>[foo]: /url &quot;title&quot;
 </code></pre>
@@ -3082,6 +3252,9 @@ Foo
 [bar]: /baz
 
 [bar]
+.
+<p>Foo</p>
+<p><a href="/baz">bar</a></p>
 .
 <p>Foo
 [bar]: /baz</p>
@@ -3136,6 +3309,12 @@ can occur one after another, without intervening blank lines.
 [bar],
 [baz]
 .
+<p>&quot;foo&quot;</p>
+<p>&quot;bar&quot;</p>
+<p><a href="/foo-url">foo</a>,
+<a href="/bar-url">bar</a>,
+<a href="/baz-url">baz</a></p>
+.
 <p><a href="/foo-url" title="foo">foo</a>,
 <a href="/bar-url" title="bar">bar</a>,
 <a href="/baz-url">baz</a></p>
@@ -3151,6 +3330,9 @@ are defined:
 [foo]
 
 > [foo]: /url
+.
+<p><a href="/url">foo</a></p>
+<blockquote></blockquote>
 .
 <p><a href="/url">foo</a></p>
 <blockquote>
@@ -3261,6 +3443,9 @@ bbb</p>
     aaa
 bbb
 .
+<p>aaa
+bbb</p>
+.
 <pre><code>aaa
 </code></pre>
 <p>bbb</p>
@@ -3274,6 +3459,9 @@ break]:
 ```````````````````````````````` example
 aaa     
 bbb     
+.
+<p>aaa
+bbb</p>
 .
 <p>aaa<br />
 bbb</p>
@@ -3352,6 +3540,10 @@ they are. Likewise, use of leading and trailing pipes may be inconsistent:
 :-: | -----------:
 bar | baz
 .
+<p>| abc | defghi |
+<span>-</span> | -----------:
+bar | baz</p>
+.
 <table>
 <thead>
 <tr>
@@ -3429,6 +3621,23 @@ block-level structure:
 bar
 
 bar
+.
+<table>
+<thead>
+<tr>
+<th>abc</th>
+<th>def</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bar</td>
+<td>baz</td>
+</tr>
+</tbody>
+</table>
+<p>bar</p>
+<p>bar</p>
 .
 <table>
 <thead>
@@ -3612,6 +3821,12 @@ Four spaces gives us a code block:
     > bar
     > baz
 .
+<blockquote>
+<h1>Foo</h1>
+<p>bar
+baz</p>
+</blockquote>
+.
 <pre><code>&gt; # Foo
 &gt; bar
 &gt; baz
@@ -3705,6 +3920,11 @@ subsequent lines of an indented or fenced code block:
     bar
 .
 <blockquote>
+<p>foo
+bar</p>
+</blockquote>
+.
+<blockquote>
 <pre><code>foo
 </code></pre>
 </blockquote>
@@ -3734,6 +3954,13 @@ continuation line]:
     - bar
 .
 <blockquote>
+<p>foo</p>
+<ul>
+<li>bar</li>
+</ul>
+</blockquote>
+.
+<blockquote>
 <p>foo
 - bar</p>
 </blockquote>
@@ -3756,6 +3983,8 @@ A block quote can be empty:
 ```````````````````````````````` example
 >
 .
+<blockquote></blockquote>
+.
 <blockquote>
 </blockquote>
 ````````````````````````````````
@@ -3765,6 +3994,8 @@ A block quote can be empty:
 >
 >  
 > 
+.
+<blockquote></blockquote>
 .
 <blockquote>
 </blockquote>
@@ -3949,6 +4180,13 @@ the `>`:
 >    not code
 .
 <blockquote>
+<p>code</p>
+</blockquote>
+<blockquote>
+<p>not code</p>
+</blockquote>
+.
+<blockquote>
 <pre><code>code
 </code></pre>
 </blockquote>
@@ -4007,6 +4245,13 @@ with two lines.
 .
 <p>A paragraph
 with two lines.</p>
+<p>indented code</p>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+.
+<p>A paragraph
+with two lines.</p>
 <pre><code>indented code
 </code></pre>
 <blockquote>
@@ -4026,6 +4271,17 @@ and the same contents as *Ls*:
         indented code
 
     > A block quote.
+.
+<ol>
+<li>
+<p>A paragraph
+with two lines.</p>
+<p>indented code</p>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+</li>
+</ol>
 .
 <ol>
 <li>
@@ -4086,6 +4342,11 @@ put under the list item:
 <ul>
 <li>one</li>
 </ul>
+<p>two</p>
+.
+<ul>
+<li>one</li>
+</ul>
 <pre><code> two
 </code></pre>
 ````````````````````````````````
@@ -4121,6 +4382,15 @@ this example:
 <blockquote>
 <blockquote>
 <ol>
+<li>one</li>
+</ol>
+<p>two</p>
+</blockquote>
+</blockquote>
+.
+<blockquote>
+<blockquote>
+<ol>
 <li>
 <p>one</p>
 <p>two</p>
@@ -4144,6 +4414,17 @@ far enough past the blockquote marker:
 >>- one
 >>
   >  > two
+.
+<blockquote>
+<blockquote>
+<ul>
+<li>
+<p>one</p>
+<p>two</p>
+</li>
+</ul>
+</blockquote>
+</blockquote>
 .
 <blockquote>
 <blockquote>
@@ -4228,6 +4509,14 @@ empty lines within the code block verbatim.
 <ul>
 <li>
 <p>Foo</p>
+<p>bar</p>
+<p>baz</p>
+</li>
+</ul>
+.
+<ul>
+<li>
+<p>Foo</p>
 <pre><code>bar
 
 
@@ -4308,6 +4597,13 @@ In the following case that is 6 spaces:
 <ul>
 <li>
 <p>foo</p>
+<p>bar</p>
+</li>
+</ul>
+.
+<ul>
+<li>
+<p>foo</p>
 <pre><code>bar
 </code></pre>
 </li>
@@ -4321,6 +4617,13 @@ And in this case it is 11 spaces:
   10.  foo
 
            bar
+.
+<ol start="10">
+<li>
+<p>foo</p>
+<p>bar</p>
+</li>
+</ol>
 .
 <ol start="10">
 <li>
@@ -4343,6 +4646,10 @@ paragraph
 
     more code
 .
+<p>indented code</p>
+<p>paragraph</p>
+<p>more code</p>
+.
 <pre><code>indented code
 </code></pre>
 <p>paragraph</p>
@@ -4357,6 +4664,12 @@ paragraph
    paragraph
 
        more code
+.
+<ol>
+<li>indented code</li>
+</ol>
+<p>paragraph</p>
+<p>more code</p>
 .
 <ol>
 <li>
@@ -4379,6 +4692,12 @@ inside the code block:
    paragraph
 
        more code
+.
+<ol>
+<li>indented code</li>
+</ol>
+<p>paragraph</p>
+<p>more code</p>
 .
 <ol>
 <li>
@@ -4464,6 +4783,15 @@ Here are some list items that start with a blank line but are not empty:
   ```
 -
       baz
+.
+<ul>
+<li>foo</li>
+<li>
+<pre><code>bar
+</code></pre>
+</li>
+<li>baz</li>
+</ul>
 .
 <ul>
 <li>foo</li>
@@ -4571,6 +4899,15 @@ foo
 foo
 1.
 .
+<p>foo</p>
+<ul>
+<li></li>
+</ul>
+<p>foo</p>
+<ol>
+<li></li>
+</ol>
+.
 <p>foo
 *</p>
 <p>foo
@@ -4593,6 +4930,17 @@ Indented one space:
          indented code
 
      > A block quote.
+.
+<ol>
+<li>
+<p>A paragraph
+with two lines.</p>
+<p>indented code</p>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+</li>
+</ol>
 .
 <ol>
 <li>
@@ -4622,6 +4970,17 @@ Indented two spaces:
 <li>
 <p>A paragraph
 with two lines.</p>
+<p>indented code</p>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+</li>
+</ol>
+.
+<ol>
+<li>
+<p>A paragraph
+with two lines.</p>
 <pre><code>indented code
 </code></pre>
 <blockquote>
@@ -4646,6 +5005,17 @@ Indented three spaces:
 <li>
 <p>A paragraph
 with two lines.</p>
+<p>indented code</p>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+</li>
+</ol>
+.
+<ol>
+<li>
+<p>A paragraph
+with two lines.</p>
 <pre><code>indented code
 </code></pre>
 <blockquote>
@@ -4665,6 +5035,17 @@ Four spaces indent gives a code block:
             indented code
 
         > A block quote.
+.
+<ol>
+<li>
+<p>A paragraph
+with two lines.</p>
+<p>indented code</p>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+</li>
+</ol>
 .
 <pre><code>1.  A paragraph
     with two lines.
@@ -4695,6 +5076,17 @@ with two lines.
           indented code
 
       > A block quote.
+.
+<ol>
+<li>
+<p>A paragraph
+with two lines.</p>
+<p>indented code</p>
+<blockquote>
+<p>A block quote.</p>
+</blockquote>
+</li>
+</ol>
 .
 <ol>
 <li>
@@ -4814,7 +5206,7 @@ One is not enough:
 Here we need four, because the list marker is wider:
 
 ```````````````````````````````` example
-10) foo
+10. foo
     - bar
 .
 <ol start="10">
@@ -4830,7 +5222,7 @@ Here we need four, because the list marker is wider:
 Three is not enough:
 
 ```````````````````````````````` example
-10) foo
+10. foo
    - bar
 .
 <ol start="10">
@@ -5110,6 +5502,11 @@ the final rendered document.
 - [x] bar
 .
 <ul>
+<li><input type="checkbox" disabled> foo</li>
+<li><input type="checkbox" disabled checked> bar</li>
+</ul>
+.
+<ul>
 <li><input disabled="" type="checkbox"> foo</li>
 <li><input checked="" disabled="" type="checkbox"> bar</li>
 </ul>
@@ -5122,6 +5519,16 @@ Task lists can be arbitrarily nested:
   - [ ] bar
   - [x] baz
 - [ ] bim
+.
+<ul>
+<li><input type="checkbox" disabled checked> foo
+<ul>
+<li><input type="checkbox" disabled> bar</li>
+<li><input type="checkbox" disabled checked> baz</li>
+</ul>
+</li>
+<li><input type="checkbox" disabled> bim</li>
+</ul>
 .
 <ul>
 <li><input checked="" disabled="" type="checkbox"> foo
@@ -5188,6 +5595,12 @@ Changing the bullet or ordered list delimiter starts a new list:
 1. foo
 2. bar
 3) baz
+.
+<ol>
+<li>foo</li>
+<li>bar
+3) baz</li>
+</ol>
 .
 <ol>
 <li>foo</li>
@@ -5282,7 +5695,7 @@ interrupt paragraphs.  Thus,
 
 ```````````````````````````````` example
 The number of windows in my house is
-14.  The number of doors is 6.
+\14.  The number of doors is 6.
 .
 <p>The number of windows in my house is
 14.  The number of doors is 6.</p>
@@ -5359,10 +5772,19 @@ comment:
 - foo
 - bar
 
-<!-- -->
+// <!-- -->
 
 - baz
 - bim
+.
+<ul>
+<li>foo</li>
+<li>bar</li>
+</ul>
+<ul>
+<li>baz</li>
+<li>bim</li>
+</ul>
 .
 <ul>
 <li>foo</li>
@@ -5383,9 +5805,20 @@ comment:
 
 -   foo
 
-<!-- -->
+// <!-- -->
 
     code
+.
+<ul>
+<li>
+<p>foo</p>
+<p>notcode</p>
+</li>
+<li>
+<p>foo</p>
+</li>
+</ul>
+<p>code</p>
 .
 <ul>
 <li>
@@ -5415,6 +5848,22 @@ item:
   - e
  - f
 - g
+.
+<ul>
+<li>a</li>
+<li>b</li>
+<li>c</li>
+<li>d</li>
+</ul>
+<ul>
+<li>e</li>
+</ul>
+<ul>
+<li>f</li>
+</ul>
+<ul>
+<li>g</li>
+</ul>
 .
 <ul>
 <li>a</li>
@@ -5463,6 +5912,14 @@ line, because it is indented more than three spaces:
 <li>a</li>
 <li>b</li>
 <li>c</li>
+<li>d</li>
+<li>e</li>
+</ul>
+.
+<ul>
+<li>a</li>
+<li>b</li>
+<li>c</li>
 <li>d
 - e</li>
 </ul>
@@ -5478,6 +5935,18 @@ blank line.
   2. b
 
     3. c
+.
+<ol>
+<li>
+<p>a</p>
+</li>
+<li>
+<p>b</p>
+</li>
+<li>
+<p>c</p>
+</li>
+</ol>
 .
 <ol>
 <li>
@@ -5502,6 +5971,14 @@ two of the list items:
 - c
 .
 <ul>
+<li>a</li>
+<li>b</li>
+</ul>
+<ul>
+<li>c</li>
+</ul>
+.
+<ul>
 <li>
 <p>a</p>
 </li>
@@ -5522,6 +5999,14 @@ So is this, with a empty second item:
 *
 
 * c
+.
+<ul>
+<li>a</li>
+<li></li>
+</ul>
+<ul>
+<li>c</li>
+</ul>
 .
 <ul>
 <li>
@@ -5547,6 +6032,15 @@ with a blank line between them:
 - d
 .
 <ul>
+<li>a</li>
+<li>b</li>
+</ul>
+<p>c</p>
+<ul>
+<li>d</li>
+</ul>
+.
+<ul>
 <li>
 <p>a</p>
 </li>
@@ -5567,6 +6061,14 @@ with a blank line between them:
 
   [ref]: /url
 - d
+.
+<ul>
+<li>a</li>
+<li>b</li>
+</ul>
+<ul>
+<li>d</li>
+</ul>
 .
 <ul>
 <li>
@@ -5801,6 +6303,8 @@ backslashes:
 ```````````````````````````````` example
 \→\A\a\ \3\φ\«
 .
+<p>\→\A\a\ 3\φ«</p>
+.
 <p>\→\A\a\ \3\φ\«</p>
 ````````````````````````````````
 
@@ -5854,7 +6358,7 @@ bar</p>
 Backslash escapes do not work in code blocks, code spans, autolinks, or
 raw HTML:
 
-```````````````````````````````` example
+```````````````````````````````` TODO: example
 `` \[\` ``
 .
 <p><code>\[\`</code></p>
@@ -5863,6 +6367,8 @@ raw HTML:
 
 ```````````````````````````````` example
     \[\]
+.
+<p>[]</p>
 .
 <pre><code>\[\]
 </code></pre>
@@ -5874,19 +6380,21 @@ raw HTML:
 \[\]
 ~~~
 .
+\[\]
+.
 <pre><code>\[\]
 </code></pre>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` TODO: example
 <http://example.com?find=\*>
 .
 <p><a href="http://example.com?find=%5C*">http://example.com?find=\*</a></p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` TODO: example
 <a href="/bar\/)">
 .
 <a href="/bar\/)">
@@ -5899,6 +6407,8 @@ link references, and [info strings] in [fenced code blocks]:
 ```````````````````````````````` example
 [foo](/bar\* "ti\*tle")
 .
+<p><a href="/bar*">foo</a></p>
+.
 <p><a href="/bar*" title="ti*tle">foo</a></p>
 ````````````````````````````````
 
@@ -5907,6 +6417,9 @@ link references, and [info strings] in [fenced code blocks]:
 [foo]
 
 [foo]: /bar\* "ti\*tle"
+.
+<p><a href="/bar*">foo</a></p>
+<p>&quot;ti*tle&quot;</p>
 .
 <p><a href="/bar*" title="ti*tle">foo</a></p>
 ````````````````````````````````
@@ -5949,7 +6462,7 @@ document <https://html.spec.whatwg.org/multipage/entities.json>
 is used as an authoritative source for the valid entity
 references and their corresponding code points.
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &nbsp; &amp; &copy; &AElig; &Dcaron;
 &frac34; &HilbertSpace; &DifferentialD;
 &ClockwiseContourIntegral; &ngE;
@@ -5968,7 +6481,7 @@ Unicode character. Invalid Unicode code points will be replaced by
 the REPLACEMENT CHARACTER (`U+FFFD`).  For security reasons,
 the code point `U+0000` will also be replaced by `U+FFFD`.
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &#35; &#1234; &#992; &#0;
 .
 <p># Ӓ Ϡ �</p>
@@ -5981,7 +6494,7 @@ either `X` or `x` + a string of 1-6 hexadecimal digits + `;`.
 They too are parsed as the corresponding Unicode character (this
 time specified with a hexadecimal numeral instead of decimal).
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &#X22; &#XD06; &#xcab;
 .
 <p>&quot; ആ ಫ</p>
@@ -5990,7 +6503,7 @@ time specified with a hexadecimal numeral instead of decimal).
 
 Here are some nonentities:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &nbsp &x; &#; &#x;
 &#987654321;
 &#abcdef0;
@@ -6007,7 +6520,7 @@ Although HTML5 does accept some entity references
 without a trailing semicolon (such as `&copy`), these are not
 recognized here, because it makes the grammar too ambiguous:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &copy
 .
 <p>&amp;copy</p>
@@ -6017,7 +6530,7 @@ recognized here, because it makes the grammar too ambiguous:
 Strings that are not on the list of HTML5 named entities are not
 recognized as entity references either:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &MadeUpEntity;
 .
 <p>&amp;MadeUpEntity;</p>
@@ -6028,30 +6541,34 @@ Entity and numeric character references are recognized in any
 context besides code spans or code blocks, including
 URLs, [link titles], and [fenced code block][] [info strings]:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href="&ouml;&ouml;.html">
 .
 <a href="&ouml;&ouml;.html">
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 [foo](/f&ouml;&ouml; "f&ouml;&ouml;")
+.
+<p><a href="/f%C3%B6%C3%B6">foo</a></p>
 .
 <p><a href="/f%C3%B6%C3%B6" title="föö">foo</a></p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 [foo]
 
 [foo]: /f&ouml;&ouml; "f&ouml;&ouml;"
 .
+<p><a href="/f%C3%B6%C3%B6">foo</a></p>
+.
 <p><a href="/f%C3%B6%C3%B6" title="föö">foo</a></p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 ``` f&ouml;&ouml;
 foo
 ```
@@ -6064,14 +6581,14 @@ foo
 Entity and numeric character references are treated as literal
 text in code spans and code blocks:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 `f&ouml;&ouml;`
 .
 <p><code>f&amp;ouml;&amp;ouml;</code></p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
     f&ouml;f&ouml;
 .
 <pre><code>f&amp;ouml;f&amp;ouml;
@@ -6083,7 +6600,7 @@ Entity and numeric character references cannot be used
 in place of symbols indicating structure in CommonMark
 documents.
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &#42;foo&#42;
 *foo*
 .
@@ -6091,7 +6608,7 @@ documents.
 <em>foo</em></p>
 ````````````````````````````````
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &#42; foo
 
 * foo
@@ -6102,7 +6619,7 @@ documents.
 </ul>
 ````````````````````````````````
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo&#10;&#10;bar
 .
 <p>foo
@@ -6110,14 +6627,14 @@ foo&#10;&#10;bar
 bar</p>
 ````````````````````````````````
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 &#9;foo
 .
 <p>→foo</p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 [a](url &quot;tit&quot;)
 .
 <p>[a](url &quot;tit&quot;)</p>
@@ -6159,6 +6676,8 @@ trailing space:
 ```````````````````````````````` example
 `` foo ` bar ``
 .
+<p><code> foo ` bar </code></p>
+.
 <p><code>foo ` bar</code></p>
 ````````````````````````````````
 
@@ -6169,6 +6688,8 @@ spaces:
 ```````````````````````````````` example
 ` `` `
 .
+<p><code> `` </code></p>
+.
 <p><code>``</code></p>
 ````````````````````````````````
 
@@ -6176,6 +6697,8 @@ Note that only *one* space is stripped:
 
 ```````````````````````````````` example
 `  ``  `
+.
+<p><code>  ``  </code></p>
 .
 <p><code> `` </code></p>
 ````````````````````````````````
@@ -6269,6 +6792,8 @@ not contain any strings of exactly *n* backtick characters.
 ```````````````````````````````` example
 ` foo `` bar `
 .
+<p><code> foo `` bar </code></p>
+.
 <p><code>foo `` bar</code></p>
 ````````````````````````````````
 
@@ -6287,7 +6812,7 @@ span:
 
 And this is not parsed as a link:
 
-```````````````````````````````` example
+```````````````````````````````` TODO: example
 [not a `link](/foo`)
 .
 <p>[not a <code>link](/foo</code>)</p>
@@ -6306,7 +6831,7 @@ Thus, this is code:
 
 But this is an HTML tag:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href="`">`
 .
 <p><a href="`">`</p>
@@ -6324,7 +6849,7 @@ And this is code:
 
 But this is an autolink:
 
-```````````````````````````````` example
+```````````````````````````````` TODO: example
 <http://foo.bar.`baz>`
 .
 <p><a href="http://foo.bar.%60baz">http://foo.bar.`baz</a>`</p>
@@ -6600,6 +7125,10 @@ Unicode nonbreaking spaces count as whitespace, too:
 ```````````````````````````````` example
 * a *
 .
+<ul>
+<li>a *</li>
+</ul>
+.
 <p>* a *</p>
 ````````````````````````````````
 
@@ -6654,6 +7183,8 @@ Emphasis with `_` is not allowed inside words:
 ```````````````````````````````` example
 foo_bar_
 .
+<p>foo<em>bar</em></p>
+.
 <p>foo_bar_</p>
 ````````````````````````````````
 
@@ -6661,12 +7192,16 @@ foo_bar_
 ```````````````````````````````` example
 5_6_78
 .
+<p>5<em>6</em>78</p>
+.
 <p>5_6_78</p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 пристаням_стремятся_
+.
+<p>пристаням<em>стремятся</em></p>
 .
 <p>пристаням_стремятся_</p>
 ````````````````````````````````
@@ -6717,7 +7252,7 @@ whitespace:
 
 A newline also counts as whitespace:
 
-```````````````````````````````` example
+```````````````````````````````` TODO: example
 *foo bar
 *
 .
@@ -6793,6 +7328,8 @@ Intraword emphasis is disallowed for `_`:
 ```````````````````````````````` example
 _foo_bar
 .
+<p><em>foo</em>bar</p>
+.
 <p>_foo_bar</p>
 ````````````````````````````````
 
@@ -6800,12 +7337,16 @@ _foo_bar
 ```````````````````````````````` example
 _пристаням_стремятся
 .
+<p><em>пристаням</em>стремятся</p>
+.
 <p>_пристаням_стремятся</p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 _foo_bar_baz_
+.
+<p><em>foo</em>bar<em>baz</em></p>
 .
 <p><em>foo_bar_baz</em></p>
 ````````````````````````````````
@@ -6905,6 +7446,8 @@ Intraword strong emphasis is forbidden with `__`:
 ```````````````````````````````` example
 foo__bar__
 .
+<p>foo<strong>bar</strong></p>
+.
 <p>foo__bar__</p>
 ````````````````````````````````
 
@@ -6912,12 +7455,16 @@ foo__bar__
 ```````````````````````````````` example
 5__6__78
 .
+<p>5<strong>6</strong>78</p>
+.
 <p>5__6__78</p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 пристаням__стремятся__
+.
+<p>пристаням<strong>стремятся</strong></p>
 .
 <p>пристаням__стремятся__</p>
 ````````````````````````````````
@@ -7039,6 +7586,8 @@ Intraword strong emphasis is forbidden with `__`:
 ```````````````````````````````` example
 __foo__bar
 .
+<p><strong>foo</strong>bar</p>
+.
 <p>__foo__bar</p>
 ````````````````````````````````
 
@@ -7046,12 +7595,16 @@ __foo__bar
 ```````````````````````````````` example
 __пристаням__стремятся
 .
+<p><strong>пристаням</strong>стремятся</p>
+.
 <p>__пристаням__стремятся</p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 __foo__bar__baz__
+.
+<p><strong>foo</strong>bar<strong>baz</strong></p>
 .
 <p><strong>foo__bar__baz</strong></p>
 ````````````````````````````````
@@ -7105,16 +7658,14 @@ _foo _bar_ baz_
 <p><em>foo <em>bar</em> baz</em></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-__foo_ bar_
+_*foo* bar_
 .
 <p><em><em>foo</em> bar</em></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-*foo *bar**
+*foo _bar_*
 .
 <p><em>foo <em>bar</em></em></p>
 ````````````````````````````````
@@ -7162,23 +7713,20 @@ cases are all strong emphasis nested inside
 emphasis, even when the interior spaces are
 omitted:
 
-
 ```````````````````````````````` example
-***foo** bar*
+*__foo__ bar*
 .
 <p><em><strong>foo</strong> bar</em></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-*foo **bar***
+*foo __bar__*
 .
 <p><em>foo <strong>bar</strong></em></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-*foo**bar***
+*foo__bar__*
 .
 <p><em>foo<strong>bar</strong></em></p>
 ````````````````````````````````
@@ -7195,7 +7743,9 @@ foo***bar***baz
 ````````````````````````````````
 
 ```````````````````````````````` example
-foo******bar*********baz
+foo******bar******\***baz
+.
+<p>foo<em><strong>bar</strong></em>***baz</p>
 .
 <p>foo<strong><strong><strong>bar</strong></strong></strong>***baz</p>
 ````````````````````````````````
@@ -7271,16 +7821,14 @@ __foo __bar__ baz__
 <p><strong>foo <strong>bar</strong> baz</strong></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-____foo__ bar__
+__**foo** bar__
 .
 <p><strong><strong>foo</strong> bar</strong></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-**foo **bar****
+**foo __bar__**
 .
 <p><strong>foo <strong>bar</strong></strong></p>
 ````````````````````````````````
@@ -7299,16 +7847,14 @@ ____foo__ bar__
 <p><strong>foo<em>bar</em>baz</strong></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-***foo* bar**
+**_foo_ bar**
 .
 <p><strong><em>foo</em> bar</strong></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-**foo *bar***
+**foo _bar_**
 .
 <p><strong>foo <em>bar</em></strong></p>
 ````````````````````````````````
@@ -7396,44 +7942,38 @@ foo **_**
 Note that when delimiters do not match evenly, Rule 11 determines
 that the excess literal `*` characters will appear outside of the
 emphasis, rather than inside it:
-
 ```````````````````````````````` example
-**foo*
+*_foo_
 .
 <p>*<em>foo</em></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-*foo**
+_foo_*
 .
 <p><em>foo</em>*</p>
 ````````````````````````````````
 
-
-```````````````````````````````` example
-***foo**
+``````````````````````````` example
+*__foo__
 .
 <p>*<strong>foo</strong></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-****foo*
+***_foo_
 .
 <p>***<em>foo</em></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-**foo***
+__foo__*
 .
 <p><strong>foo</strong>*</p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-*foo****
+_foo_***
 .
 <p><em>foo</em>***</p>
 ````````````````````````````````
@@ -7483,9 +8023,8 @@ foo __*__
 <p>foo <strong>*</strong></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-__foo_
+_*foo*
 .
 <p>_<em>foo</em></p>
 ````````````````````````````````
@@ -7494,37 +8033,32 @@ __foo_
 Note that when delimiters do not match evenly, Rule 12 determines
 that the excess literal `_` characters will appear outside of the
 emphasis, rather than inside it:
-
 ```````````````````````````````` example
-_foo__
+*foo*_
 .
 <p><em>foo</em>_</p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-___foo__
+_**foo**
 .
 <p>_<strong>foo</strong></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-____foo_
+___*foo*
 .
 <p>___<em>foo</em></p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-__foo___
+**foo**_
 .
 <p><strong>foo</strong>_</p>
 ````````````````````````````````
 
-
 ```````````````````````````````` example
-_foo____
+*foo*___
 .
 <p><em>foo</em>___</p>
 ````````````````````````````````
@@ -7567,12 +8101,16 @@ switching delimiters:
 ```````````````````````````````` example
 ****foo****
 .
+<p><em><strong>foo</strong></em></p>
+.
 <p><strong><strong>foo</strong></strong></p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 ____foo____
+.
+<p><em><strong>foo</strong></em></p>
 .
 <p><strong><strong>foo</strong></strong></p>
 ````````````````````````````````
@@ -7584,6 +8122,8 @@ delimiters:
 
 ```````````````````````````````` example
 ******foo******
+.
+<p><em><strong>foo</strong></em></p>
 .
 <p><strong><strong><strong>foo</strong></strong></strong></p>
 ````````````````````````````````
@@ -7600,6 +8140,8 @@ Rule 14:
 
 ```````````````````````````````` example
 _____foo_____
+.
+<p><em><strong>foo</strong></em></p>
 .
 <p><em><strong><strong>foo</strong></strong></em></p>
 ````````````````````````````````
@@ -7642,12 +8184,16 @@ Rule 17:
 ```````````````````````````````` example
 *[bar*](/url)
 .
+<p><em>[bar</em>](/url)</p>
+.
 <p>*<a href="/url">bar*</a></p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 _foo [bar_](/url)
+.
+<p><em>foo [bar</em>](/url)</p>
 .
 <p>_foo <a href="/url">bar_</a></p>
 ````````````````````````````````
@@ -7656,6 +8202,8 @@ _foo [bar_](/url)
 ```````````````````````````````` example
 *<img src="foo" title="*"/>
 .
+<p><em>&lt;img src=&quot;foo&quot; title=&quot;</em>&quot;/&gt;</p>
+.
 <p>*<img src="foo" title="*"/></p>
 ````````````````````````````````
 
@@ -7663,12 +8211,16 @@ _foo [bar_](/url)
 ```````````````````````````````` example
 **<a href="**">
 .
+<p><strong>&lt;a href=&quot;</strong>&quot;&gt;</p>
+.
 <p>**<a href="**"></p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 __<a href="__">
+.
+<p><strong>&lt;a href=&quot;</strong>&quot;&gt;</p>
 .
 <p>__<a href="__"></p>
 ````````````````````````````````
@@ -7691,12 +8243,16 @@ _a `_`_
 ```````````````````````````````` example
 **a<http://foo.bar/?q=**>
 .
+<p><strong>a&lt;http://foo.bar/?q=</strong>&gt;</p>
+.
 <p>**a<a href="http://foo.bar/?q=**">http://foo.bar/?q=**</a></p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 __a<http://foo.bar/?q=__>
+.
+<p><strong>a&lt;http://foo.bar/?q=</strong>&gt;</p>
 .
 <p>__a<a href="http://foo.bar/?q=__">http://foo.bar/?q=__</a></p>
 ````````````````````````````````
@@ -7714,7 +8270,7 @@ Strikethrough text is any text wrapped in two tildes (`~`).
 ```````````````````````````````` example strikethrough
 ~~Hi~~ Hello, world!
 .
-<p><del>Hi</del> Hello, world!</p>
+<p><s>Hi</s> Hello, world!</p>
 ````````````````````````````````
 
 As with regular emphasis delimiters, a new paragraph will cause strikethrough
@@ -7817,6 +8373,8 @@ Here is a simple inline link:
 ```````````````````````````````` example
 [link](/uri "title")
 .
+<p><a href="/uri">link</a></p>
+.
 <p><a href="/uri" title="title">link</a></p>
 ````````````````````````````````
 
@@ -7842,6 +8400,8 @@ Both the title and the destination may be omitted:
 ```````````````````````````````` example
 [link](<>)
 .
+<p><a href="%3C%3E">link</a></p>
+.
 <p><a href="">link</a></p>
 ````````````````````````````````
 
@@ -7851,11 +8411,15 @@ enclosed in pointy brackets:
 ```````````````````````````````` example
 [link](/my uri)
 .
+<p><a href="/my">link</a></p>
+.
 <p>[link](/my uri)</p>
 ````````````````````````````````
 
 ```````````````````````````````` example
 [link](</my uri>)
+.
+<p><a href="%3C/my">link</a></p>
 .
 <p><a href="/my%20uri">link</a></p>
 ````````````````````````````````
@@ -7875,6 +8439,9 @@ bar)</p>
 [link](<foo
 bar>)
 .
+<p>[link](&lt;foo
+bar&gt;)</p>
+.
 <p>[link](<foo
 bar>)</p>
 ````````````````````````````````
@@ -7885,6 +8452,8 @@ in pointy brackets:
 ```````````````````````````````` example
 [a](<b)c>)
 .
+<p><a href="%3Cb">a</a>c&gt;)</p>
+.
 <p><a href="b)c">a</a></p>
 ````````````````````````````````
 
@@ -7892,6 +8461,8 @@ Pointy brackets that enclose links must be unescaped:
 
 ```````````````````````````````` example
 [link](<foo\>)
+.
+<p><a href="%3Cfoo%3E">link</a></p>
 .
 <p>[link](&lt;foo&gt;)</p>
 ````````````````````````````````
@@ -7903,6 +8474,10 @@ is not matched properly:
 [a](<b)c
 [a](<b)c>
 [a](<b>c)
+.
+<p><a href="%3Cb">a</a>c
+<a href="%3Cb">a</a>c&gt;
+<a href="%3Cb%3Ec">a</a></p>
 .
 <p>[a](&lt;b)c
 [a](&lt;b)c&gt;
@@ -7923,6 +8498,8 @@ balanced:
 ```````````````````````````````` example
 [link](foo(and(bar)))
 .
+<p>[link](foo(and(bar)))</p>
+.
 <p><a href="foo(and(bar))">link</a></p>
 ````````````````````````````````
 
@@ -7933,11 +8510,15 @@ However, if you have unbalanced parentheses, you need to escape or use the
 [link](foo\(and\(bar\))
 .
 <p><a href="foo(and(bar)">link</a></p>
+.
+<p><a href="foo(and(bar)">link</a></p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 [link](<foo(and(bar)>)
+.
+<p>[link](&lt;foo(and(bar)&gt;)</p>
 .
 <p><a href="foo(and(bar)">link</a></p>
 ````````````````````````````````
@@ -7990,6 +8571,8 @@ about how to escape or normalize URLs in the output.
 ```````````````````````````````` example
 [link](foo%20b&auml;)
 .
+<p><a href="foo%20b&auml;">link</a></p>
+.
 <p><a href="foo%20b%C3%A4">link</a></p>
 ````````````````````````````````
 
@@ -8012,6 +8595,10 @@ Titles may be in single quotes, double quotes, or parentheses:
 [link](/url 'title')
 [link](/url (title))
 .
+<p><a href="/url">link</a>
+<a href="/url">link</a>
+[link](/url (title))</p>
+.
 <p><a href="/url" title="title">link</a>
 <a href="/url" title="title">link</a>
 <a href="/url" title="title">link</a></p>
@@ -8023,6 +8610,8 @@ may be used in titles:
 
 ```````````````````````````````` example
 [link](/url "title \"&quot;")
+.
+<p><a href="/url">link</a></p>
 .
 <p><a href="/url" title="title &quot;&quot;">link</a></p>
 ````````````````````````````````
@@ -8043,6 +8632,8 @@ Nested balanced quotes are not allowed without escaping:
 ```````````````````````````````` example
 [link](/url "title "and" title")
 .
+<p><a href="/url">link</a></p>
+.
 <p>[link](/url &quot;title &quot;and&quot; title&quot;)</p>
 ````````````````````````````````
 
@@ -8051,6 +8642,8 @@ But it is easy to work around this by using a different quote type:
 
 ```````````````````````````````` example
 [link](/url 'title "and" title')
+.
+<p><a href="/url">link</a></p>
 .
 <p><a href="/url" title="title &quot;and&quot; title">link</a></p>
 ````````````````````````````````
@@ -8076,6 +8669,8 @@ the same way in inline links and link reference definitions.)
 ```````````````````````````````` example
 [link](   /uri
   "title"  )
+.
+<p><a href="/uri">link</a></p>
 .
 <p><a href="/uri" title="title">link</a></p>
 ````````````````````````````````
@@ -8248,6 +8843,8 @@ Here is a simple example:
 
 [bar]: /url "title"
 .
+<p><a href="/url">foo</a></p>
+.
 <p><a href="/url" title="title">foo</a></p>
 ````````````````````````````````
 
@@ -8377,6 +8974,8 @@ Matching is case-insensitive:
 
 [bar]: /url "title"
 .
+<p><a href="/url">foo</a></p>
+.
 <p><a href="/url" title="title">foo</a></p>
 ````````````````````````````````
 
@@ -8413,6 +9012,8 @@ No [whitespace] is allowed between the [link text] and the
 
 [bar]: /url "title"
 .
+<p>[foo] <a href="/url">bar</a></p>
+.
 <p>[foo] <a href="/url" title="title">bar</a></p>
 ````````````````````````````````
 
@@ -8422,6 +9023,9 @@ No [whitespace] is allowed between the [link text] and the
 [bar]
 
 [bar]: /url "title"
+.
+<p>[foo]
+<a href="/url">bar</a></p>
 .
 <p>[foo]
 <a href="/url" title="title">bar</a></p>
@@ -8575,6 +9179,8 @@ provided by the matching reference link definition.  Thus,
 
 [foo]: /url "title"
 .
+<p><a href="/url">foo</a></p>
+.
 <p><a href="/url" title="title">foo</a></p>
 ````````````````````````````````
 
@@ -8583,6 +9189,8 @@ provided by the matching reference link definition.  Thus,
 [*foo* bar][]
 
 [*foo* bar]: /url "title"
+.
+<p><a href="/url"><em>foo</em> bar</a></p>
 .
 <p><a href="/url" title="title"><em>foo</em> bar</a></p>
 ````````````````````````````````
@@ -8594,6 +9202,8 @@ The link labels are case-insensitive:
 [Foo][]
 
 [foo]: /url "title"
+.
+<p><a href="/url">Foo</a></p>
 .
 <p><a href="/url" title="title">Foo</a></p>
 ````````````````````````````````
@@ -8608,6 +9218,9 @@ allowed between the two sets of brackets:
 []
 
 [foo]: /url "title"
+.
+<p><a href="/url">foo</a>
+[]</p>
 .
 <p><a href="/url" title="title">foo</a>
 []</p>
@@ -8628,6 +9241,8 @@ Thus, `[foo]` is equivalent to `[foo][]`.
 
 [foo]: /url "title"
 .
+<p><a href="/url">foo</a></p>
+.
 <p><a href="/url" title="title">foo</a></p>
 ````````````````````````````````
 
@@ -8637,6 +9252,8 @@ Thus, `[foo]` is equivalent to `[foo][]`.
 
 [*foo* bar]: /url "title"
 .
+<p><a href="/url"><em>foo</em> bar</a></p>
+.
 <p><a href="/url" title="title"><em>foo</em> bar</a></p>
 ````````````````````````````````
 
@@ -8645,6 +9262,8 @@ Thus, `[foo]` is equivalent to `[foo][]`.
 [[*foo* bar]]
 
 [*foo* bar]: /url "title"
+.
+<p>[<a href="/url"><em>foo</em> bar</a>]</p>
 .
 <p>[<a href="/url" title="title"><em>foo</em> bar</a>]</p>
 ````````````````````````````````
@@ -8665,6 +9284,8 @@ The link labels are case-insensitive:
 [Foo]
 
 [foo]: /url "title"
+.
+<p><a href="/url">Foo</a></p>
 .
 <p><a href="/url" title="title">Foo</a></p>
 ````````````````````````````````
@@ -8797,6 +9418,8 @@ this is standardly used as the image's `alt` attribute.
 ```````````````````````````````` example
 ![foo](/url "title")
 .
+<p><img src="/url" alt="foo" /></p>
+.
 <p><img src="/url" alt="foo" title="title" /></p>
 ````````````````````````````````
 
@@ -8805,6 +9428,8 @@ this is standardly used as the image's `alt` attribute.
 ![foo *bar*]
 
 [foo *bar*]: train.jpg "train & tracks"
+.
+<p><img src="train.jpg" alt="foo bar" /></p>
 .
 <p><img src="train.jpg" alt="foo bar" title="train &amp; tracks" /></p>
 ````````````````````````````````
@@ -8836,6 +9461,8 @@ content is rendered, without formatting.
 
 [foo *bar*]: train.jpg "train & tracks"
 .
+<p><img src="train.jpg" alt="foo bar" /></p>
+.
 <p><img src="train.jpg" alt="foo bar" title="train &amp; tracks" /></p>
 ````````````````````````````````
 
@@ -8844,6 +9471,8 @@ content is rendered, without formatting.
 ![foo *bar*][foobar]
 
 [FOOBAR]: train.jpg "train & tracks"
+.
+<p><img src="train.jpg" alt="foo bar" /></p>
 .
 <p><img src="train.jpg" alt="foo bar" title="train &amp; tracks" /></p>
 ````````````````````````````````
@@ -8858,6 +9487,8 @@ content is rendered, without formatting.
 
 ```````````````````````````````` example
 My ![foo bar](/path/to/train.jpg  "title"   )
+.
+<p>My <img src="/path/to/train.jpg" alt="foo bar" /></p>
 .
 <p>My <img src="/path/to/train.jpg" alt="foo bar" title="title" /></p>
 ````````````````````````````````
@@ -8904,6 +9535,8 @@ Collapsed:
 
 [foo]: /url "title"
 .
+<p><img src="/url" alt="foo" /></p>
+.
 <p><img src="/url" alt="foo" title="title" /></p>
 ````````````````````````````````
 
@@ -8912,6 +9545,8 @@ Collapsed:
 ![*foo* bar][]
 
 [*foo* bar]: /url "title"
+.
+<p><img src="/url" alt="foo bar"  /></p>
 .
 <p><img src="/url" alt="foo bar" title="title" /></p>
 ````````````````````````````````
@@ -8923,6 +9558,8 @@ The labels are case-insensitive:
 ![Foo][]
 
 [foo]: /url "title"
+.
+<p><img src="/url" alt="Foo" /></p>
 .
 <p><img src="/url" alt="Foo" title="title" /></p>
 ````````````````````````````````
@@ -8937,6 +9574,9 @@ between the two sets of brackets:
 
 [foo]: /url "title"
 .
+<p><img src="/url" alt="foo" />
+[]</p>
+.
 <p><img src="/url" alt="foo" title="title" />
 []</p>
 ````````````````````````````````
@@ -8949,6 +9589,8 @@ Shortcut:
 
 [foo]: /url "title"
 .
+<p><img src="/url" alt="foo" /></p>
+.
 <p><img src="/url" alt="foo" title="title" /></p>
 ````````````````````````````````
 
@@ -8957,6 +9599,8 @@ Shortcut:
 ![*foo* bar]
 
 [*foo* bar]: /url "title"
+.
+<p><img src="/url" alt="foo bar" /></p>
 .
 <p><img src="/url" alt="foo bar" title="title" /></p>
 ````````````````````````````````
@@ -8981,6 +9625,8 @@ The link labels are case-insensitive:
 
 [foo]: /url "title"
 .
+<p><img src="/url" alt="Foo" /></p>
+.
 <p><img src="/url" alt="Foo" title="title" /></p>
 ````````````````````````````````
 
@@ -9004,6 +9650,8 @@ If you want a link after a literal `!`, backslash-escape the
 \![foo]
 
 [foo]: /url "title"
+.
+<p>!<a href="/url">foo</a></p>
 .
 <p>!<a href="/url" title="title">foo</a></p>
 ````````````````````````````````
