@@ -30,7 +30,9 @@ import isSpace from "../utils/isSpace";
 
 const name = "heading_underline";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
+	let parent = state.openNodes.at(-1)!;
+
 	// An underlined heading requires a paragraph
 	if (parent.type !== "paragraph") {
 		return false;
@@ -78,7 +80,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	return false;
 }
 

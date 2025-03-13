@@ -14,22 +14,15 @@ export default interface BlockRule {
 	 * @param parent
 	 * @returns
 	 */
-	testStart: (state: BlockParserState, parent: MidtextNode) => boolean;
-	/**
-	 * Creates a node for this rule.
-	 * @param state
-	 * @param parent
-	 * @returns
-	 */
-	// TODO: createNode: (state: ParserState, parent: MarkdownNode) => void;
+	testStart: (state: BlockParserState) => boolean;
 	/**
 	 * Tests whether a node should continue after being started e.g. a block
 	 * quote should continue if we find a '>'.
 	 * @param state
-	 * @param parent
+	 * @param node
 	 * @returns
 	 */
-	testContinue: (state: BlockParserState, parent: MidtextNode) => boolean;
+	testContinue: (state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) => boolean;
 	/**
 	 * Does any cleanup for this rule's node when it is closed.
 	 * @param state

@@ -23,14 +23,14 @@ function getMarkup(state: BlockParserState): ListInfo | undefined {
 	}
 }
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	let info = getMarkup(state);
-	return listRule.testStart(state, parent, info);
+	return listRule.testStart(state, info);
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	let info = getMarkup(state);
-	return listRule.testContinue(state, node, info);
+	return listRule.testContinue(state, node, hadBlankLine, info);
 }
 
 export default {

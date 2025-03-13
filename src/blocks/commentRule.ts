@@ -6,7 +6,7 @@ import isEscaped from "../utils/isEscaped";
 
 const name = "comment";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "/" && state.src[state.i + 1] === "/" && !isEscaped(state.src, state.i)) {
 		state.i += 2;
@@ -18,7 +18,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	return false;
 }
 

@@ -9,12 +9,12 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "table";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
-	let lastNode = state.openNodes.at(-1)!;
+function testStart(state: BlockParserState) {
+	let parent = state.openNodes.at(-1)!;
 
 	let char = state.src[state.i];
 
-	if (lastNode.type === name && char !== "|") {
+	if (parent.type === name && char !== "|") {
 		state.openNodes.pop();
 		return false;
 	}
@@ -22,15 +22,14 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	let level = state.openNodes.indexOf(parent);
 	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 
-	if (!hadBlankLine && lastNode.type === name && char === "|") {
+	if (!hadBlankLine && parent.type === name && char === "|") {
 		// We may already have a table
-		//lastNode = lastNode?.children ? lastNode.children[0] : undefined;
 		let endOfLine = getEndOfLine(state);
 
-		let headers = lastNode.children![0].children!.map((c) => c.info);
+		let headers = parent.children![0].children!.map((c) => c.info);
 
 		let row = newBlockNode("table_row", state, "", 0, 0);
-		lastNode.children!.push(row);
+		parent.children!.push(row);
 
 		let rowContent = state.src
 			.substring(state.i, endOfLine)
@@ -126,7 +125,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	if (state.src[state.i] === "|") {
 		return true;
 	}

@@ -24,7 +24,7 @@ import normalizeLabel from "../utils/normalizeLabel";
 
 const name = "link_ref";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	//if (parent.acceptsContent) {
 	//	return false;
 	//}
@@ -131,7 +131,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 
 		let ref = newInlineNode(name, state, "", 0, []);
 
-		parent.children!.push(ref);
+		state.openNodes.at(-1)!.children!.push(ref);
 
 		return true;
 	}
@@ -139,7 +139,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	return false;
 }
 

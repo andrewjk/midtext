@@ -6,9 +6,11 @@ import consumeAttributes from "../utils/consumeAttributes";
 
 const name = "block_attributes";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "{") {
+		let parent = state.openNodes.at(-1)!;
+
 		// If there's an open paragraph, close it
 		if (parent.type === "paragraph") {
 			state.openNodes.pop();
@@ -26,7 +28,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	return false;
 }
 

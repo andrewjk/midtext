@@ -50,7 +50,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "code_block";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	let markup = getBlockFence(state.src, "`", state.i, true);
 	if (markup && markup.length >= 3) {
 		let end = state.i + markup.length;
@@ -76,7 +76,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 		evictBlocks(state);
 
 		// Create the node
-		parent = state.openNodes.at(-1)!;
+		let parent = state.openNodes.at(-1)!;
 
 		let codeNode = newBlockNode(name, state, markup, state.indent, state.indent);
 		checkBlankLineBefore(state, codeNode, parent);
@@ -93,10 +93,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
-	let level = state.openNodes.indexOf(node);
-	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
-
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	if (!hadBlankLine && state.indent < node.subindent) {
 		return false;
 	}

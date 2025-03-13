@@ -29,7 +29,8 @@ import newInlineNode from "../utils/newInlineNode";
 
 const name = "task_item";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
+	let parent = state.openNodes.at(-1)!;
 	if (parent.type === "list_item") {
 		let start = state.i;
 		if (state.src[start] === "[" && state.src[start + 2] === "]") {
@@ -44,7 +45,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	return false;
 }
 

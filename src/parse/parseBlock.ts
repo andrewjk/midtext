@@ -1,13 +1,12 @@
 import type BlockParserState from "../types/BlockParserState";
-import type MidtextNode from "../types/MidtextNode";
 import parseIndent from "./parseIndent";
 
-export default function parseBlock(state: BlockParserState, parent: MidtextNode) {
-	parseIndent(state, state.openNodes.indexOf(parent));
+export default function parseBlock(state: BlockParserState, index: number) {
+	parseIndent(state, index);
 
 	for (let rule of state.rules.values()) {
-		if (!parent.acceptsContent || !!rule.acceptsContent) {
-			let handled = rule.testStart(state, parent);
+		if (!state.openNodes[index].acceptsContent || !!rule.acceptsContent) {
+			let handled = rule.testStart(state);
 
 			if (handled) {
 				state.atLineEnd = false;

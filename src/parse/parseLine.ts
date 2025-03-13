@@ -22,7 +22,8 @@ export default function parseLine(state: BlockParserState) {
 		// TODO: Fallback rule??
 		let rule = state.rules.get(node.type)!;
 		if (rule) {
-			if (rule.testContinue(state, node)) {
+			const hadBlankLine = state.blankLevel !== -1 && state.blankLevel < i;
+			if (rule.testContinue(state, node, hadBlankLine)) {
 				// TODO: Is there a rule that shouldn't do this?
 				parseIndent(state, i);
 			} else {
@@ -32,6 +33,5 @@ export default function parseLine(state: BlockParserState) {
 		}
 	}
 
-	let parent = state.openNodes.at(-1)!;
-	parseBlock(state, parent);
+	parseBlock(state, state.openNodes.length - 1);
 }

@@ -15,7 +15,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "section_break";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "-" || char === "_" || char === "*") {
 		let matched = 1;
@@ -39,7 +39,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 			evictBlocks(state);
 
 			// Create the node
-			parent = state.openNodes.at(-1)!;
+			let parent = state.openNodes.at(-1)!;
 
 			let markup = state.src.substring(state.i, end);
 			let breakNode = newBlockNode(name, state, markup, state.indent, state.indent);
@@ -54,7 +54,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	return false;
 }
 

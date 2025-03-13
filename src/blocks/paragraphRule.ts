@@ -15,22 +15,22 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "paragraph";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
-	let lastNode = state.openNodes.at(-1)!;
+function testStart(state: BlockParserState) {
+	let parent = state.openNodes.at(-1)!;
 
 	let endOfLine = getEndOfLine(state);
 
-	if (lastNode.acceptsContent) {
-		let startOfLine = state.atLineEnd ? state.lineStart : state.lineStart + lastNode.indent;
+	if (parent.acceptsContent) {
+		let startOfLine = state.atLineEnd ? state.lineStart : state.lineStart + parent.indent;
 		let content = state.src.substring(startOfLine, endOfLine);
-		lastNode.content += content;
+		parent.content += content;
 		state.i = endOfLine;
 		state.blankLevel = -1;
 		return true;
 	}
 
 	let content = state.src.substring(state.i, endOfLine);
-	let haveParagraph = lastNode.type === name;
+	let haveParagraph = parent.type === name;
 
 	// TODO: Proper blank checking
 	// TODO: Move this to parseindent too
@@ -44,13 +44,13 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	}
 
 	let paragraph = haveParagraph
-		? lastNode
+		? parent
 		: newBlockNode(name, state, "", state.indent, state.indent);
 	paragraph.content += content;
 	checkBlankLineBefore(state, paragraph, parent);
 
 	if (!haveParagraph) {
-		lastNode.children!.push(paragraph);
+		parent.children!.push(paragraph);
 		state.openNodes.push(paragraph);
 	}
 
@@ -59,10 +59,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return true;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
-	let level = state.openNodes.indexOf(node);
-	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
-
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	if (!hadBlankLine) {
 		return true;
 	}

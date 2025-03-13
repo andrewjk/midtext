@@ -15,7 +15,7 @@ export interface ListInfo {
 	type: string;
 }
 
-function testStart(state: BlockParserState, parent: MidtextNode, info?: ListInfo) {
+function testStart(state: BlockParserState, info?: ListInfo) {
 	if (info) {
 		const name = info.type;
 
@@ -32,20 +32,20 @@ function testStart(state: BlockParserState, parent: MidtextNode, info?: ListInfo
 		evictBlocksForNestableNode(state, name);
 
 		// Create the node
-		let lastNode = state.openNodes.at(-1)!;
-		let haveNode = lastNode.type === name;
+		let parent = state.openNodes.at(-1)!;
+		let haveNode = parent.type === name;
 
 		// Create the new item
 		let itemNode = newBlockNode("list_item", state, info.markup, state.indent, contentColumn);
 
 		// Create or continue the list
 		let listNode = haveNode
-			? lastNode
+			? parent
 			: newBlockNode(name, state, info.markup, state.indent, contentColumn);
 		listNode.delimiter = itemNode.delimiter = info.delimiter;
 		listNode.children!.push(itemNode);
 		if (!haveNode) {
-			lastNode.children!.push(listNode);
+			parent.children!.push(listNode);
 			state.openNodes.push(listNode);
 			state.openNodes.push(itemNode);
 		} else {
@@ -55,7 +55,7 @@ function testStart(state: BlockParserState, parent: MidtextNode, info?: ListInfo
 		if (haveNode) {
 			checkBlankLineBefore(state, itemNode, listNode);
 			if (itemNode.blankBefore) {
-				lastNode.loose = true;
+				parent.loose = true;
 			}
 		} else {
 			checkBlankLineBefore(state, listNode, parent);
@@ -64,7 +64,7 @@ function testStart(state: BlockParserState, parent: MidtextNode, info?: ListInfo
 		// Reset the state and parse inside the item
 		state.i += info.markup.length + spaces;
 		state.indent = contentColumn;
-		parseBlock(state, itemNode);
+		parseBlock(state, state.openNodes.length - 1);
 
 		return true;
 	}
@@ -72,10 +72,12 @@ function testStart(state: BlockParserState, parent: MidtextNode, info?: ListInfo
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode, info?: ListInfo) {
-	let level = state.openNodes.indexOf(node);
-	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
-
+function testContinue(
+	state: BlockParserState,
+	node: MidtextNode,
+	hadBlankLine: boolean,
+	info?: ListInfo,
+) {
 	// You can't start a list with an empty first item
 	if (state.atLineEnd && node.children!.length === 1) {
 		let itemNode = node.children![0];

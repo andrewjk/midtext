@@ -39,7 +39,7 @@ const name = "block_quote";
 // Otherwise, they depend on the number of >
 // But you can lazily continue any number of >...
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === ">") {
 		let spaces = countSpaces(state.src, state.i + 1);
@@ -55,18 +55,18 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 		evictBlocksForNestableNode(state, name);
 
 		// Create the node
-		let lastNode = state.openNodes.at(-1)!;
+		let parent = state.openNodes.at(-1)!;
 
 		let quoteNode = newBlockNode(name, state, char, state.indent, contentColumn);
 		checkBlankLineBefore(state, quoteNode, parent);
 
-		lastNode.children!.push(quoteNode);
+		parent.children!.push(quoteNode);
 		state.openNodes.push(quoteNode);
 
 		// Reset the state and parse inside the item
 		state.i += 1 + spaces;
 		state.indent = contentColumn;
-		parseBlock(state, quoteNode);
+		parseBlock(state, state.openNodes.length - 1);
 
 		return true;
 	}
@@ -74,10 +74,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
-	let level = state.openNodes.indexOf(node);
-	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
-
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	if (state.src[state.i] === ">") {
 		if (hadBlankLine) {
 			return false;

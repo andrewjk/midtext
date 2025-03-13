@@ -9,7 +9,7 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "details";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "?") {
 		let spaces = countSpaces(state.src, state.i + 1);
@@ -19,7 +19,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 		evictBlocks(state);
 
 		// Create the node
-		let lastNode = state.openNodes.at(-1)!;
+		let parent = state.openNodes.at(-1)!;
 		let detailsNode = newBlockNode(name, state, char, state.indent, contentColumn);
 		checkBlankLineBefore(state, detailsNode, parent);
 
@@ -30,7 +30,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 
 		detailsNode.children!.push(summaryNode);
 
-		lastNode.children!.push(detailsNode);
+		parent.children!.push(detailsNode);
 		state.openNodes.push(detailsNode);
 
 		state.i = end;
@@ -41,7 +41,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	if (state.src[state.i] === "?") {
 		state.i++;
 		return true;

@@ -20,8 +20,9 @@ import newBlockNode from "../utils/newBlockNode";
 
 const name = "heading";
 
-function testStart(state: BlockParserState, parent: MidtextNode) {
+function testStart(state: BlockParserState) {
 	// TODO: Remove trimEnd everywhere
+	let parent = state.openNodes.at(-1)!;
 	if (parent.children?.length) {
 		const lastChild = parent.children.at(-1)!;
 		if (lastChild.type === name && lastChild.content.trimEnd().endsWith("\\")) {
@@ -53,11 +54,11 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 			}
 
 			// Create the node
-			let lastNode = state.openNodes.at(-1)!;
+			let parent = state.openNodes.at(-1)!;
 
 			let headingNode = newBlockNode(name, state, "#".repeat(level), state.indent, state.indent);
 
-			lastNode.children!.push(headingNode);
+			parent.children!.push(headingNode);
 
 			// HACK: ignore optional end heading marks and spaces, destructively
 			state.i += level;
@@ -86,7 +87,7 @@ function testStart(state: BlockParserState, parent: MidtextNode) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode) {
+function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
 	return false;
 }
 
