@@ -101,7 +101,7 @@ function processDelimiters(
 		// Maybe add the text between delimiters
 		if (delimiter.start > start) {
 			let text = state.src.substring(start, delimiter.start);
-			text = formatText(text);
+			if (!delimiter.acceptsContent) text = formatText(text);
 			let textNode = newInlineNode("text", state, text, 0);
 			parent.children!.push(textNode);
 		}
@@ -121,7 +121,8 @@ function processDelimiters(
 		if (delimiter.hidden) {
 			start = delimiter.end + delimiter.length;
 		} else if (delimiter.content) {
-			let text = formatText(delimiter.content);
+			let text = delimiter.content;
+			if (!delimiter.acceptsContent) text = formatText(delimiter.content);
 			let textNode = newInlineNode("text", state, text, 0);
 			delimiterNode.children!.push(textNode);
 			start = delimiter.end + delimiter.length;
@@ -146,7 +147,7 @@ function processDelimiters(
 			// No overlapping delimiters, so add the text
 			if (!found) {
 				let text = state.src.substring(start, delimiter.end - (delimiter.skip ?? 0));
-				text = formatText(text);
+				if (!delimiter.acceptsContent) text = formatText(text);
 				let textNode = newInlineNode("text", state, text, 0);
 				delimiterNode.children!.push(textNode);
 
@@ -157,7 +158,7 @@ function processDelimiters(
 		// Maybe add the text between delimiters
 		if (delimiter.end > start) {
 			let text = state.src.substring(start, delimiter.end - (delimiter.skip ?? 0));
-			text = formatText(text);
+			if (!delimiter.acceptsContent) text = formatText(text);
 			let textNode = newInlineNode("text", state, text, 0);
 			delimiterNode.children!.push(textNode);
 			//start = delimiter.start;

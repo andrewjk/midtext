@@ -12,6 +12,11 @@ export default interface Delimiter {
 	content?: string;
 	attributes?: Attribute[];
 	/**
+	 * Whether this node contains plain text content, rather than parsed and
+	 * formatted text
+	 */
+	acceptsContent?: boolean;
+	/**
 	 * Additional info for the delimiter pair, like a link. It must be set on
 	 * the END delimiter
 	 */

@@ -3113,7 +3113,7 @@ Both title and destination can contain backslash escapes
 and literal backslashes:
 
 ```````````````````````````````` example
-[foo]: /url\bar\*baz "foo\"bar\baz"
+[foo]: /url\\bar\*baz "foo\"bar\\baz"
 
 [foo]
 .
@@ -6303,7 +6303,7 @@ backslashes:
 ```````````````````````````````` example
 \→\A\a\ \3\φ\«
 .
-<p>\→\A\a\ 3\φ«</p>
+<p>Aa 3φ«</p>
 .
 <p>\→\A\a\ \3\φ\«</p>
 ````````````````````````````````
@@ -6358,8 +6358,10 @@ bar</p>
 Backslash escapes do not work in code blocks, code spans, autolinks, or
 raw HTML:
 
-```````````````````````````````` TODO: example
+```````````````````````````````` example
 `` \[\` ``
+.
+<p><code> \[\` </code></p>
 .
 <p><code>\[\`</code></p>
 ````````````````````````````````
@@ -8553,7 +8555,7 @@ Note that a backslash before a non-escapable character is
 just a backslash:
 
 ```````````````````````````````` example
-[link](foo\bar)
+[link](foo\\bar)
 .
 <p><a href="foo%5Cbar">link</a></p>
 ````````````````````````````````

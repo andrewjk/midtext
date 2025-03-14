@@ -27,7 +27,7 @@ export default interface MidtextNode {
 	blankBefore?: boolean;
 	/** Whether this node is a loose list */
 	loose?: boolean;
-	/** Whether this node contains plain text content, rather than parsed Markdown */
+	/** Whether this node contains plain text content, rather than parsed and formatted text */
 	acceptsContent?: boolean;
 	/** The node's children, if applicable */
 	children?: MidtextNode[];

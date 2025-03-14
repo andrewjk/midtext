@@ -48,6 +48,7 @@ function test(state: InlineParserState, parent: MidtextNode, end: number) {
 					canOpen: false,
 					canClose: false,
 					content,
+					acceptsContent: true,
 				});
 
 				state.i = closeEnd + closeLength;
