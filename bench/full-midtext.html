@@ -203,12 +203,12 @@ Some text to show that the reference links can follow later.
 </code></pre>
 <p><a href="https://www.google.com">I'm an inline-style link</a></p>
 <p><a href="https://www.google.com">I'm an inline-style link with title</a></p>
-<p><a href="https://www.mozilla.org">I'm a reference-style link][</a></p>
+<p><a href="https://www.mozilla.org">I'm a reference-style link</a></p>
 <p><a href="../blob/master/LICENSE">I'm a relative reference to a repository file</a></p>
 <p>[You can use numbers for reference-style link definitions]<a href="http://slashdot.org">1</a></p>
 <p>Or leave it empty and use the <a href="http://www.reddit.com">link text itself</a>.</p>
 <p>URLs and URLs in angle brackets will automatically get turned into links.
-http://www.example.com or &lt;http://www.example.com&gt; and sometimes
+http://www.example.com or <a href="http://www.example.com">http://www.example.com</a> and sometimes
 example.com (but not on Github, for example).</p>
 <p>Some text to show that the reference links can follow later.</p>
 <hr />
@@ -236,14 +236,13 @@ With a reference later in the document defining the URL location:
 </code></pre>
 <p>Here's our logo (hover to see the title text):</p>
 <p>Inline-style:
-<image>[alt text</image></p>
+<img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" /></p>
 <p>Reference-style:
-<image>[alt text][</image></p>
+<img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" /></p>
 <p>&quot;Logo Title Text 2&quot;</p>
-<p><image>[Minion</image>
-<image>[Stormtroopocat</image></p>
+<p><img src="https://octodex.github.com/images/minion.png" alt="Minion" /><img src="https://octodex.github.com/images/stormtroopocat.jpg" alt="Stormtroopocat" /></p>
 <p>Like links, Images also have a footnote style syntax</p>
-<p><image>[Alt text][</image></p>
+<p><img src="https://octodex.github.com/images/dojocat.jpg" alt="Alt text" /></p>
 <p>With a reference later in the document defining the URL location:</p>
 <p>&quot;The Dojocat&quot;</p>
 <hr />
@@ -642,9 +641,9 @@ Underscores
 &lt;img src=&quot;http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg&quot; alt=&quot;IMAGE ALT TEXT HERE&quot; width=&quot;240&quot; height=&quot;180&quot; border=&quot;10&quot;&gt;
 &lt;/a&gt;
 </code></pre>
-<p>&lt;a href=&quot;http://www.youtube.com/watch?feature<mark>player_embedded&amp;v</mark>YOUTUBE<em>VIDEO</em>ID<em>HERE&quot; target=&quot;<em>blank&quot;&gt;
-&lt;img src=&quot;http://img.youtube.com/vi/YOUTUBE</em>VIDEO</em>ID_HERE/0.jpg&quot; alt=&quot;IMAGE ALT TEXT HERE&quot; width=&quot;240&quot; height=&quot;180&quot; border=&quot;10&quot;&gt;
+<p><a href="a%20href=%22http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE%22%20target=%22_blank%22">a href=&quot;http://www.youtube.com/watch?feature<mark>player_embedded&amp;v</mark>YOUTUBE<em>VIDEO</em>ID_HERE&quot; target=&quot;_blank&quot;</a>
+<a href="img%20src=%22http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg%22%20alt=%22IMAGE%20ALT%20TEXT%20HERE%22%20width=%22240%22%20height=%22180%22%20border=%2210%22">img src=&quot;http://img.youtube.com/vi/YOUTUBE<em>VIDEO</em>ID_HERE/0.jpg&quot; alt=&quot;IMAGE ALT TEXT HERE&quot; width=&quot;240&quot; height=&quot;180&quot; border=&quot;10&quot;</a>
 &lt;/a&gt;</p>
 <pre><code>[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 </code></pre>
-<p>[<image>[IMAGE ALT TEXT HERE</image>](https://www.youtube.com/watch?v=ciawICBvQoE)</p>
+<p>[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/YouTube_logo_2015.svg/1200px-YouTube_logo_2015.svg.png" alt="IMAGE ALT TEXT HERE" />](https://www.youtube.com/watch?v=ciawICBvQoE)</p>

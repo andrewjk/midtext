@@ -149,7 +149,7 @@ function testLinkClose(state: InlineParserState, parent: MidtextNode) {
 					link = state.refs[label];
 					if (link !== undefined) {
 						state.i = i + 1;
-						skip = i - start;
+						skip = i - start + 2;
 					}
 					break;
 				}
@@ -181,7 +181,6 @@ function testLinkClose(state: InlineParserState, parent: MidtextNode) {
 				name,
 				markup: startDelimiter.markup,
 				length: 1,
-				// HACK: Set state.i properly
 				start: state.i - 1,
 				end: -1,
 				canOpen: false,
@@ -191,8 +190,6 @@ function testLinkClose(state: InlineParserState, parent: MidtextNode) {
 			});
 
 			startDelimiter.handled = false;
-			//startDelimiter.info = link;
-			//startDelimiter.skip = skip;
 			return true;
 		}
 

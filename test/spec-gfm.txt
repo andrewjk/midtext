@@ -6389,15 +6389,17 @@ raw HTML:
 ````````````````````````````````
 
 
-```````````````````````````````` TODO: example
-<http://example.com?find=\*>
+```````````````````````````````` example
+<http://example.com?find=\\*>
 .
 <p><a href="http://example.com?find=%5C*">http://example.com?find=\*</a></p>
 ````````````````````````````````
 
 
-```````````````````````````````` TODO: example
+```````````````````````````````` example
 <a href="/bar\/)">
+.
+<p>&lt;a href=&quot;/bar/)&quot;&gt;</p>
 .
 <a href="/bar\/)">
 ````````````````````````````````
@@ -6814,7 +6816,7 @@ span:
 
 And this is not parsed as a link:
 
-```````````````````````````````` TODO: example
+```````````````````````````````` example
 [not a `link](/foo`)
 .
 <p>[not a <code>link](/foo</code>)</p>
@@ -6851,8 +6853,10 @@ And this is code:
 
 But this is an autolink:
 
-```````````````````````````````` TODO: example
+```````````````````````````````` example
 <http://foo.bar.`baz>`
+.
+<p>&lt;http://foo.bar.<code>baz&gt;</code></p>
 .
 <p><a href="http://foo.bar.%60baz">http://foo.bar.`baz</a>`</p>
 ````````````````````````````````
@@ -8668,7 +8672,7 @@ the same way in inline links and link reference definitions.)
 
 [Whitespace] is allowed around the destination and title:
 
-```````````````````````````````` example
+```````````````````````````````` TODO: example
 [link](   /uri
   "title"  )
 .

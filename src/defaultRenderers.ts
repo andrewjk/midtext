@@ -7,6 +7,7 @@ import hardBreakRenderer from "./render/hardBreakRenderer";
 import headingRenderer from "./render/headingRenderer";
 import headingUnderlineRenderer from "./render/headingUnderlineRenderer";
 import highlightRenderer from "./render/highlightRenderer";
+import imageRenderer from "./render/imageRenderer";
 import linkReferenceRenderer from "./render/linkReferenceRenderer";
 import linkRenderer from "./render/linkRenderer";
 import listBulletedRenderer from "./render/listBulletedRenderer";
@@ -52,6 +53,7 @@ export default function defaultRenderers() {
 	rules.set(hardBreakRenderer.name, hardBreakRenderer);
 	rules.set(highlightRenderer.name, highlightRenderer);
 	rules.set(linkRenderer.name, linkRenderer);
+	rules.set(imageRenderer.name, imageRenderer);
 	rules.set(rawSpanRenderer.name, rawSpanRenderer);
 	rules.set(strikethroughRenderer.name, strikethroughRenderer);
 	rules.set(superscriptRenderer.name, superscriptRenderer);

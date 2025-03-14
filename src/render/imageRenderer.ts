@@ -9,8 +9,7 @@ const name = "image";
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	let alt = getChildText(node);
-	let title = /*node.title ? ` title="${node.title}"` :*/ "";
-	state.output += `<img src="${node.info}" alt="${alt}"${title} />`;
+	state.output += `<img src="${node.info}" alt="${alt}" />`;
 	endNewLine(node, state);
 }
 

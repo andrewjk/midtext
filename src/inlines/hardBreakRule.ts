@@ -9,7 +9,7 @@ function test(state: InlineParserState, parent: MidtextNode, end: number) {
 	if (state.src[state.i] === "\\" && isNewLine(state.src[state.i + 1])) {
 		state.delimiters.push({
 			name,
-			markup: "",
+			markup: "\n",
 			start: state.i,
 			end: state.i + 1,
 			length: 1,

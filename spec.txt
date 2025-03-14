@@ -691,26 +691,47 @@ Code spans, strikethroughs, highlights, and superscript are included:
 
 ### Links
 
-\[link text](url)
+```````````````````````````````` example
+[link text](url)
+.
+<p><a href="url">link text</a></p>
+````````````````````````````````
 
 OR
 
-\[link text][ref] \
-\[ref]: url
+```````````````````````````````` example
+[link text][ref]
+[ref]: url
+.
+<p><a href="url">link text</a></p>
+````````````````````````````````
 
 OR 
 
-- <http://www.example.com>
-- <mailto:blah@example.com>
+```````````````````````````````` example
+<http://www.example.com>
+<mailto:blah@example.com>
+.
+<p><a href="http://www.example.com">http://www.example.com</a>
+<a href="mailto:blah@example.com">mailto:blah@example.com</a></p>
+````````````````````````````````
 
 ### Images / Media
 
+```````````````````````````````` example
 ![image alt](url)
+.
+<p><img src="url" alt="image alt" /></p>
+````````````````````````````````
 
 OR
 
-\![image alt][ref] \
-\![ref]: url
+```````````````````````````````` example
+![image alt][ref]
+[ref]: url
+.
+<p><img src="url" alt="image alt" /></p>
+````````````````````````````````
 
 ## Raw
 

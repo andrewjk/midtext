@@ -109,23 +109,22 @@ function processDelimiters(
 		// Add the delimiter
 		let markup = delimiter.markup.repeat(delimiter.length);
 		let delimiterNode = newInlineNode(delimiter.name, state, markup, 0, []);
-		// HACK:
 		delimiterNode.info = delimiter.info;
 		delimiterNode.attributes = delimiter.attributes;
 		if (!delimiter.hidden) {
 			parent.children!.push(delimiterNode);
 		}
 
-		start = delimiter.start + delimiter.length;
+		start = delimiter.start + markup.length;
 
 		if (delimiter.hidden) {
-			start = delimiter.end + delimiter.length;
+			start = delimiter.end + markup.length;
 		} else if (delimiter.content) {
 			let text = delimiter.content;
 			if (!delimiter.acceptsContent) text = formatText(delimiter.content);
 			let textNode = newInlineNode("text", state, text, 0);
 			delimiterNode.children!.push(textNode);
-			start = delimiter.end + delimiter.length;
+			start = delimiter.end + markup.length;
 		} else {
 			let found = false;
 			for (let j = i + 1; j < state.delimiters.length; j++) {
@@ -138,7 +137,7 @@ function processDelimiters(
 					i = j;
 					lastHandledIndex = i;
 
-					start = nextDelimiter.end + nextDelimiter.length;
+					start = nextDelimiter.end + nextDelimiter.length * nextDelimiter.markup.length;
 				} else {
 					break;
 				}
@@ -151,7 +150,7 @@ function processDelimiters(
 				let textNode = newInlineNode("text", state, text, 0);
 				delimiterNode.children!.push(textNode);
 
-				start = delimiter.end + delimiter.length;
+				start = delimiter.end + markup.length;
 			}
 		}
 
@@ -164,7 +163,7 @@ function processDelimiters(
 			//start = delimiter.start;
 		}
 
-		start = delimiter.end + delimiter.length;
+		start = delimiter.end + markup.length;
 	}
 	return lastHandledIndex;
 }

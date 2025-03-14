@@ -1,3 +1,4 @@
+import autoLinkRule from "./inlines/autoLinkRule";
 import codeSpanRule from "./inlines/codeSpanRule";
 import commentSpanRule from "./inlines/commentSpanRule";
 import emphasisRule from "./inlines/emphasisRule";
@@ -22,6 +23,7 @@ export default function defaultInlineRules() {
 	rules.set(highlightRule.name, highlightRule);
 	rules.set(superscriptRule.name, superscriptRule);
 	rules.set(linkRule.name, linkRule);
+	rules.set(autoLinkRule.name, autoLinkRule);
 	rules.set(spanRule.name, spanRule);
 	rules.set(hardBreakRule.name, hardBreakRule);
 	rules.set(commentSpanRule.name, commentSpanRule);
