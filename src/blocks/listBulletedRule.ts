@@ -1,6 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
+import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 import listRule, { type ListInfo } from "./listRule";
@@ -11,6 +12,7 @@ function getMarkup(state: BlockParserState): ListInfo | undefined {
 	let char = state.src[state.i];
 	if (
 		(char === "-" || char === "*" || char === "+") &&
+		!isEscaped(state.src, state.i) &&
 		// TODO: Should this be part of the isSpace/isNewLine check? i.e. eof counts as a space?
 		(state.i === state.src.length - 1 || isSpace(state.src.charCodeAt(state.i + 1)))
 	) {

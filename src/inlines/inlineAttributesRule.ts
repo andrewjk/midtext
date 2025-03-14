@@ -3,12 +3,13 @@ import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
 import type MidtextNode from "../types/MidtextNode";
 import consumeAttributes from "../utils/consumeAttributes";
+import isEscaped from "../utils/isEscaped";
 
-const name = "span_attributes";
+const name = "inline_attributes";
 
 function test(state: InlineParserState, parent: MidtextNode, end: number) {
 	let char = state.src[state.i];
-	if (char === "{") {
+	if (char === "{" && !isEscaped(state.src, state.i)) {
 		const lastDelimiter = state.delimiters.at(-1);
 		if (lastDelimiter) {
 			const content = consumeAttributes(state.src, state.i);

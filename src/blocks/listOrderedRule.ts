@@ -13,14 +13,14 @@ function getMarkup(state: BlockParserState): ListInfo | undefined {
 	let numbers = "";
 	let delimiter = "";
 	let end = state.i;
-	if (isNumeric(state.src.charCodeAt(end))) {
+	if (isNumeric(state.src.charCodeAt(end)) && !isEscaped(state.src, state.i)) {
 		numbers = state.src[end++];
 		while (isNumeric(state.src.charCodeAt(end))) {
 			numbers += state.src[end];
 			end++;
 		}
 		delimiter = "1";
-	} else if (isAlpha(state.src.charCodeAt(end))) {
+	} else if (isAlpha(state.src.charCodeAt(end)) && !isEscaped(state.src, state.i)) {
 		numbers = state.src[end++];
 		delimiter = numbers === numbers.toLowerCase() ? "a" : "A";
 	}

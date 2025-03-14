@@ -13,18 +13,16 @@ const name = "link";
 function test(state: InlineParserState, parent: MidtextNode, end: number) {
 	let char = state.src[state.i];
 
-	if (!isEscaped(state.src, state.i)) {
-		if (char === "[") {
-			return testLinkOpen(state, parent);
-		}
+	if (char === "[" && !isEscaped(state.src, state.i)) {
+		return testLinkOpen(state, parent);
+	}
 
-		if (char === "!" && state.src[state.i + 1] === "[") {
-			return testImageOpen(state, parent);
-		}
+	if (char === "!" && state.src[state.i + 1] === "[" && !isEscaped(state.src, state.i)) {
+		return testImageOpen(state, parent);
+	}
 
-		if (char === "]") {
-			return testLinkClose(state, parent);
-		}
+	if (char === "]" && !isEscaped(state.src, state.i)) {
+		return testLinkClose(state, parent);
 	}
 
 	return false;

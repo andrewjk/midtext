@@ -1,3 +1,4 @@
+import isEscaped from "./isEscaped";
 import isNewLine from "./isNewLine";
 import isSpace from "./isSpace";
 
@@ -7,7 +8,7 @@ export function getBlockFence(
 	start: number,
 	allowInfo: boolean,
 ): string | void {
-	if (src[start] === char) {
+	if (src[start] === char && !isEscaped(src, start)) {
 		let matched = 1;
 		let end = start + 1;
 		let haveSpace = false;

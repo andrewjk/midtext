@@ -3,6 +3,7 @@ import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import evictBlocks from "../utils/evictBlocks";
+import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 import newBlockNode from "../utils/newBlockNode";
@@ -17,7 +18,7 @@ const name = "section_break";
 
 function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
-	if (char === "-" || char === "_" || char === "*") {
+	if ((char === "-" || char === "_" || char === "*") && !isEscaped(state.src, state.i)) {
 		let matched = 1;
 		let end = state.i + 1;
 		for (; end < state.src.length; end++) {

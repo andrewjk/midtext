@@ -5,13 +5,14 @@ import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
 import evictBlocks from "../utils/evictBlocks";
+import isEscaped from "../utils/isEscaped";
 import newBlockNode from "../utils/newBlockNode";
 
 const name = "aside";
 
 function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
-	if (char === "@") {
+	if (char === "@" && !isEscaped(state.src, state.i)) {
 		let spaces = countSpaces(state.src, state.i + 1);
 		let contentColumn = state.indent + 1 + spaces;
 
@@ -39,7 +40,7 @@ function testStart(state: BlockParserState) {
 }
 
 function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
-	if (state.src[state.i] === "@") {
+	if (state.src[state.i] === "@" && !isEscaped(state.src, state.i)) {
 		state.i++;
 		return true;
 	}

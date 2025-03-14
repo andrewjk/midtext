@@ -10,6 +10,7 @@ import newBlockNode from "../utils/newBlockNode";
 const name = "table";
 
 function testStart(state: BlockParserState) {
+	// TODO: Less work
 	let parent = state.openNodes.at(-1)!;
 
 	let char = state.src[state.i];
