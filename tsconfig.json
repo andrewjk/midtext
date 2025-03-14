@@ -17,7 +17,8 @@
 		//"erasableSyntaxOnly": true,
 		"allowImportingTsExtensions": true,
 		"rewriteRelativeImportExtensions": true,
-		"verbatimModuleSyntax": true
+		"verbatimModuleSyntax": true,
+		"skipLibCheck": true
 	},
 	"exclude": ["dist"]
 }
