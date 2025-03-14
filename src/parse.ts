@@ -13,8 +13,8 @@ export default function parse(
 	blockRules?: Map<string, BlockRule>,
 	inlineRules?: Map<string, InlineRule>,
 ): MidtextNode {
-	blockRules ??= defaultBlockRules();
-	inlineRules ??= defaultInlineRules();
+	blockRules ??= defaultBlockRules;
+	inlineRules ??= defaultInlineRules;
 
 	let state: BlockParserState = {
 		src,

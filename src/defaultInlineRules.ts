@@ -13,20 +13,18 @@ import superscriptRule from "./inlines/superscriptRule";
 import textRule from "./inlines/textRule";
 import type InlineRule from "./types/InlineRule";
 
-export default function defaultInlineRules() {
-	let rules = new Map<string, InlineRule>();
-	rules.set(inlineAttributesRule.name, inlineAttributesRule);
-	rules.set(rawSpanRule.name, rawSpanRule);
-	rules.set(codeSpanRule.name, codeSpanRule);
-	rules.set(emphasisRule.name, emphasisRule);
-	rules.set(strikethroughRule.name, strikethroughRule);
-	rules.set(highlightRule.name, highlightRule);
-	rules.set(superscriptRule.name, superscriptRule);
-	rules.set(linkRule.name, linkRule);
-	rules.set(autoLinkRule.name, autoLinkRule);
-	rules.set(spanRule.name, spanRule);
-	rules.set(hardBreakRule.name, hardBreakRule);
-	rules.set(commentSpanRule.name, commentSpanRule);
-	rules.set(textRule.name, textRule);
-	return rules;
-}
+let defaultInlineRules = new Map<string, InlineRule>();
+defaultInlineRules.set(inlineAttributesRule.name, inlineAttributesRule);
+defaultInlineRules.set(rawSpanRule.name, rawSpanRule);
+defaultInlineRules.set(codeSpanRule.name, codeSpanRule);
+defaultInlineRules.set(emphasisRule.name, emphasisRule);
+defaultInlineRules.set(strikethroughRule.name, strikethroughRule);
+defaultInlineRules.set(highlightRule.name, highlightRule);
+defaultInlineRules.set(superscriptRule.name, superscriptRule);
+defaultInlineRules.set(linkRule.name, linkRule);
+defaultInlineRules.set(autoLinkRule.name, autoLinkRule);
+defaultInlineRules.set(spanRule.name, spanRule);
+defaultInlineRules.set(hardBreakRule.name, hardBreakRule);
+defaultInlineRules.set(commentSpanRule.name, commentSpanRule);
+defaultInlineRules.set(textRule.name, textRule);
+export default defaultInlineRules;

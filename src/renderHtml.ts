@@ -4,7 +4,7 @@ import type MidtextNode from "./types/MidtextNode";
 import type Renderer from "./types/Renderer";
 
 export default function renderHtml(root: MidtextNode, renderers?: Map<string, Renderer>): string {
-	renderers ??= defaultRenderers();
+	renderers ??= defaultRenderers;
 
 	let state = { output: "", renderers };
 
