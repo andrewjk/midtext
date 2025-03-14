@@ -17,6 +17,7 @@ const name = "paragraph";
 
 function testStart(state: BlockParserState) {
 	let parent = state.openNodes.at(-1)!;
+	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < state.openNodes.length;
 
 	let endOfLine = getEndOfLine(state);
 
@@ -41,6 +42,18 @@ function testStart(state: BlockParserState) {
 			state.openNodes.pop();
 		}
 		return true;
+	}
+
+	// Evict open blocks that this paragraph can't continue
+	if (hadBlankLine) {
+		let i = state.openNodes.length;
+		while (i-- > 1) {
+			let node = state.openNodes[i];
+			if (state.indent < node.subindent) {
+				state.openNodes.length = i;
+			}
+		}
+		parent = state.openNodes.at(-1)!;
 	}
 
 	let paragraph = haveParagraph
