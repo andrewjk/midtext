@@ -1,11 +1,10 @@
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MidtextNode from "../types/MidtextNode";
 import isNewLine from "../utils/isNewLine";
 
 const name = "hard_break";
 
-function test(state: InlineParserState, parent: MidtextNode, end: number) {
+function test(state: InlineParserState) {
 	if (state.src[state.i] === "\\" && isNewLine(state.src[state.i + 1])) {
 		state.delimiters.push({
 			name,

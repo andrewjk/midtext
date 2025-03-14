@@ -1,12 +1,11 @@
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MidtextNode from "../types/MidtextNode";
 import delimiterLength from "../utils/delimiterLength";
 import isEscaped from "../utils/isEscaped";
 
 const name = "raw_span";
 
-function test(state: InlineParserState, parent: MidtextNode, end: number) {
+function test(state: InlineParserState) {
 	let char = state.src[state.i];
 	if (char === "%" && !isEscaped(state.src, state.i)) {
 		let start = state.i;

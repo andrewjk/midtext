@@ -1,7 +1,6 @@
 import type Delimiter from "../types/Delimiter";
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
@@ -10,19 +9,19 @@ import normalizeLabel from "../utils/normalizeLabel";
 // TODO: Split this into link and image
 const name = "link";
 
-function test(state: InlineParserState, parent: MidtextNode, end: number) {
+function test(state: InlineParserState) {
 	let char = state.src[state.i];
 
 	if (char === "[" && !isEscaped(state.src, state.i)) {
-		return testLinkOpen(state, parent);
+		return testLinkOpen(state);
 	}
 
 	if (char === "!" && state.src[state.i + 1] === "[" && !isEscaped(state.src, state.i)) {
-		return testImageOpen(state, parent);
+		return testImageOpen(state);
 	}
 
 	if (char === "]" && !isEscaped(state.src, state.i)) {
-		return testLinkClose(state, parent);
+		return testLinkClose(state);
 	}
 
 	return false;
@@ -35,7 +34,7 @@ export default {
 
 // TODO: Just take everything inside the () as a URL
 
-function testLinkOpen(state: InlineParserState, parent: MidtextNode) {
+function testLinkOpen(state: InlineParserState) {
 	let markup = "[";
 
 	state.delimiters.push({
@@ -53,7 +52,7 @@ function testLinkOpen(state: InlineParserState, parent: MidtextNode) {
 	return true;
 }
 
-function testImageOpen(state: InlineParserState, parent: MidtextNode) {
+function testImageOpen(state: InlineParserState) {
 	let markup = "![";
 
 	state.delimiters.push({
@@ -71,7 +70,7 @@ function testImageOpen(state: InlineParserState, parent: MidtextNode) {
 	return true;
 }
 
-function testLinkClose(state: InlineParserState, parent: MidtextNode) {
+function testLinkClose(state: InlineParserState) {
 	// TODO: Standardize precedence
 	// For now the link takes precedence over anything else
 	let startDelimiter: Delimiter | undefined;

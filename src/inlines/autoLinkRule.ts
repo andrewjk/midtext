@@ -1,21 +1,20 @@
 import type Delimiter from "../types/Delimiter";
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import isEscaped from "../utils/isEscaped";
 
 const name = "auto_link";
 
-function test(state: InlineParserState, parent: MidtextNode, end: number) {
+function test(state: InlineParserState) {
 	let char = state.src[state.i];
 
 	if (char === "<" && !isEscaped(state.src, state.i)) {
-		return testLinkOpen(state, parent);
+		return testLinkOpen(state);
 	}
 
 	if (char === ">" && !isEscaped(state.src, state.i)) {
-		return testLinkClose(state, parent);
+		return testLinkClose(state);
 	}
 
 	return false;
@@ -26,7 +25,7 @@ export default {
 	test,
 } satisfies InlineRule;
 
-function testLinkOpen(state: InlineParserState, parent: MidtextNode) {
+function testLinkOpen(state: InlineParserState) {
 	state.delimiters.push({
 		name: "link",
 		markup: "<",
@@ -40,16 +39,14 @@ function testLinkOpen(state: InlineParserState, parent: MidtextNode) {
 	return true;
 }
 
-function testLinkClose(state: InlineParserState, parent: MidtextNode) {
+function testLinkClose(state: InlineParserState) {
 	let startDelimiter: Delimiter | undefined;
-	let startDelimiterIndex = 0;
 	let i = state.delimiters.length;
 	while (i--) {
 		let prevDelimiter = state.delimiters[i];
 		if (!prevDelimiter.handled) {
 			if (prevDelimiter.markup === "<") {
 				startDelimiter = prevDelimiter;
-				startDelimiterIndex = i;
 				break;
 			} else {
 				continue;
@@ -72,7 +69,6 @@ function testLinkClose(state: InlineParserState, parent: MidtextNode) {
 				canOpen: false,
 				canClose: true,
 				info: link,
-				//skip: content.length + 2,
 			});
 
 			state.i++;

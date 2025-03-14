@@ -1,13 +1,12 @@
 import parseAttributes from "../parse/parseAttributes";
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
-import type MidtextNode from "../types/MidtextNode";
 import consumeAttributes from "../utils/consumeAttributes";
 import isEscaped from "../utils/isEscaped";
 
 const name = "inline_attributes";
 
-function test(state: InlineParserState, parent: MidtextNode, end: number) {
+function test(state: InlineParserState) {
 	let char = state.src[state.i];
 	if (char === "{" && !isEscaped(state.src, state.i)) {
 		const lastDelimiter = state.delimiters.at(-1);

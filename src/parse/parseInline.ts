@@ -19,7 +19,7 @@ export default function parseInline(state: InlineParserState, parent: MidtextNod
 		}
 
 		for (let rule of state.rules.values()) {
-			let handled = rule.test(state, parent, inlineEnd);
+			let handled = rule.test(state);
 			if (handled) {
 				// TODO: Make sure that state.i has been incremented to prevent infinite loops
 				break;
