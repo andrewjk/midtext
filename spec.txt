@@ -385,10 +385,10 @@ or completed statuses:
   - [x] Completed task list item
 .
 <ul>
-<li><input type="checkbox" disabled> Task list item</li>
-<li><input type="checkbox" disabled checked indeterminate> In progress task list item
+<li><input type="checkbox" disabled /> Task list item</li>
+<li><input type="checkbox" disabled checked indeterminate /> In progress task list item
 <ul>
-<li><input type="checkbox" disabled checked> Completed task list item</li>
+<li><input type="checkbox" disabled checked /> Completed task list item</li>
 </ul>
 </li>
 </ul>
@@ -402,10 +402,10 @@ Task lists can be ordered too:
    b. [x] Completed task list item
 .
 <ol>
-<li><input type="checkbox" disabled> Task list item
+<li><input type="checkbox" disabled /> Task list item
 <ol type="a">
-<li><input type="checkbox" disabled checked indeterminate> In progress task list item</li>
-<li><input type="checkbox" disabled checked> Completed task list item</li>
+<li><input type="checkbox" disabled checked indeterminate /> In progress task list item</li>
+<li><input type="checkbox" disabled checked /> Completed task list item</li>
 </ol>
 </li>
 </ol>

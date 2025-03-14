@@ -5502,8 +5502,8 @@ the final rendered document.
 - [x] bar
 .
 <ul>
-<li><input type="checkbox" disabled> foo</li>
-<li><input type="checkbox" disabled checked> bar</li>
+<li><input type="checkbox" disabled /> foo</li>
+<li><input type="checkbox" disabled checked /> bar</li>
 </ul>
 .
 <ul>
@@ -5521,13 +5521,13 @@ Task lists can be arbitrarily nested:
 - [ ] bim
 .
 <ul>
-<li><input type="checkbox" disabled checked> foo
+<li><input type="checkbox" disabled checked /> foo
 <ul>
-<li><input type="checkbox" disabled> bar</li>
-<li><input type="checkbox" disabled checked> baz</li>
+<li><input type="checkbox" disabled /> bar</li>
+<li><input type="checkbox" disabled checked /> baz</li>
 </ul>
 </li>
-<li><input type="checkbox" disabled> bim</li>
+<li><input type="checkbox" disabled /> bim</li>
 </ul>
 .
 <ul>
