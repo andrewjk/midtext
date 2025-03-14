@@ -1,0 +1,63 @@
+import parse from "../../../src/parse";
+import renderHtml from "../../../src/renderHtml";
+
+/**
+ * The home component
+ */
+export default function Index() {
+	let $state = $watch({
+		input: "",
+		get ast() {
+			return JSON.stringify(parse(this.input), null, 2);
+		},
+		get html() {
+			const ast = parse(this.input);
+			return renderHtml(ast);
+		},
+	});
+
+	@render {
+		<div class="main">
+		<h1>Midtext</h1>
+		<div class="spread">
+			<div>
+				<h2>Input</h2>
+				<textarea :value={$state.input} />
+			</div>
+			<div>
+				<h2>Output</h2>
+				@html($state.html)
+			</div>
+			<div>
+				<h2>AST</h2>
+				<pre><code>{$state.ast}</code></pre>
+			</div>
+		</div>
+		</div>
+	}
+
+	@style {
+		.main {
+			height: 100vh;
+			width: 100vw;
+		}
+
+		.spread {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+			width: 100%;
+			text-align: start;
+		}
+
+		textarea {
+			width: 100%;
+			height: 100%;
+			font-family: monospace;
+		}
+
+		.warning {
+			color: red;
+		}
+	}
+}
