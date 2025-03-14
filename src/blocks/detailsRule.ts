@@ -25,7 +25,7 @@ function testStart(state: BlockParserState) {
 		checkBlankLineBefore(state, detailsNode, parent);
 
 		let end = getEndOfLine(state);
-		let content = state.src.substring(contentColumn, end);
+		let content = state.src.substring(state.i + 1 + spaces, end);
 		let summaryNode = newBlockNode("summary", state, char, state.indent, contentColumn);
 		summaryNode.content = content;
 
