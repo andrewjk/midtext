@@ -23,7 +23,7 @@ function testStart(state: BlockParserState, info?: ListInfo) {
 		let contentColumn = state.indent + info.markup.length + spaces;
 
 		// If it's an empty item, set its content start to just after the marker
-		let isEmpty = isNewLine(state.src[state.i + info.markup.length]);
+		let isEmpty = isNewLine(state.src[state.i + info.markup.length + spaces]);
 		if (isEmpty) {
 			contentColumn = state.indent + info.markup.length;
 		}
