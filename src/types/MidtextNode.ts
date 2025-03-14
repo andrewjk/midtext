@@ -1,10 +1,5 @@
 import type Attribute from "./Attribute";
 
-export const BLOCK_NODE = 0;
-export const LEAF_NODE = 1;
-export const PARAGRAPH_NODE = 2;
-export const INLINE_NODE = 3;
-
 export default interface MidtextNode {
 	type: string;
 	block: boolean;
