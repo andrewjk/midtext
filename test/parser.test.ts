@@ -26,9 +26,7 @@ Here is some text
 </ul>
 </blockquote>
 <ul>
-<li>
-<p>A different list</p>
-</li>
+<li>A different list</li>
 </ul>
 <ul>
 <li>
@@ -40,9 +38,6 @@ Here is some text
 </ul>
 `.trimStart();
 	const root = parse(input);
-	//console.log(JSON.stringify(root, null, 2));
 	const html = renderHtml(root);
-	console.log(html);
-	//console.log(JSON.stringify(removeStuff(root), null, 2));
 	expect(html).toBe(expected);
 });

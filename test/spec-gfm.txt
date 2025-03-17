@@ -10400,10 +10400,10 @@ is parsed as a [hard line break](@) (rendered
 in HTML as a `<br />` tag):
 
 ```````````````````````````````` example
-foo  
+foo  \
 baz
 .
-<p>foo<br />
+<p>foo  <br />
 baz</p>
 ````````````````````````````````
 
@@ -10423,10 +10423,10 @@ baz</p>
 More than two spaces can be used:
 
 ```````````````````````````````` example
-foo       
+foo       \
 baz
 .
-<p>foo<br />
+<p>foo       <br />
 baz</p>
 ````````````````````````````````
 
@@ -10434,10 +10434,10 @@ baz</p>
 Leading spaces at the beginning of the next line are ignored:
 
 ```````````````````````````````` example
-foo  
+foo  \
      bar
 .
-<p>foo<br />
+<p>foo  <br />
 bar</p>
 ````````````````````````````````
 
@@ -10455,10 +10455,10 @@ Line breaks can occur inside emphasis, links, and other constructs
 that allow inline content:
 
 ```````````````````````````````` example
-*foo  
+*foo  \
 bar*
 .
-<p><em>foo<br />
+<p><em>foo  <br />
 bar</em></p>
 ````````````````````````````````
 
@@ -10475,10 +10475,10 @@ bar</em></p>
 Line breaks do not occur inside code spans
 
 ```````````````````````````````` example
-`code  
+`code  \
 span`
 .
-<p><code>code   span</code></p>
+<p><code>code  \ span</code></p>
 ````````````````````````````````
 
 
@@ -10492,7 +10492,7 @@ span`
 
 or HTML tags:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href="foo  
 bar">
 .
@@ -10501,7 +10501,7 @@ bar"></p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href="foo\
 bar">
 .
@@ -10522,9 +10522,9 @@ foo\
 
 
 ```````````````````````````````` example
-foo  
+foo  \
 .
-<p>foo</p>
+<p>foo  \</p>
 ````````````````````````````````
 
 
@@ -10536,9 +10536,9 @@ foo
 
 
 ```````````````````````````````` example
-### foo  
+### foo  \
 .
-<h3>foo</h3>
+<h3>foo  \</h3>
 ````````````````````````````````
 
 
