@@ -4,13 +4,13 @@ import type InlineRule from "../types/InlineRule";
 import extractLink from "../utils/extractLink";
 import isEscaped from "../utils/isEscaped";
 
-const name = "link";
-const precedence = 5;
+const name = "image";
+const precedence = 6;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
 
-	if (char === "[" && !isEscaped(state.src, state.i)) {
+	if (char === "!" && state.src[state.i + 1] === "[" && !isEscaped(state.src, state.i)) {
 		return testOpen(state);
 	}
 
@@ -28,8 +28,8 @@ export default {
 
 function testOpen(state: InlineParserState) {
 	state.delimiters.push({
-		name: "link",
-		markup: "[",
+		name: "image",
+		markup: "![",
 		precedence,
 		length: 1,
 		start: state.i,
@@ -37,7 +37,7 @@ function testOpen(state: InlineParserState) {
 		canOpen: true,
 		canClose: false,
 	});
-	state.i += 1;
+	state.i += 2;
 	return true;
 }
 
@@ -49,10 +49,10 @@ function testClose(state: InlineParserState) {
 		let prevDelimiter = state.delimiters[i];
 		if (!prevDelimiter.handled) {
 			if (prevDelimiter.canOpen) {
-				if (prevDelimiter.markup === "[") {
+				if (prevDelimiter.markup === "![") {
 					startDelimiter = prevDelimiter;
 					break;
-				} else if (prevDelimiter.markup === "![") {
+				} else if (prevDelimiter.markup === "[") {
 					return false;
 				}
 			} else {
@@ -66,15 +66,6 @@ function testClose(state: InlineParserState) {
 		let { link, skip } = extractLink(state, label);
 
 		if (link !== undefined) {
-			// Remove all the opening link delimiters so they won't be picked up in future
-			let d = state.delimiters.length;
-			while (d--) {
-				let prevDelimiter = state.delimiters[d];
-				if (prevDelimiter.precedence === precedence) {
-					prevDelimiter.handled = true;
-				}
-			}
-
 			state.delimiters.push({
 				name,
 				markup: startDelimiter.markup,

@@ -47,11 +47,7 @@ function testLinkClose(state: InlineParserState) {
 	let i = state.delimiters.length;
 	while (i--) {
 		let prevDelimiter = state.delimiters[i];
-		if (prevDelimiter.handled) {
-			// At this stage, the only delimiters that are handled are ones that
-			// have the same or higher precedence, so we cannot surround them
-			//break;
-		} else {
+		if (!prevDelimiter.handled) {
 			if (prevDelimiter.canOpen && prevDelimiter.markup === "<") {
 				startDelimiter = prevDelimiter;
 				startDelimiterIndex = i;
@@ -74,7 +70,9 @@ function testLinkClose(state: InlineParserState) {
 		let isLink = /.[\.:]./.test(content);
 
 		if (isEmail || isLink) {
-			// Remove all the opening delimiters so they won't be picked up in future
+			// Remove all the opening link delimiters so they won't be picked up
+			// in future. Remove all the opening delimiters between the
+			// delimiters as autolinks can't contain formatting
 			let d = state.delimiters.length;
 			while (d--) {
 				let prevDelimiter = state.delimiters[d];
