@@ -7,6 +7,32 @@ A lightweight text markup language, inspired by Markdown, CommonMark, GFM and Dj
   - Comprehensiveness, so that most things you need are included
   - Flexibility, so that you can add the things you need that aren't included
 
+[Playground](https://andrewjk.github.io/midtext/)
+
+## Installation
+
+Using `npm`, or your favorite package manager:
+
+```
+npm install midtext
+```
+
+## Usage
+
+In your code:
+
+```
+import { parse, renderHtml } from "midtext";
+
+let input = "# Hello from *Midtext*";
+let ast = parse(input);
+let html = renderHtml(ast);
+
+console.log(html);
+```
+
+Which will output `<h1>Hello from <em>Midtext</em></h1>` to the console.
+
 ## Features
 
 ### Block structure

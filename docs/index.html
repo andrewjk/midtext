@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="reset.css" />
+		<link rel="stylesheet" href="style.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Midtext</title>
+	</head>
+	<body>
+		<div class="main">
+			<h1>Midtext</h1>
+			<div class="spread">
+				<div>
+					<h2>Input</h2>
+					<textarea id="input" oninput="generate()"></textarea>
+				</div>
+				<div>
+					<h2>Output</h2>
+					<div id="html"></div>
+				</div>
+				<div>
+					<h2>AST</h2>
+					<pre><code id="ast"></code></pre>
+				</div>
+			</div>
+		</div>
+		<script type="module">
+			import midtext from "https://unpkg.me/midtext/dist/index.js";
+
+			window.midtext = midtext;
+		</script>
+		<script>
+			function generate(e) {
+				let midtext = window.midtext;
+				let input = document.getElementById("input");
+				let ast = midtext.parse(input.value);
+				document.getElementById("ast").innerHTML = JSON.stringify(ast, null, 2);
+				document.getElementById("html").innerHTML = midtext.renderHtml(ast);
+
+				input.style.height = "auto";
+				input.style.height = input.scrollHeight + "px";
+			}
+		</script>
+		<style>
+			.main {
+				height: 100vh;
+				width: 100vw;
+			}
+
+			.spread {
+				gap: 1rem;
+				width: 100%;
+				text-align: start;
+			}
+
+			@media screen and (min-width: 768px) {
+				.spread {
+					display: grid;
+					grid-template-columns: repeat(3, minmax(0, 1fr));
+				}
+			}
+
+			textarea {
+				width: 100%;
+				font-family: monospace;
+			}
+
+			#html {
+				background: var(--panel-back);
+				padding: 0.5rem;
+			}
+
+			.warning {
+				color: red;
+			}
+		</style>
+	</body>
+</html>
