@@ -4,9 +4,9 @@ export default interface MidtextNode {
 	type: string;
 	block: boolean;
 	offset: number;
-	/** The line number */
+	/** The line index */
 	line: number;
-	/** The column number */
+	/** The column index */
 	column: number;
 	/** The markdown-specific markup for this node as it has been entered by the user */
 	markup: string;

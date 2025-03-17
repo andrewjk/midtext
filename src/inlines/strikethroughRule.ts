@@ -22,6 +22,7 @@ function test(state: InlineParserState) {
 				name,
 				markup: char,
 				precedence,
+				line: state.line,
 				start,
 				end: -1,
 				length,

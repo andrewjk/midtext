@@ -22,6 +22,7 @@ function test(state: InlineParserState) {
 			name: length >= 3 ? "strong_emphasis" : length === 2 ? "strong" : "emphasis",
 			markup: char,
 			precedence,
+			line: state.line,
 			start,
 			end: -1,
 			length,

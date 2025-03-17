@@ -1,28 +1,25 @@
-import type BlockParserState from "../types/BlockParserState";
 import type InlineParserState from "../types/InlineParserState";
 import type MidtextNode from "../types/MidtextNode";
 
-// TODO: Move a lot of functionality into here
-// e.g. checking maybeContinue, checking if last node needs closing etc
-
 export default function newInlineNode(
 	type: string,
-	state: BlockParserState | InlineParserState,
+	state: InlineParserState,
+	offset: number,
+	line: number,
 	markup: string,
 	indent: number,
-	children?: MidtextNode[],
 ): MidtextNode {
 	return {
 		type,
 		block: false,
-		offset: state.i,
-		line: state.line,
-		column: state.i - state.lineStart,
+		offset: offset + state.offset,
+		line,
+		column: offset + (line > state.line ? -state.lineStarts[line - state.line - 1] : state.column),
 		markup,
 		delimiter: "",
 		content: "",
 		indent,
 		subindent: 0,
-		children,
+		children: [],
 	};
 }

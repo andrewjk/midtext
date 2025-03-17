@@ -1,7 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
+import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
 import type MidtextNode from "../types/MidtextNode";
-import newInlineNode from "../utils/newInlineNode";
 import parseInline from "./parseInline";
 
 export default function parseBlockInlines(
@@ -12,7 +12,19 @@ export default function parseBlockInlines(
 	// Rules that need special text processing can add the text node directly
 	// and it won't be processed for inlines
 	if (parent.acceptsContent) {
-		let textNode = newInlineNode("text", state, parent.content, 0);
+		let textNode: MidtextNode = {
+			type: "text",
+			block: false,
+			offset: state.i,
+			line: state.line,
+			column: state.column,
+			markup: parent.content,
+			delimiter: "",
+			content: "",
+			indent: 0,
+			subindent: 0,
+			children: [],
+		};
 		parent.children!.push(textNode);
 		return;
 	}
@@ -24,13 +36,15 @@ export default function parseBlockInlines(
 
 	// Now add the inlines
 	if (parent.content.length) {
-		let inlineState = {
+		let inlineState: InlineParserState = {
 			// Strip final spaces before inline parsing
 			src: parent.content.trimEnd(),
 			rules,
 			i: 0,
+			offset: parent.offset + (parent.subindent - parent.indent),
 			line: parent.line,
-			lineStart: 0,
+			column: parent.subindent,
+			lineStarts: [],
 			indent: 0,
 			delimiters: [],
 			refs: state.refs,

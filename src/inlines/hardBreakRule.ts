@@ -11,6 +11,7 @@ function test(state: InlineParserState) {
 			name,
 			markup: "\n",
 			precedence,
+			line: state.line,
 			start: state.i,
 			end: state.i + 1,
 			length: 1,

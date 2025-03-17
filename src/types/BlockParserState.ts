@@ -6,7 +6,9 @@ export default interface BlockParserState {
 	src: string;
 	rules: Map<string, BlockRule>;
 	i: number;
+	offset: number;
 	line: number;
+	column: number;
 	lineStart: number;
 	indent: number;
 	openNodes: MidtextNode[];

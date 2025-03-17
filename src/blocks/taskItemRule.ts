@@ -1,7 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
-import newInlineNode from "../utils/newInlineNode";
+import newBlockNode from "../utils/newBlockNode";
 
 /**
  * "GFM enables the tasklist extension, where an additional processing step is
@@ -35,7 +35,8 @@ function testStart(state: BlockParserState) {
 		let start = state.i;
 		if (state.src[start] === "[" && state.src[start + 2] === "]") {
 			let markup = `[${state.src[start + 1]}]`;
-			let task = newInlineNode(name, state, markup, state.indent, []);
+			let task = newBlockNode(name, state, markup, state.indent, state.indent);
+			task.block = false;
 			parent.children!.push(task);
 			state.i = start + markup.length;
 			state.indent = state.i;

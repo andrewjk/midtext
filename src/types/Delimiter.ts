@@ -5,6 +5,7 @@ export default interface Delimiter {
 	markup: string;
 	precedence: number;
 	length: number;
+	line: number;
 	start: number;
 	end: number;
 	canOpen: boolean;

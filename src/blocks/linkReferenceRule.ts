@@ -6,7 +6,7 @@ import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
-import newInlineNode from "../utils/newInlineNode";
+import newBlockNode from "../utils/newBlockNode";
 import normalizeLabel from "../utils/normalizeLabel";
 
 /**
@@ -130,7 +130,8 @@ function testStart(state: BlockParserState) {
 
 		state.refs[label] = url;
 
-		let ref = newInlineNode(name, state, "", 0, []);
+		let ref = newBlockNode(name, state, "", state.indent, state.indent);
+		ref.block = false;
 
 		state.openNodes.at(-1)!.children!.push(ref);
 
