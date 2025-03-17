@@ -3,6 +3,7 @@ import type Attribute from "./Attribute";
 export default interface Delimiter {
 	name: string;
 	markup: string;
+	precedence: number;
 	length: number;
 	start: number;
 	end: number;

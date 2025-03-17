@@ -8,6 +8,7 @@ import normalizeLabel from "../utils/normalizeLabel";
 
 // TODO: Split this into link and image
 const name = "link";
+const precedence = 5;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -40,6 +41,7 @@ function testLinkOpen(state: InlineParserState) {
 	state.delimiters.push({
 		name: "link",
 		markup,
+		precedence,
 		length: 1,
 		start: state.i,
 		end: -1,
@@ -58,6 +60,7 @@ function testImageOpen(state: InlineParserState) {
 	state.delimiters.push({
 		name: "image",
 		markup,
+		precedence: precedence - 1,
 		length: 1,
 		start: state.i,
 		end: -1,
@@ -74,21 +77,15 @@ function testLinkClose(state: InlineParserState) {
 	// TODO: Standardize precedence
 	// For now the link takes precedence over anything else
 	let startDelimiter: Delimiter | undefined;
-	let startDelimiterIndex = 0;
 	let i = state.delimiters.length;
 	while (i--) {
 		let prevDelimiter = state.delimiters[i];
-		if (prevDelimiter.handled) {
-			// At this stage, the only delimiters that are handled are ones that
-			// have the same or higher precedence, so we cannot surround them
-			//break;
-		} else {
+		if (!prevDelimiter.handled) {
 			if (
 				prevDelimiter.canOpen &&
 				(prevDelimiter.markup === "[" || prevDelimiter.markup === "![")
 			) {
 				startDelimiter = prevDelimiter;
-				startDelimiterIndex = i;
 				break;
 			} else {
 				continue;
@@ -166,13 +163,7 @@ function testLinkClose(state: InlineParserState) {
 				let d = state.delimiters.length;
 				while (d--) {
 					let prevDelimiter = state.delimiters[d];
-					// HACK: We shouldn't be referring to autolinks!
-					if (
-						//prevDelimiter.markup === "![" ||
-						prevDelimiter.markup === "[" ||
-						prevDelimiter.markup === "]" ||
-						prevDelimiter.markup === "<"
-					) {
+					if (prevDelimiter.precedence === precedence) {
 						prevDelimiter.handled = true;
 					}
 				}
@@ -181,6 +172,7 @@ function testLinkClose(state: InlineParserState) {
 			state.delimiters.push({
 				name: isLink ? "link" : "image",
 				markup: startDelimiter.markup,
+				precedence: isLink ? precedence : precedence - 1,
 				length: 1,
 				start: state.i - 1,
 				end: -1,
@@ -197,7 +189,8 @@ function testLinkClose(state: InlineParserState) {
 			return true;
 		}
 
-		// If we found a matching `[` but didn't find a link, ignore it in future
+		// If we found a matching `[` but didn't find a link, ignore it in
+		// future so that it will be rendered as plain text
 		startDelimiter.handled = true;
 	}
 

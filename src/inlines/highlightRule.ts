@@ -5,6 +5,7 @@ import delimiterState from "../utils/delimiterState";
 import isEscaped from "../utils/isEscaped";
 
 const name = "highlight";
+const precedence = 0;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -20,6 +21,7 @@ function test(state: InlineParserState) {
 			state.delimiters.push({
 				name,
 				markup: char,
+				precedence,
 				start,
 				end: -1,
 				length,

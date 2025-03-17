@@ -5,6 +5,7 @@ import escapeBackslashes from "../utils/escapeBackslashes";
 import isEscaped from "../utils/isEscaped";
 
 const name = "auto_link";
+const precedence = 5;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -29,6 +30,7 @@ function testLinkOpen(state: InlineParserState) {
 	state.delimiters.push({
 		name: "link",
 		markup: "<",
+		precedence,
 		length: 1,
 		start: state.i,
 		end: -1,
@@ -76,13 +78,7 @@ function testLinkClose(state: InlineParserState) {
 			let d = state.delimiters.length;
 			while (d--) {
 				let prevDelimiter = state.delimiters[d];
-				// HACK: We shouldn't be referring to links or images!
-				if (
-					//prevDelimiter.markup === "![" ||
-					prevDelimiter.markup === "[" ||
-					prevDelimiter.markup === "]" ||
-					prevDelimiter.markup === "<"
-				) {
+				if (prevDelimiter.precedence === precedence) {
 					prevDelimiter.handled = true;
 				} else if (d > startDelimiterIndex) {
 					prevDelimiter.handled = true;
@@ -98,6 +94,7 @@ function testLinkClose(state: InlineParserState) {
 			state.delimiters.push({
 				name,
 				markup: startDelimiter.markup,
+				precedence,
 				length: 1,
 				start: state.i,
 				end: -1,

@@ -3,6 +3,7 @@ import type InlineRule from "../types/InlineRule";
 import isEscaped from "../utils/isEscaped";
 
 const name = "comment_span";
+const precedence = 10;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -18,6 +19,7 @@ function test(state: InlineParserState) {
 		state.delimiters.push({
 			name,
 			markup: char,
+			precedence,
 			start,
 			end: closeEnd,
 			length: 2,
