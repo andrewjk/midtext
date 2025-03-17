@@ -1,6 +1,8 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
+import countChars from "../utils/countChars";
+import countSpaces from "../utils/countSpaces";
 import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 import isSpace from "../utils/isSpace";
@@ -38,16 +40,11 @@ function testStart(state: BlockParserState) {
 
 	let char = state.src[state.i];
 	if (char === "#" && !isEscaped(state.src, state.i)) {
-		let level = 1;
-		// TODO: peekUntil
-		for (let j = state.i + 1; j < state.src.length; j++) {
-			if (state.src[j] === "#") {
-				level++;
-			} else {
-				break;
-			}
-		}
+		let level = countChars(state.src, state.i, "#");
 		if (level < 7 && isSpace(state.src.charCodeAt(state.i + level))) {
+			let spaces = countSpaces(state.src, state.i + level);
+			let contentColumn = state.indent + level + spaces;
+
 			// If there's an open paragraph, close it
 			if (state.openNodes.at(-1)!.type === "paragraph") {
 				state.openNodes.pop();
@@ -55,13 +52,12 @@ function testStart(state: BlockParserState) {
 
 			// Create the node
 			let parent = state.openNodes.at(-1)!;
-
-			let headingNode = newBlockNode(name, state, "#".repeat(level), state.indent, state.indent);
-
+			let headingNode = newBlockNode(name, state, "#".repeat(level), state.indent, contentColumn);
 			parent.children!.push(headingNode);
 
-			// HACK: ignore optional end heading marks and spaces, destructively
-			state.i += level;
+			// Ignore optional end heading marks and spaces (but stash them in
+			// info if found)
+			state.i += level + spaces;
 			let endOfLine = getEndOfLine(state);
 			let end = endOfLine - 1;
 			for (; end >= state.i; end--) {
@@ -78,8 +74,11 @@ function testStart(state: BlockParserState) {
 				}
 			}
 			headingNode.content = state.src.substring(state.i, end + 1);
-			state.i = endOfLine;
+			if (endOfLine > end + 1) {
+				headingNode.info = state.src.substring(end, endOfLine);
+			}
 
+			state.i = endOfLine;
 			return true;
 		}
 	}

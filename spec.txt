@@ -1,4 +1,4 @@
-Textet
+Midtext
 ======
 
 Like a strict markdown, with (mostly!) one way of doing things.
