@@ -6,10 +6,10 @@ export default function renderChildren(node: MidtextNode, state: RenderState) {
 	let children = node.children;
 	if (children && children.length) {
 		let trim =
-			node.type !== "code_block" &&
-			node.type !== "raw_block" &&
-			node.type !== "code_span" &&
-			node.type !== "raw_span";
+			node.name !== "code_block" &&
+			node.name !== "raw_block" &&
+			node.name !== "code_span" &&
+			node.name !== "raw_span";
 		for (let [i, child] of children.entries()) {
 			let first = i === 0;
 			let last = i === children.length - 1;

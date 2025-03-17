@@ -31,7 +31,7 @@ const name = "task_item";
 
 function testStart(state: BlockParserState) {
 	let parent = state.openNodes.at(-1)!;
-	if (parent.type === "list_item") {
+	if (parent.name === "list_item") {
 		let start = state.i;
 		if (state.src[start] === "[" && state.src[start + 2] === "]") {
 			let markup = `[${state.src[start + 1]}]`;

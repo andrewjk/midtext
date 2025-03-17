@@ -44,12 +44,12 @@ function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === ">" && !isEscaped(state.src, state.i)) {
 		let spaces = countSpaces(state.src, state.i + 1);
-		let contentColumn = state.indent + 1 + spaces;
+		let subindent = state.indent + 1 + spaces;
 
 		// If it's an empty item, set its content start to just after the marker
 		let isEmpty = isNewLine(state.src[state.i + 1]);
 		if (isEmpty) {
-			contentColumn = state.indent + 1;
+			subindent = state.indent + 1;
 		}
 
 		// Close blocks that this node shouldn't be nested under
@@ -58,7 +58,7 @@ function testStart(state: BlockParserState) {
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
 
-		let quoteNode = newBlockNode(name, state, char, state.indent, contentColumn);
+		let quoteNode = newBlockNode(name, state, char, state.indent, subindent);
 		checkBlankLineBefore(state, quoteNode, parent);
 
 		parent.children!.push(quoteNode);
@@ -66,7 +66,7 @@ function testStart(state: BlockParserState) {
 
 		// Reset the state and parse inside the item
 		state.i += 1 + spaces;
-		state.indent = contentColumn;
+		state.indent = subindent;
 		parseBlock(state, state.openNodes.length - 1);
 
 		return true;
@@ -91,7 +91,7 @@ function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: 
 		return true;
 	}
 
-	if (state.openNodes.at(-1)!.type === "paragraph") {
+	if (state.openNodes.at(-1)!.name === "paragraph") {
 		return true;
 	}
 

@@ -12,20 +12,20 @@ export interface ListInfo {
 	delimiter: string;
 	markup: string;
 	isBlank: boolean;
-	type: string;
+	name: string;
 }
 
 function testStart(state: BlockParserState, info?: ListInfo) {
 	if (info) {
-		const name = info.type;
+		const name = info.name;
 
 		let spaces = countSpaces(state.src, state.i + info.markup.length);
-		let contentColumn = state.indent + info.markup.length + spaces;
+		let subindent = state.indent + info.markup.length + spaces;
 
 		// If it's an empty item, set its content start to just after the marker
 		let isEmpty = isNewLine(state.src[state.i + info.markup.length + spaces]);
 		if (isEmpty) {
-			contentColumn = state.indent + info.markup.length;
+			subindent = state.indent + info.markup.length;
 		}
 
 		// Close blocks that this node shouldn't be nested under
@@ -33,15 +33,15 @@ function testStart(state: BlockParserState, info?: ListInfo) {
 
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
-		let haveNode = parent.type === name;
+		let haveNode = parent.name === name;
 
 		// Create the new item
-		let itemNode = newBlockNode("list_item", state, info.markup, state.indent, contentColumn);
+		let itemNode = newBlockNode("list_item", state, info.markup, state.indent, subindent);
 
 		// Create or continue the list
 		let listNode = haveNode
 			? parent
-			: newBlockNode(name, state, info.markup, state.indent, contentColumn);
+			: newBlockNode(name, state, info.markup, state.indent, subindent);
 		listNode.delimiter = itemNode.delimiter = info.delimiter;
 		listNode.children!.push(itemNode);
 		if (!haveNode) {
@@ -63,7 +63,7 @@ function testStart(state: BlockParserState, info?: ListInfo) {
 
 		// Reset the state and parse inside the item
 		state.i += info.markup.length + spaces;
-		state.indent = contentColumn;
+		state.indent = subindent;
 		parseBlock(state, state.openNodes.length - 1);
 
 		return true;

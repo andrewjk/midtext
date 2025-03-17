@@ -8,10 +8,10 @@ export default function renderNode(
 	first = false,
 	last = false,
 ) {
-	let rule = state.renderers.get(node.type);
+	let rule = state.renderers.get(node.name);
 	if (rule) {
 		rule.render(node, state, first, last);
 	} else {
-		renderTag(node, state, node.type);
+		renderTag(node, state, node.name);
 	}
 }

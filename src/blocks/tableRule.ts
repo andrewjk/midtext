@@ -15,7 +15,7 @@ function testStart(state: BlockParserState) {
 
 	let char = state.src[state.i];
 
-	if (parent.type === name && char !== "|") {
+	if (parent.name === name && char !== "|") {
 		state.openNodes.pop();
 		return false;
 	}
@@ -23,7 +23,7 @@ function testStart(state: BlockParserState) {
 	let level = state.openNodes.indexOf(parent);
 	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 
-	if (!hadBlankLine && parent.type === name && char === "|") {
+	if (!hadBlankLine && parent.name === name && char === "|") {
 		// We may already have a table
 		let endOfLine = getEndOfLine(state);
 
@@ -51,7 +51,7 @@ function testStart(state: BlockParserState) {
 		return true;
 	}
 
-	let haveParagraph = parent.type === "paragraph" && /[^\s]/.test(parent.content);
+	let haveParagraph = parent.name === "paragraph" && /[^\s]/.test(parent.content);
 	if (haveParagraph) {
 		// "The delimiter row consists of cells whose only content are hyphens (-),
 		// and optionally, a leading or trailing colon (:), or both, to indicate
@@ -114,7 +114,7 @@ function testStart(state: BlockParserState) {
 				header.children!.push(cell);
 			}
 
-			parent.type = name;
+			parent.name = name;
 			parent.content = "";
 			parent.markup = state.src.substring(state.i, end);
 
@@ -135,7 +135,7 @@ function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: 
 }
 
 export default {
-	name: name,
+	name,
 	testStart,
 	testContinue,
 } satisfies BlockRule;

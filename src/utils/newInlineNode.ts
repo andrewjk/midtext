@@ -2,15 +2,14 @@ import type InlineParserState from "../types/InlineParserState";
 import type MidtextNode from "../types/MidtextNode";
 
 export default function newInlineNode(
-	type: string,
+	name: string,
 	state: InlineParserState,
+	markup: string,
 	offset: number,
 	line: number,
-	markup: string,
-	indent: number,
 ): MidtextNode {
 	return {
-		type,
+		name,
 		block: false,
 		offset: offset + state.offset,
 		line,
@@ -18,7 +17,7 @@ export default function newInlineNode(
 		markup,
 		delimiter: "",
 		content: "",
-		indent,
+		indent: 0,
 		subindent: 0,
 		children: [],
 	};

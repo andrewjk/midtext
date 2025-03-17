@@ -1,7 +1,7 @@
 import type Attribute from "./Attribute";
 
 export default interface MidtextNode {
-	type: string;
+	name: string;
 	block: boolean;
 	offset: number;
 	/** The line index */

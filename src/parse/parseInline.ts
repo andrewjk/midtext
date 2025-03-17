@@ -67,7 +67,7 @@ export default function parseInline(state: InlineParserState, parent: MidtextNod
 	let i = processDelimiters(state, parent, -1, 0, state.src.length);
 	if (i === -1) {
 		let text = formatText(state.src);
-		let textNode = newInlineNode("text", state, 0, state.line, text, 0);
+		let textNode = newInlineNode("text", state, text, 0, state.line);
 		parent.children?.push(textNode);
 	} else {
 		let start = 0;
@@ -78,7 +78,7 @@ export default function parseInline(state: InlineParserState, parent: MidtextNod
 		if (start < state.src.length) {
 			let text = state.src.substring(start, state.src.length);
 			text = formatText(text);
-			let textNode = newInlineNode("text", state, start, state.line, text, 0);
+			let textNode = newInlineNode("text", state, text, start, state.line);
 			parent.children?.push(textNode);
 		}
 	}
@@ -105,37 +105,30 @@ function processDelimiters(
 		if (delimiter.start > start) {
 			let text = state.src.substring(start, delimiter.start);
 			if (!delimiter.acceptsContent) text = formatText(text);
-			let textNode = newInlineNode("text", state, start, state.line, text, 0);
+			let textNode = newInlineNode("text", state, text, start, state.line);
 			parent.children!.push(textNode);
 		}
 
 		// Add the delimiter
-		let markup = delimiter.markup.repeat(delimiter.length);
-		let delimiterNode = newInlineNode(
-			delimiter.name,
-			state,
-			delimiter.start,
-			delimiter.line,
-			markup,
-			0,
-		);
+		let text = delimiter.markup.repeat(delimiter.length);
+		let delimiterNode = newInlineNode(delimiter.name, state, text, delimiter.start, delimiter.line);
 		delimiterNode.info = delimiter.info;
 		delimiterNode.attributes = delimiter.attributes;
 		if (!delimiter.hidden) {
 			parent.children!.push(delimiterNode);
 		}
 
-		start = delimiter.start + markup.length;
+		start = delimiter.start + text.length;
 		state.line = delimiter.line;
 
 		if (delimiter.hidden) {
-			start = delimiter.end + markup.length;
+			start = delimiter.end + text.length;
 		} else if (delimiter.content) {
 			let text = delimiter.content;
 			if (!delimiter.acceptsContent) text = formatText(delimiter.content);
-			let textNode = newInlineNode("text", state, start, delimiter.line, text, 0);
+			let textNode = newInlineNode("text", state, text, start, delimiter.line);
 			delimiterNode.children!.push(textNode);
-			start = delimiter.end + markup.length;
+			start = delimiter.end + text.length;
 			state.line = delimiter.line;
 		} else {
 			let found = false;
@@ -160,9 +153,9 @@ function processDelimiters(
 			if (!found) {
 				let text = state.src.substring(start, delimiter.end - (delimiter.skip ?? 0));
 				if (!delimiter.acceptsContent) text = formatText(text);
-				let textNode = newInlineNode("text", state, start, delimiter.line, text, 0);
+				let textNode = newInlineNode("text", state, text, start, delimiter.line);
 				delimiterNode.children!.push(textNode);
-				start = delimiter.end + markup.length;
+				start = delimiter.end + text.length;
 				state.line = delimiter.line;
 			}
 		}
@@ -173,11 +166,11 @@ function processDelimiters(
 			// lengths and go back to using substring
 			let text = state.src.slice(start, delimiter.end - (delimiter.skip ?? 0));
 			if (!delimiter.acceptsContent) text = formatText(text);
-			let textNode = newInlineNode("text", state, start, delimiter.line, text, 0);
+			let textNode = newInlineNode("text", state, text, start, delimiter.line);
 			delimiterNode.children!.push(textNode);
 		}
 
-		start = delimiter.end + markup.length;
+		start = delimiter.end + text.length;
 		state.line = delimiter.line;
 	}
 	return lastHandledIndex;

@@ -14,7 +14,7 @@ function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "@" && !isEscaped(state.src, state.i)) {
 		let spaces = countSpaces(state.src, state.i + 1);
-		let contentColumn = state.indent + 1 + spaces;
+		let subindent = state.indent + 1 + spaces;
 
 		// Close blocks that this node shouldn't be nested under
 		evictBlocks(state);
@@ -22,7 +22,7 @@ function testStart(state: BlockParserState) {
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
 
-		let asideNode = newBlockNode(name, state, char, state.indent, contentColumn);
+		let asideNode = newBlockNode(name, state, char, state.indent, subindent);
 		checkBlankLineBefore(state, asideNode, parent);
 
 		parent.children!.push(asideNode);
@@ -30,7 +30,7 @@ function testStart(state: BlockParserState) {
 
 		// Parse children
 		state.i += 1 + spaces;
-		state.indent = contentColumn;
+		state.indent = subindent;
 		parseBlock(state, state.openNodes.length - 1);
 
 		return true;

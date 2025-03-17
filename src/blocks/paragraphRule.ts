@@ -31,7 +31,7 @@ function testStart(state: BlockParserState) {
 	}
 
 	let content = state.src.substring(state.i, endOfLine);
-	let haveParagraph = parent.type === name;
+	let haveParagraph = parent.name === name;
 
 	// TODO: Proper blank checking
 	// TODO: Move this to parseindent too

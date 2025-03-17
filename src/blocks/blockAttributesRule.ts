@@ -13,7 +13,7 @@ function testStart(state: BlockParserState) {
 		let parent = state.openNodes.at(-1)!;
 
 		// If there's an open paragraph, close it
-		if (parent.type === "paragraph") {
+		if (parent.name === "paragraph") {
 			state.openNodes.pop();
 		}
 

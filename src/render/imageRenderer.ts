@@ -17,7 +17,7 @@ function getChildText(node: MidtextNode) {
 	let text = "";
 	if (node.children) {
 		for (let child of node.children) {
-			if (child.type === "text") {
+			if (child.name === "text") {
 				text += child.markup;
 			} else {
 				text += getChildText(child);

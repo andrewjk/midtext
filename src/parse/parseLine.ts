@@ -20,7 +20,7 @@ export default function parseLine(state: BlockParserState) {
 		}
 
 		// TODO: Fallback rule??
-		let rule = state.rules.get(node.type)!;
+		let rule = state.rules.get(node.name)!;
 		if (rule) {
 			const hadBlankLine = state.blankLevel !== -1 && state.blankLevel < i;
 			if (rule.testContinue(state, node, hadBlankLine)) {

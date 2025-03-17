@@ -35,7 +35,7 @@ function getMarkup(state: BlockParserState): ListInfo | undefined {
 			delimiter,
 			markup: numbers + ".",
 			isBlank: end === state.src.length - 1 || isNewLine(state.src[end + 1]),
-			type: name,
+			name,
 		};
 	}
 }

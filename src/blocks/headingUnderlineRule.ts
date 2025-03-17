@@ -35,7 +35,7 @@ function testStart(state: BlockParserState) {
 	let parent = state.openNodes.at(-1)!;
 
 	// An underlined heading requires a paragraph
-	if (parent.type !== "paragraph") {
+	if (parent.name !== "paragraph") {
 		return false;
 	}
 
@@ -69,7 +69,7 @@ function testStart(state: BlockParserState) {
 			}
 		}
 
-		parent.type = name;
+		parent.name = name;
 		parent.markup = state.src.substring(state.i, end);
 
 		state.openNodes.pop();

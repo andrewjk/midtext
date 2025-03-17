@@ -2,14 +2,14 @@ import type BlockParserState from "../types/BlockParserState";
 import type MidtextNode from "../types/MidtextNode";
 
 export default function newBlockNode(
-	type: string,
+	name: string,
 	state: BlockParserState,
 	markup: string,
 	indent: number,
 	subindent: number,
 ): MidtextNode {
 	let node = {
-		type,
+		name,
 		block: true,
 		offset: state.i,
 		line: state.line,

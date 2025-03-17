@@ -14,19 +14,19 @@ function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "?" && !isEscaped(state.src, state.i)) {
 		let spaces = countSpaces(state.src, state.i + 1);
-		let contentColumn = state.indent + 1 + spaces;
+		let subindent = state.indent + 1 + spaces;
 
 		// Close blocks that this node shouldn't be nested under
 		evictBlocks(state);
 
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
-		let detailsNode = newBlockNode(name, state, char, state.indent, contentColumn);
+		let detailsNode = newBlockNode(name, state, char, state.indent, subindent);
 		checkBlankLineBefore(state, detailsNode, parent);
 
 		let end = getEndOfLine(state);
 		let content = state.src.substring(state.i + 1 + spaces, end);
-		let summaryNode = newBlockNode("summary", state, char, state.indent, contentColumn);
+		let summaryNode = newBlockNode("summary", state, char, state.indent, subindent);
 		summaryNode.content = content;
 
 		detailsNode.children!.push(summaryNode);

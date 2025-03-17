@@ -50,7 +50,7 @@ function render(node: MidtextNode, state: RenderState, ordered?: boolean) {
 	for (let item of node.children!) {
 		state.output += "<li>";
 		for (let [i, child] of item.children!.entries()) {
-			if (!loose && child.type === "paragraph") {
+			if (!loose && child.name === "paragraph") {
 				// Skip paragraphs under list items to make the list tight
 				renderChildren(child, state);
 			} else {

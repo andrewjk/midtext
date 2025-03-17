@@ -20,7 +20,7 @@ function getMarkup(state: BlockParserState): ListInfo | undefined {
 			delimiter: char,
 			markup: char,
 			isBlank: state.i === state.src.length - 1 || isNewLine(state.src[state.i + 1]),
-			type: name,
+			name,
 		};
 	}
 }

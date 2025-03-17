@@ -27,7 +27,7 @@ function testStart(state: BlockParserState) {
 	let parent = state.openNodes.at(-1)!;
 	if (parent.children?.length) {
 		const lastChild = parent.children.at(-1)!;
-		if (lastChild.type === name && lastChild.content.trimEnd().endsWith("\\")) {
+		if (lastChild.name === name && lastChild.content.trimEnd().endsWith("\\")) {
 			let endOfLine = getEndOfLine(state);
 			let content = state.src.substring(state.i, endOfLine);
 			lastChild.content = lastChild.content.trimEnd();
@@ -43,16 +43,16 @@ function testStart(state: BlockParserState) {
 		let level = countChars(state.src, state.i, "#");
 		if (level < 7 && isSpace(state.src.charCodeAt(state.i + level))) {
 			let spaces = countSpaces(state.src, state.i + level);
-			let contentColumn = state.indent + level + spaces;
+			let subindent = state.indent + level + spaces;
 
 			// If there's an open paragraph, close it
-			if (state.openNodes.at(-1)!.type === "paragraph") {
+			if (state.openNodes.at(-1)!.name === "paragraph") {
 				state.openNodes.pop();
 			}
 
 			// Create the node
 			let parent = state.openNodes.at(-1)!;
-			let headingNode = newBlockNode(name, state, "#".repeat(level), state.indent, contentColumn);
+			let headingNode = newBlockNode(name, state, "#".repeat(level), state.indent, subindent);
 			parent.children!.push(headingNode);
 
 			// Ignore optional end heading marks and spaces (but stash them in

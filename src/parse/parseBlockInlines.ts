@@ -13,7 +13,7 @@ export default function parseBlockInlines(
 	// and it won't be processed for inlines
 	if (parent.acceptsContent) {
 		let textNode: MidtextNode = {
-			type: "text",
+			name: "text",
 			block: false,
 			offset: state.i,
 			line: state.line,
