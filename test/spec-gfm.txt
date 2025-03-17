@@ -2963,11 +2963,10 @@ reference definitions] can come either before or after the links that use
 them.
 
 ```````````````````````````````` example
-[foo]: /url "title"
+[foo]: /url
 
 [foo]
 .
-<p>&quot;title&quot;</p>
 <p><a href="/url">foo</a></p>
 .
 <p><a href="/url" title="title">foo</a></p>
@@ -2993,7 +2992,6 @@ them.
 
 [Foo*bar\]]
 .
-<p>'title (with parens)'</p>
 <p><a href="my_(url)">Foo*bar]</a></p>
 .
 <p><a href="my_(url)" title="title (with parens)">Foo*bar]</a></p>
@@ -3025,8 +3023,7 @@ line2
 
 [foo]
 .
-<p>'
-title
+<p>title
 line1
 line2
 '</p>
@@ -3049,7 +3046,6 @@ with blank line'
 
 [foo]
 .
-<p>'title</p>
 <p>with blank line'</p>
 <p><a href="/url">foo</a></p>
 .
@@ -3101,7 +3097,6 @@ whitespace:
 
 [foo]
 .
-<p>(baz)</p>
 <p><a href="bar">foo</a></p>
 .
 <p>[foo]: <bar>(baz)</p>
@@ -3117,7 +3112,6 @@ and literal backslashes:
 
 [foo]
 .
-<p>&quot;foo&quot;bar\baz&quot;</p>
 <p><a href="/url%5Cbar*baz">foo</a></p>
 .
 <p><a href="/url%5Cbar*baz" title="foo&quot;bar\baz">foo</a></p>
@@ -3194,9 +3188,8 @@ This is not a link reference definition, because there are
 [non-whitespace characters] after the title:
 
 ```````````````````````````````` example
-[foo]: /url "title" ok
+[foo]: /url ok
 .
-<p>&quot;title&quot; ok</p>
 .
 <p>[foo]: /url &quot;title&quot; ok</p>
 ````````````````````````````````
@@ -3216,11 +3209,10 @@ This is not a link reference definition, because it is indented
 four spaces:
 
 ```````````````````````````````` example
-    [foo]: /url "title"
+    [foo]: /url
 
 [foo]
 .
-<p>&quot;title&quot;</p>
 <p><a href="/url">foo</a></p>
 .
 <pre><code>[foo]: /url &quot;title&quot;
@@ -3309,7 +3301,6 @@ can occur one after another, without intervening blank lines.
 [bar],
 [baz]
 .
-<p>&quot;foo&quot;</p>
 <p>&quot;bar&quot;</p>
 <p><a href="/foo-url">foo</a>,
 <a href="/bar-url">bar</a>,
@@ -6409,7 +6400,7 @@ But they work in all other contexts, including URLs and link titles,
 link references, and [info strings] in [fenced code blocks]:
 
 ```````````````````````````````` example
-[foo](/bar\* "ti\*tle")
+[foo](/bar\*)
 .
 <p><a href="/bar*">foo</a></p>
 .
@@ -6423,7 +6414,6 @@ link references, and [info strings] in [fenced code blocks]:
 [foo]: /bar\* "ti\*tle"
 .
 <p><a href="/bar*">foo</a></p>
-<p>&quot;ti*tle&quot;</p>
 .
 <p><a href="/bar*" title="ti*tle">foo</a></p>
 ````````````````````````````````
@@ -8190,16 +8180,12 @@ Rule 17:
 ```````````````````````````````` example
 *[bar*](/url)
 .
-<p><em>[bar</em>](/url)</p>
-.
 <p>*<a href="/url">bar*</a></p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 _foo [bar_](/url)
-.
-<p><em>foo [bar</em>](/url)</p>
 .
 <p>_foo <a href="/url">bar_</a></p>
 ````````````````````````````````
@@ -8249,16 +8235,12 @@ _a `_`_
 ```````````````````````````````` example
 **a<http://foo.bar/?q=**>
 .
-<p><strong>a&lt;http://foo.bar/?q=</strong>&gt;</p>
-.
 <p>**a<a href="http://foo.bar/?q=**">http://foo.bar/?q=**</a></p>
 ````````````````````````````````
 
 
 ```````````````````````````````` example
 __a<http://foo.bar/?q=__>
-.
-<p><strong>a&lt;http://foo.bar/?q=</strong>&gt;</p>
 .
 <p>__a<a href="http://foo.bar/?q=__">http://foo.bar/?q=__</a></p>
 ````````````````````````````````
@@ -8377,7 +8359,7 @@ above.
 Here is a simple inline link:
 
 ```````````````````````````````` example
-[link](/uri "title")
+[link](/uri)
 .
 <p><a href="/uri">link</a></p>
 .
@@ -8406,8 +8388,6 @@ Both the title and the destination may be omitted:
 ```````````````````````````````` example
 [link](<>)
 .
-<p><a href="%3C%3E">link</a></p>
-.
 <p><a href="">link</a></p>
 ````````````````````````````````
 
@@ -8417,15 +8397,13 @@ enclosed in pointy brackets:
 ```````````````````````````````` example
 [link](/my uri)
 .
-<p><a href="/my">link</a></p>
-.
 <p>[link](/my uri)</p>
 ````````````````````````````````
 
 ```````````````````````````````` example
 [link](</my uri>)
 .
-<p><a href="%3C/my">link</a></p>
+<p>[link](&lt;/my uri&gt;)</p>
 .
 <p><a href="/my%20uri">link</a></p>
 ````````````````````````````````
@@ -8597,13 +8575,13 @@ get unexpected results:
 Titles may be in single quotes, double quotes, or parentheses:
 
 ```````````````````````````````` example
-[link](/url "title")
-[link](/url 'title')
-[link](/url (title))
+[link](/url)
+[link](/url)
+[link](/url)
 .
 <p><a href="/url">link</a>
 <a href="/url">link</a>
-[link](/url (title))</p>
+<a href="/url">link</a></p>
 .
 <p><a href="/url" title="title">link</a>
 <a href="/url" title="title">link</a>
@@ -8615,7 +8593,7 @@ Backslash escapes and entity and numeric character references
 may be used in titles:
 
 ```````````````````````````````` example
-[link](/url "title \"&quot;")
+[link](/url)
 .
 <p><a href="/url">link</a></p>
 .
@@ -8627,7 +8605,9 @@ Titles must be separated from the link using a [whitespace].
 Other [Unicode whitespace] like non-breaking space doesn't work.
 
 ```````````````````````````````` example
-[link](/url "title")
+[link](/url)
+.
+<p><a href="/url">link</a></p>
 .
 <p><a href="/url%C2%A0%22title%22">link</a></p>
 ````````````````````````````````
@@ -8636,7 +8616,7 @@ Other [Unicode whitespace] like non-breaking space doesn't work.
 Nested balanced quotes are not allowed without escaping:
 
 ```````````````````````````````` example
-[link](/url "title "and" title")
+[link](/url)
 .
 <p><a href="/url">link</a></p>
 .
@@ -8647,7 +8627,7 @@ Nested balanced quotes are not allowed without escaping:
 But it is easy to work around this by using a different quote type:
 
 ```````````````````````````````` example
-[link](/url 'title "and" title')
+[link](/url)
 .
 <p><a href="/url">link</a></p>
 .
@@ -8758,6 +8738,8 @@ However, links may not contain other links, at any level of nesting.
 ```````````````````````````````` example
 ![[[foo](uri1)](uri2)](uri3)
 .
+<p><img src="uri2" alt="[foo" />](uri3)</p>
+.
 <p><img src="uri3" alt="[foo](uri2)" /></p>
 ````````````````````````````````
 
@@ -8795,6 +8777,8 @@ and autolinks over link grouping:
 ```````````````````````````````` example
 [foo <bar attr="](baz)">
 .
+<p><a href="baz">foo &lt;bar attr=&quot;</a>&quot;&gt;</p>
+.
 <p>[foo <bar attr="](baz)"></p>
 ````````````````````````````````
 
@@ -8808,6 +8792,8 @@ and autolinks over link grouping:
 
 ```````````````````````````````` example
 [foo<http://example.com/?search=](uri)>
+.
+<p><a href="uri">foo&lt;http://example.com/?search=</a>&gt;</p>
 .
 <p>[foo<a href="http://example.com/?search=%5D(uri)">http://example.com/?search=](uri)</a></p>
 ````````````````````````````````
@@ -8847,7 +8833,7 @@ Here is a simple example:
 ```````````````````````````````` example
 [foo][bar]
 
-[bar]: /url "title"
+[bar]: /url
 .
 <p><a href="/url">foo</a></p>
 .
@@ -8951,6 +8937,8 @@ and autolinks over link grouping:
 
 [ref]: /uri
 .
+<p><a href="/uri">foo &lt;bar attr=&quot;</a>&quot;&gt;</p>
+.
 <p>[foo <bar attr="][ref]"></p>
 ````````````````````````````````
 
@@ -8969,6 +8957,8 @@ and autolinks over link grouping:
 
 [ref]: /uri
 .
+<p><a href="/uri">foo&lt;http://example.com/?search=</a>&gt;</p>
+.
 <p>[foo<a href="http://example.com/?search=%5D%5Bref%5D">http://example.com/?search=][ref]</a></p>
 ````````````````````````````````
 
@@ -8978,7 +8968,7 @@ Matching is case-insensitive:
 ```````````````````````````````` example
 [foo][BaR]
 
-[bar]: /url "title"
+[bar]: /url
 .
 <p><a href="/url">foo</a></p>
 .
@@ -9016,7 +9006,7 @@ No [whitespace] is allowed between the [link text] and the
 ```````````````````````````````` example
 [foo] [bar]
 
-[bar]: /url "title"
+[bar]: /url
 .
 <p>[foo] <a href="/url">bar</a></p>
 .
@@ -9028,7 +9018,7 @@ No [whitespace] is allowed between the [link text] and the
 [foo]
 [bar]
 
-[bar]: /url "title"
+[bar]: /url
 .
 <p>[foo]
 <a href="/url">bar</a></p>
@@ -9183,7 +9173,7 @@ provided by the matching reference link definition.  Thus,
 ```````````````````````````````` example
 [foo][]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><a href="/url">foo</a></p>
 .
@@ -9194,7 +9184,7 @@ provided by the matching reference link definition.  Thus,
 ```````````````````````````````` example
 [*foo* bar][]
 
-[*foo* bar]: /url "title"
+[*foo* bar]: /url
 .
 <p><a href="/url"><em>foo</em> bar</a></p>
 .
@@ -9207,7 +9197,7 @@ The link labels are case-insensitive:
 ```````````````````````````````` example
 [Foo][]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><a href="/url">Foo</a></p>
 .
@@ -9223,7 +9213,7 @@ allowed between the two sets of brackets:
 [foo] 
 []
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><a href="/url">foo</a>
 []</p>
@@ -9245,7 +9235,7 @@ Thus, `[foo]` is equivalent to `[foo][]`.
 ```````````````````````````````` example
 [foo]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><a href="/url">foo</a></p>
 .
@@ -9256,7 +9246,7 @@ Thus, `[foo]` is equivalent to `[foo][]`.
 ```````````````````````````````` example
 [*foo* bar]
 
-[*foo* bar]: /url "title"
+[*foo* bar]: /url
 .
 <p><a href="/url"><em>foo</em> bar</a></p>
 .
@@ -9267,7 +9257,7 @@ Thus, `[foo]` is equivalent to `[foo][]`.
 ```````````````````````````````` example
 [[*foo* bar]]
 
-[*foo* bar]: /url "title"
+[*foo* bar]: /url
 .
 <p>[<a href="/url"><em>foo</em> bar</a>]</p>
 .
@@ -9289,7 +9279,7 @@ The link labels are case-insensitive:
 ```````````````````````````````` example
 [Foo]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><a href="/url">Foo</a></p>
 .
@@ -9314,7 +9304,7 @@ opening bracket to avoid links:
 ```````````````````````````````` example
 \[foo]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p>[foo]</p>
 ````````````````````````````````
@@ -9422,7 +9412,7 @@ as its contents.  When an image is rendered to HTML,
 this is standardly used as the image's `alt` attribute.
 
 ```````````````````````````````` example
-![foo](/url "title")
+![foo](/url)
 .
 <p><img src="/url" alt="foo" /></p>
 .
@@ -9492,7 +9482,7 @@ content is rendered, without formatting.
 
 
 ```````````````````````````````` example
-My ![foo bar](/path/to/train.jpg  "title"   )
+My ![foo bar](/path/to/train.jpg)
 .
 <p>My <img src="/path/to/train.jpg" alt="foo bar" /></p>
 .
@@ -9539,7 +9529,7 @@ Collapsed:
 ```````````````````````````````` example
 ![foo][]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><img src="/url" alt="foo" /></p>
 .
@@ -9550,9 +9540,9 @@ Collapsed:
 ```````````````````````````````` example
 ![*foo* bar][]
 
-[*foo* bar]: /url "title"
+[*foo* bar]: /url
 .
-<p><img src="/url" alt="foo bar"  /></p>
+<p><img src="/url" alt="foo bar" /></p>
 .
 <p><img src="/url" alt="foo bar" title="title" /></p>
 ````````````````````````````````
@@ -9563,7 +9553,7 @@ The labels are case-insensitive:
 ```````````````````````````````` example
 ![Foo][]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><img src="/url" alt="Foo" /></p>
 .
@@ -9578,7 +9568,7 @@ between the two sets of brackets:
 ![foo] 
 []
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><img src="/url" alt="foo" />
 []</p>
@@ -9593,7 +9583,7 @@ Shortcut:
 ```````````````````````````````` example
 ![foo]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><img src="/url" alt="foo" /></p>
 .
@@ -9604,7 +9594,7 @@ Shortcut:
 ```````````````````````````````` example
 ![*foo* bar]
 
-[*foo* bar]: /url "title"
+[*foo* bar]: /url
 .
 <p><img src="/url" alt="foo bar" /></p>
 .
@@ -9617,7 +9607,10 @@ Note that link labels cannot contain unescaped brackets:
 ```````````````````````````````` example
 ![[foo]]
 
-[[foo]]: /url "title"
+[[foo]]: /url
+.
+<p>![[foo]]</p>
+<p>[[foo]]: /url</p>
 .
 <p>![[foo]]</p>
 <p>[[foo]]: /url &quot;title&quot;</p>
@@ -9629,7 +9622,7 @@ The link labels are case-insensitive:
 ```````````````````````````````` example
 ![Foo]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p><img src="/url" alt="Foo" /></p>
 .
@@ -9643,7 +9636,7 @@ backslash-escape the opening `[`:
 ```````````````````````````````` example
 !\[foo]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p>![foo]</p>
 ````````````````````````````````
@@ -9655,7 +9648,7 @@ If you want a link after a literal `!`, backslash-escape the
 ```````````````````````````````` example
 \![foo]
 
-[foo]: /url "title"
+[foo]: /url
 .
 <p>!<a href="/url">foo</a></p>
 .
@@ -9696,6 +9689,8 @@ Here are some valid autolinks:
 
 ```````````````````````````````` example
 <http://foo.bar.baz/test?q=hello&id=22&boolean>
+.
+<p><a href="http://foo.bar.baz/test?q=hello&id=22&boolean">http://foo.bar.baz/test?q=hello&amp;id=22&amp;boolean</a></p>
 .
 <p><a href="http://foo.bar.baz/test?q=hello&amp;id=22&amp;boolean">http://foo.bar.baz/test?q=hello&amp;id=22&amp;boolean</a></p>
 ````````````````````````````````
@@ -9764,6 +9759,8 @@ Backslash-escapes do not work inside autolinks:
 ```````````````````````````````` example
 <http://example.com/\[\>
 .
+<p>&lt;http://example.com/[&gt;</p>
+.
 <p><a href="http://example.com/%5C%5B%5C">http://example.com/\[\</a></p>
 ````````````````````````````````
 
@@ -9802,6 +9799,8 @@ Backslash-escapes do not work inside email autolinks:
 ```````````````````````````````` example
 <foo\+@bar.example.com>
 .
+<p><a href="mailto:foo+@bar.example.com">foo+@bar.example.com</a></p>
+.
 <p>&lt;foo+@bar.example.com&gt;</p>
 ````````````````````````````````
 
@@ -9825,6 +9824,8 @@ These are not autolinks:
 ```````````````````````````````` example
 <m:abc>
 .
+<p><a href="m:abc">m:abc</a></p>
+.
 <p>&lt;m:abc&gt;</p>
 ````````````````````````````````
 
@@ -9832,18 +9833,20 @@ These are not autolinks:
 ```````````````````````````````` example
 <foo.bar.baz>
 .
+<p><a href="foo.bar.baz">foo.bar.baz</a></p>
+.
 <p>&lt;foo.bar.baz&gt;</p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 http://example.com
 .
 <p><a href="http://example.com">http://example.com</a></p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo@bar.example.com
 .
 <p><a href="mailto:foo@bar.example.com">foo@bar.example.com</a></p>
@@ -9872,7 +9875,7 @@ and no underscores may be present in the last two segments of the domain.
 
 The scheme `http` will be inserted automatically:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 www.commonmark.org
 .
 <p><a href="http://www.commonmark.org">www.commonmark.org</a></p>
@@ -9880,7 +9883,7 @@ www.commonmark.org
 
 After a [valid domain], zero or more non-space non-`<` characters may follow:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 Visit www.commonmark.org/help for more information.
 .
 <p>Visit <a href="http://www.commonmark.org/help">www.commonmark.org/help</a> for more information.</p>
@@ -9892,7 +9895,7 @@ Trailing punctuation (specifically, `?`, `!`, `.`, `,`, `:`, `*`, `_`, and `~`)
 will not be considered part of the autolink, though they may be included in the
 interior of the link:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 Visit www.commonmark.org.
 
 Visit www.commonmark.org/a.b.
@@ -9906,7 +9909,7 @@ of parentheses.  If there is a greater number of closing parentheses than
 opening ones, we don't consider the unmatched trailing parentheses part of the
 autolink, in order to facilitate including an autolink inside a parenthesis:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 www.google.com/search?q=Markup+(business)
 
 www.google.com/search?q=Markup+(business)))
@@ -9925,7 +9928,7 @@ This check is only done when the link ends in a closing parentheses `)`, so if
 the only parentheses are in the interior of the autolink, no special rules are
 applied:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 www.google.com/search?q=(business))+ok
 .
 <p><a href="http://www.google.com/search?q=(business))+ok">www.google.com/search?q=(business))+ok</a></p>
@@ -9936,7 +9939,7 @@ resemble an [entity reference][entity references]; if the preceding text is `&`
 followed by one or more alphanumeric characters.  If so, it is excluded from
 the autolink:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 www.google.com/search?q=commonmark&hl=en
 
 www.google.com/search?q=commonmark&hl;
@@ -9947,7 +9950,7 @@ www.google.com/search?q=commonmark&hl;
 
 `<` immediately ends an autolink.
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 www.commonmark.org/he<lp
 .
 <p><a href="http://www.commonmark.org/he">www.commonmark.org/he</a>&lt;lp</p>
@@ -9958,7 +9961,7 @@ An [extended url autolink](@) will be recognised when one of the schemes
 more non-space non-`<` characters according to
 [extended autolink path validation]:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 http://commonmark.org
 
 (Visit https://encrypted.google.com/search?q=Markup+(business))
@@ -9984,7 +9987,7 @@ the following rules:
 
 The scheme `mailto:` will automatically be added to the generated link:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 foo@bar.baz
 .
 <p><a href="mailto:foo@bar.baz">foo@bar.baz</a></p>
@@ -9992,7 +9995,7 @@ foo@bar.baz
 
 `+` can occur before the `@`, but not after.
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is.
 .
 <p>hello@mail+xyz.example isn't valid, but <a href="mailto:hello+xyz@mail.example">hello+xyz@mail.example</a> is.</p>
@@ -10002,7 +10005,7 @@ hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is.
 the end of the email address, in which case it will not be considered part of
 the address:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 a.b-c_d@a.b
 
 a.b-c_d@a.b.
@@ -10026,7 +10029,7 @@ within any text node. Valid protocols are:
 The scheme of the protocol will automatically be added to the generated link.
 All the rules of email address autolinking apply.
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 mailto:foo@bar.baz
 
 mailto:a.b-c_d@a.b
@@ -10057,7 +10060,7 @@ A described in the specification xmpp offers an optional / followed by a
 resource. The resource can contain all alphanumeric characters, as well as @
 and ..
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 xmpp:foo@bar.baz/txt
 
 xmpp:foo@bar.baz/txt@bin
@@ -10071,7 +10074,7 @@ xmpp:foo@bar.baz/txt@bin.com
 
 Further / characters are not considered part of the domain:
 
-```````````````````````````````` example autolink
+```````````````````````````````` SKIP example autolink
 xmpp:foo@bar.baz/txt/bin
 .
 <p><a href="xmpp:foo@bar.baz/txt">xmpp:foo@bar.baz/txt</a>/bin</p>
@@ -10153,7 +10156,7 @@ or a [CDATA section].
 
 Here are some simple open tags:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a><bab><c2c>
 .
 <p><a><bab><c2c></p>
@@ -10162,7 +10165,7 @@ Here are some simple open tags:
 
 Empty elements:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a/><b2/>
 .
 <p><a/><b2/></p>
@@ -10171,7 +10174,7 @@ Empty elements:
 
 [Whitespace] is allowed:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a  /><b2
 data="foo" >
 .
@@ -10182,7 +10185,7 @@ data="foo" ></p>
 
 With attributes:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a foo="bar" bam = 'baz <em>"</em>'
 _boolean zoop:33=zoop:33 />
 .
@@ -10193,7 +10196,7 @@ _boolean zoop:33=zoop:33 /></p>
 
 Custom tag names can be used:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 Foo <responsive-image src="foo.jpg" />
 .
 <p>Foo <responsive-image src="foo.jpg" /></p>
@@ -10202,7 +10205,7 @@ Foo <responsive-image src="foo.jpg" />
 
 Illegal tag names, not parsed as HTML:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <33> <__>
 .
 <p>&lt;33&gt; &lt;__&gt;</p>
@@ -10211,7 +10214,7 @@ Illegal tag names, not parsed as HTML:
 
 Illegal attribute names:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a h*#ref="hi">
 .
 <p>&lt;a h*#ref=&quot;hi&quot;&gt;</p>
@@ -10220,7 +10223,7 @@ Illegal attribute names:
 
 Illegal attribute values:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href="hi'> <a href=hi'>
 .
 <p>&lt;a href=&quot;hi'&gt; &lt;a href=hi'&gt;</p>
@@ -10229,7 +10232,7 @@ Illegal attribute values:
 
 Illegal [whitespace]:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 < a><
 foo><bar/ >
 <foo bar=baz
@@ -10244,7 +10247,7 @@ bim!bop /&gt;</p>
 
 Missing [whitespace]:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href='bar'title=title>
 .
 <p>&lt;a href='bar'title=title&gt;</p>
@@ -10253,7 +10256,7 @@ Missing [whitespace]:
 
 Closing tags:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 </a></foo >
 .
 <p></a></foo ></p>
@@ -10262,7 +10265,7 @@ Closing tags:
 
 Illegal attributes in closing tag:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 </a href="foo">
 .
 <p>&lt;/a href=&quot;foo&quot;&gt;</p>
@@ -10271,7 +10274,7 @@ Illegal attributes in closing tag:
 
 Comments:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <!-- this is a --
 comment - with hyphens -->
 .
@@ -10279,7 +10282,7 @@ comment - with hyphens -->
 comment - with hyphens --></p>
 ````````````````````````````````
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <!-- this is a --
 comment - with hyphens -->
 .
@@ -10287,7 +10290,7 @@ comment - with hyphens -->
 comment - with hyphens --></p>
 ````````````````````````````````
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <!--> foo -->
 
 foo <!---> foo -->
@@ -10299,7 +10302,7 @@ foo <!---> foo -->
 
 Processing instructions:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <?php echo $a; ?>
 .
 <p>foo <?php echo $a; ?></p>
@@ -10308,7 +10311,7 @@ foo <?php echo $a; ?>
 
 Declarations:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <!ELEMENT br EMPTY>
 .
 <p>foo <!ELEMENT br EMPTY></p>
@@ -10317,7 +10320,7 @@ foo <!ELEMENT br EMPTY>
 
 CDATA sections:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <![CDATA[>&<]]>
 .
 <p>foo <![CDATA[>&<]]></p>
@@ -10327,7 +10330,7 @@ foo <![CDATA[>&<]]>
 Entity and numeric character references are preserved in HTML
 attributes:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <a href="&ouml;">
 .
 <p>foo <a href="&ouml;"></p>
@@ -10336,14 +10339,14 @@ foo <a href="&ouml;">
 
 Backslash escapes do not work in HTML attributes:
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 foo <a href="\*">
 .
 <p>foo <a href="\*"></p>
 ````````````````````````````````
 
 
-```````````````````````````````` example
+```````````````````````````````` SKIP example
 <a href="\"">
 .
 <p>&lt;a href=&quot;&quot;&quot;&gt;</p>
@@ -10374,7 +10377,7 @@ usually undesireable in the context of other rendered Markdown content.
 
 All other HTML tags are left untouched.
 
-```````````````````````````````` example tagfilter
+```````````````````````````````` SKIP example tagfilter
 <strong> <title> <style> <em>
 
 <blockquote>

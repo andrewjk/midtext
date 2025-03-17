@@ -41,12 +41,18 @@ function testLinkOpen(state: InlineParserState) {
 
 function testLinkClose(state: InlineParserState) {
 	let startDelimiter: Delimiter | undefined;
+	let startDelimiterIndex = -1;
 	let i = state.delimiters.length;
 	while (i--) {
 		let prevDelimiter = state.delimiters[i];
-		if (!prevDelimiter.handled) {
-			if (prevDelimiter.markup === "<") {
+		if (prevDelimiter.handled) {
+			// At this stage, the only delimiters that are handled are ones that
+			// have the same or higher precedence, so we cannot surround them
+			//break;
+		} else {
+			if (prevDelimiter.canOpen && prevDelimiter.markup === "<") {
 				startDelimiter = prevDelimiter;
+				startDelimiterIndex = i;
 				break;
 			} else {
 				continue;
@@ -56,9 +62,38 @@ function testLinkClose(state: InlineParserState) {
 
 	if (startDelimiter) {
 		let content = state.src.substring(startDelimiter.start + startDelimiter.markup.length, state.i);
-		// HACK: Probably should be stricter...
-		if (content.includes(":")) {
+
+		if (/\s/.test(content)) {
+			return false;
+		}
+
+		// TODO: Should be stricter in defining what is and isn't an autolink
+		let isEmail = /.@./.test(content);
+		let isLink = /.[\.:]./.test(content);
+
+		if (isEmail || isLink) {
+			// Remove all the opening delimiters so they won't be picked up in future
+			let d = state.delimiters.length;
+			while (d--) {
+				let prevDelimiter = state.delimiters[d];
+				// HACK: We shouldn't be referring to links or images!
+				if (
+					//prevDelimiter.markup === "![" ||
+					prevDelimiter.markup === "[" ||
+					prevDelimiter.markup === "]" ||
+					prevDelimiter.markup === "<"
+				) {
+					prevDelimiter.handled = true;
+				} else if (d > startDelimiterIndex) {
+					prevDelimiter.handled = true;
+				}
+			}
+
 			let link = encodeURI(decodeURI(escapeBackslashes(content)));
+
+			if (isEmail && !link.startsWith("mailto:") && !link.startsWith("MAILTO:")) {
+				link = `mailto:${link}`;
+			}
 
 			state.delimiters.push({
 				name,
@@ -68,8 +103,13 @@ function testLinkClose(state: InlineParserState) {
 				end: -1,
 				canOpen: false,
 				canClose: true,
-				info: link,
+				handled: true,
+				//info: link,
 			});
+
+			startDelimiter.handled = true;
+			startDelimiter.end = state.i;
+			startDelimiter.info = link;
 
 			state.i++;
 			return true;

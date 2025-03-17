@@ -181,7 +181,7 @@ _This is italic text_
 <h1>Links</h1>
 <pre><code>[I'm an inline-style link](https://www.google.com)
 
-[I'm an inline-style link with title](https://www.google.com &quot;Google's Homepage&quot;)
+[I'm an inline-style link with title](https://www.google.com)
 
 [I'm a reference-style link][Arbitrary case-insensitive reference text]
 
@@ -216,15 +216,15 @@ example.com (but not on Github, for example).</p>
 <pre><code>Here's our logo (hover to see the title text):
 
 Inline-style:
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png &quot;Logo Title Text 1&quot;)
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
 
 Reference-style:
 ![alt text][logo]
 
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png &quot;Logo Title Text 2&quot;
+[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
 
 ![Minion](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg &quot;The Stormtroopocat&quot;)
+![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg)
 
 Like links, Images also have a footnote style syntax
 
@@ -232,19 +232,17 @@ Like links, Images also have a footnote style syntax
 
 With a reference later in the document defining the URL location:
 
-[id]: https://octodex.github.com/images/dojocat.jpg  &quot;The Dojocat&quot;
+[id]: https://octodex.github.com/images/dojocat.jpg
 </code></pre>
 <p>Here's our logo (hover to see the title text):</p>
 <p>Inline-style:
 <img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" /></p>
 <p>Reference-style:
 <img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" /></p>
-<p>&quot;Logo Title Text 2&quot;</p>
 <p><img src="https://octodex.github.com/images/minion.png" alt="Minion" /><img src="https://octodex.github.com/images/stormtroopocat.jpg" alt="Stormtroopocat" /></p>
 <p>Like links, Images also have a footnote style syntax</p>
 <p><img src="https://octodex.github.com/images/dojocat.jpg" alt="Alt text" /></p>
 <p>With a reference later in the document defining the URL location:</p>
-<p>&quot;The Dojocat&quot;</p>
 <hr />
 <h1><a href="https://github.com/markdown-it/markdown-it-footnote">Footnotes</a></h1>
 <pre><code>Footnote 1 link[^first].
@@ -265,9 +263,7 @@ Duplicated footnote reference[^second].
 <p>Footnote 2 link<a href="Footnote">^second</a>.</p>
 <p>Inline footnote^[Text of inline footnote] definition.</p>
 <p>Duplicated footnote reference<a href="Footnote">^second</a>.</p>
-<p><strong>can have markup</strong></p>
 <p>and multiple paragraphs.</p>
-<p>text.</p>
 <hr />
 <h1>Code and Syntax Highlighting</h1>
 <pre><code>Inline `code` has `back-ticks around` it.
@@ -641,9 +637,9 @@ Underscores
 &lt;img src=&quot;http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg&quot; alt=&quot;IMAGE ALT TEXT HERE&quot; width=&quot;240&quot; height=&quot;180&quot; border=&quot;10&quot;&gt;
 &lt;/a&gt;
 </code></pre>
-<p><a href="a%20href=%22http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE%22%20target=%22_blank%22">a href=&quot;http://www.youtube.com/watch?feature<mark>player_embedded&amp;v</mark>YOUTUBE<em>VIDEO</em>ID_HERE&quot; target=&quot;_blank&quot;</a>
-<a href="img%20src=%22http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg%22%20alt=%22IMAGE%20ALT%20TEXT%20HERE%22%20width=%22240%22%20height=%22180%22%20border=%2210%22">img src=&quot;http://img.youtube.com/vi/YOUTUBE<em>VIDEO</em>ID_HERE/0.jpg&quot; alt=&quot;IMAGE ALT TEXT HERE&quot; width=&quot;240&quot; height=&quot;180&quot; border=&quot;10&quot;</a>
-&lt;/a&gt;</p>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE" target="_blank">
+<img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10">
+</a>
 <pre><code>[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 </code></pre>
-<p>[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/YouTube_logo_2015.svg/1200px-YouTube_logo_2015.svg.png" alt="IMAGE ALT TEXT HERE" />](https://www.youtube.com/watch?v=ciawICBvQoE)</p>
+<p><a href="https://www.youtube.com/watch?v=ciawICBvQoE"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/YouTube_logo_2015.svg/1200px-YouTube_logo_2015.svg.png" alt="IMAGE ALT TEXT HERE" /></a></p>

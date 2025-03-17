@@ -28,14 +28,16 @@ export default function parseInline(state: InlineParserState, parent: MidtextNod
 	}
 
 	// Match the delimiters
-	// TODO: Do this while parsing, so that we don't have to check end !== -1 all the time??
 	for (let i = 0; i < state.delimiters.length; i++) {
 		let endDelimiter = state.delimiters[i];
 		if (endDelimiter.canClose && !endDelimiter.handled) {
 			let j = i;
 			while (j--) {
 				let startDelimiter = state.delimiters[j];
-				if (
+				if (startDelimiter.handled && startDelimiter.end > endDelimiter.start) {
+					// Can't cross a delimiter that's already handled
+					break;
+				} else if (
 					!startDelimiter.handled &&
 					startDelimiter.canOpen &&
 					startDelimiter.markup === endDelimiter.markup &&
@@ -156,7 +158,9 @@ function processDelimiters(
 
 		// Maybe add the text between delimiters
 		if (delimiter.end > start) {
-			let text = state.src.substring(start, delimiter.end - (delimiter.skip ?? 0));
+			// HACK: Need to account for start and end delimiters of different
+			// lengths and go back to substring
+			let text = state.src.slice(start, delimiter.end - (delimiter.skip ?? 0));
 			if (!delimiter.acceptsContent) text = formatText(text);
 			let textNode = newInlineNode("text", state, text, 0);
 			delimiterNode.children!.push(textNode);

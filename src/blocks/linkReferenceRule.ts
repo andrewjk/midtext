@@ -2,6 +2,7 @@ import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
+import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
@@ -132,6 +133,11 @@ function testStart(state: BlockParserState) {
 		let ref = newInlineNode(name, state, "", 0, []);
 
 		state.openNodes.at(-1)!.children!.push(ref);
+
+		// HACK: We are just swallowing everything at the end of the line so
+		// that we can ignore titles, but we should return false if anything is
+		// found instead
+		state.i = getEndOfLine(state);
 
 		return true;
 	}

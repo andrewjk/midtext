@@ -78,8 +78,15 @@ function testLinkClose(state: InlineParserState) {
 	let i = state.delimiters.length;
 	while (i--) {
 		let prevDelimiter = state.delimiters[i];
-		if (!prevDelimiter.handled) {
-			if (prevDelimiter.markup === "[" || prevDelimiter.markup === "![") {
+		if (prevDelimiter.handled) {
+			// At this stage, the only delimiters that are handled are ones that
+			// have the same or higher precedence, so we cannot surround them
+			//break;
+		} else {
+			if (
+				prevDelimiter.canOpen &&
+				(prevDelimiter.markup === "[" || prevDelimiter.markup === "![")
+			) {
 				startDelimiter = prevDelimiter;
 				startDelimiterIndex = i;
 				break;
@@ -95,22 +102,6 @@ function testLinkClose(state: InlineParserState) {
 		let label = content;
 		let skip = 0;
 
-		// "The link text may contain balanced brackets, but not
-		// unbalanced ones, unless they are escaped"
-		let level = 0;
-		for (let i = 0; i < label.length; i++) {
-			if (label[i] === "\\") {
-				i++;
-			} else if (label[i] === "[") {
-				level++;
-			} else if (label[i] === "]") {
-				level--;
-			}
-		}
-		if (level != 0) {
-			return false;
-		}
-
 		let isLink = startDelimiter.markup === "[";
 
 		let hasInfo = state.src[state.i + 1] === "(";
@@ -124,10 +115,15 @@ function testLinkClose(state: InlineParserState) {
 			// TODO: better parsing
 			for (let i = start; i < state.src.length; i++) {
 				if (state.src[i] === ")" && !isEscaped(state.src, i)) {
-					// TODO: Just take everything from the brackets
-					link = state.src.substring(start, i).trim().split(" ")[0];
+					let info = state.src.substring(start, i).trim();
+					if (info.startsWith("<") && info.endsWith(">") && info.at(-2) !== "\\") {
+						info = info.substring(1, info.length - 1);
+					}
+					if (/\s/.test(info)) {
+						break;
+					}
 					//link = escapeBackslashes(link);
-					link = encodeURI(decodeURI(escapeBackslashes(link)));
+					link = encodeURI(decodeURI(escapeBackslashes(info)));
 					state.i = i + 1;
 					skip = i - start + 2;
 					break;
@@ -168,33 +164,40 @@ function testLinkClose(state: InlineParserState) {
 			if (isLink) {
 				// Remove all the opening delimiters so they won't be picked up in future
 				let d = state.delimiters.length;
-				while (d-- > startDelimiterIndex) {
+				while (d--) {
 					let prevDelimiter = state.delimiters[d];
-					if (prevDelimiter.markup === "[" || prevDelimiter.markup === "]") {
+					// HACK: We shouldn't be referring to autolinks!
+					if (
+						//prevDelimiter.markup === "![" ||
+						prevDelimiter.markup === "[" ||
+						prevDelimiter.markup === "]" ||
+						prevDelimiter.markup === "<"
+					) {
 						prevDelimiter.handled = true;
 					}
 				}
 			}
 
 			state.delimiters.push({
-				name,
+				name: isLink ? "link" : "image",
 				markup: startDelimiter.markup,
 				length: 1,
 				start: state.i - 1,
 				end: -1,
+				handled: true,
 				canOpen: false,
 				canClose: true,
-				info: link,
-				skip,
 			});
 
-			startDelimiter.handled = false;
+			startDelimiter.handled = true;
+			startDelimiter.end = state.i - 1;
+			startDelimiter.info = link;
+			startDelimiter.skip = skip;
+
 			return true;
 		}
 
-		// TODO: If it's not a link, go back and close delimiters that
-		// weren't closed between the start and end
-
+		// If we found a matching `[` but didn't find a link, ignore it in future
 		startDelimiter.handled = true;
 	}
 
