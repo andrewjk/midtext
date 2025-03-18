@@ -9,6 +9,8 @@ A lightweight text markup language, inspired by Markdown, CommonMark, GFM and Dj
 
 [Playground](https://andrewjk.github.io/midtext/)
 
+🚧 WARNING: WORK IN PROGRESS 🚧
+
 ## Installation
 
 Using `npm`, or your favorite package manager:
