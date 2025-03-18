@@ -573,20 +573,22 @@ has a hard break
 has a hard break</p>
 ````````````````````````````````
 
-Hard breaks also work in headers:
+Hard breaks do not work in hashed headers (as they do not contain paragraphs),
+but do work in underlined headers:
 ```````````````````````````````` example
-# A \
+A \
 header \
 that \
 spans \
 multiple \
 lines
+===
 .
-<h1>A<br />
-header<br />
-that<br />
-spans<br />
-multiple<br />
+<h1>A <br />
+header <br />
+that <br />
+spans <br />
+multiple <br />
 lines</h1>
 ````````````````````````````````
 

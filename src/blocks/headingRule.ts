@@ -23,21 +23,6 @@ import newBlockNode from "../utils/newBlockNode";
 const name = "heading";
 
 function testStart(state: BlockParserState) {
-	// TODO: Remove trimEnd everywhere
-	let parent = state.openNodes.at(-1)!;
-	if (parent.children?.length) {
-		const lastChild = parent.children.at(-1)!;
-		if (lastChild.name === name && lastChild.content.trimEnd().endsWith("\\")) {
-			let endOfLine = getEndOfLine(state);
-			let content = state.src.substring(state.i, endOfLine);
-			lastChild.content = lastChild.content.trimEnd();
-			lastChild.content =
-				lastChild.content.substring(0, lastChild.content.length - 1).trimEnd() + "\\\n" + content;
-			state.i = endOfLine;
-			return true;
-		}
-	}
-
 	let char = state.src[state.i];
 	if (char === "#" && !isEscaped(state.src, state.i)) {
 		let level = countChars(state.src, state.i, "#");
