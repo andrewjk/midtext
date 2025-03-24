@@ -9434,6 +9434,8 @@ this is standardly used as the image's `alt` attribute.
 ```````````````````````````````` example
 ![foo ![bar](/url)](/url2)
 .
+<p>![foo <img src="/url" alt="bar" />](/url2)</p>
+.
 <p><img src="/url2" alt="foo bar" /></p>
 ````````````````````````````````
 

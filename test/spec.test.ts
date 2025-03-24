@@ -5,7 +5,7 @@ import renderHtml from "../src/renderHtml";
 import { tidyFields } from "./tidyFields";
 
 const ONLY_TEST = 0;
-const OUTPUT_FIELDS = ["type", "markup", "content", "children", "indent", "subindent"];
+const OUTPUT_FIELDS = ["name", "markup", "content", "children", "indent", "subindent"];
 
 describe("spec: midtext", () => {
 	// Could do this more efficiently

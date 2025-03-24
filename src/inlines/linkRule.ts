@@ -28,7 +28,7 @@ export default {
 
 function testOpen(state: InlineParserState) {
 	state.delimiters.push({
-		name: "link",
+		name,
 		markup: "[",
 		precedence,
 		length: 1,
@@ -45,6 +45,7 @@ function testOpen(state: InlineParserState) {
 function testClose(state: InlineParserState) {
 	// Find the closest matching start delimiter
 	let startDelimiter: Delimiter | undefined;
+	let startDelimiterIndex = -1;
 	let i = state.delimiters.length;
 	while (i--) {
 		let prevDelimiter = state.delimiters[i];
@@ -52,9 +53,8 @@ function testClose(state: InlineParserState) {
 			if (prevDelimiter.canOpen) {
 				if (prevDelimiter.markup === "[") {
 					startDelimiter = prevDelimiter;
+					startDelimiterIndex = i;
 					break;
-				} else if (prevDelimiter.markup === "![") {
-					return false;
 				}
 			} else {
 				continue;
@@ -63,19 +63,20 @@ function testClose(state: InlineParserState) {
 	}
 
 	if (startDelimiter) {
+		// Links cannot be nested
+		let d = state.delimiters.length;
+		while (d--) {
+			let prevDelimiter = state.delimiters[d];
+			if (prevDelimiter.precedence === precedence && prevDelimiter.end > startDelimiter.start) {
+				startDelimiter.handled = true;
+				return false;
+			}
+		}
+
 		let label = state.src.substring(startDelimiter.start + startDelimiter.markup.length, state.i);
 		let { link, skip } = extractLink(state, label);
 
 		if (link !== undefined) {
-			// Remove all the opening link delimiters so they won't be picked up in future
-			let d = state.delimiters.length;
-			while (d--) {
-				let prevDelimiter = state.delimiters[d];
-				if (prevDelimiter.precedence === precedence) {
-					prevDelimiter.handled = true;
-				}
-			}
-
 			state.delimiters.push({
 				name,
 				markup: startDelimiter.markup,

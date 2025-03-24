@@ -28,7 +28,7 @@ export default {
 
 function testOpen(state: InlineParserState) {
 	state.delimiters.push({
-		name: "image",
+		name,
 		markup: "![",
 		precedence,
 		length: 1,
@@ -63,6 +63,16 @@ function testClose(state: InlineParserState) {
 	}
 
 	if (startDelimiter) {
+		// Images cannot be nested
+		let d = state.delimiters.length;
+		while (d--) {
+			let prevDelimiter = state.delimiters[d];
+			if (prevDelimiter.precedence === precedence && prevDelimiter.end > startDelimiter.start) {
+				startDelimiter.handled = true;
+				return false;
+			}
+		}
+
 		let label = state.src.substring(startDelimiter.start + startDelimiter.markup.length, state.i);
 		let { link, skip } = extractLink(state, label);
 
@@ -88,7 +98,7 @@ function testClose(state: InlineParserState) {
 			return true;
 		}
 
-		// If we found a matching `[` but didn't find a link, ignore it in
+		// If we found a matching `![` but didn't find a link, ignore it in
 		// future so that it will be rendered as plain text
 		startDelimiter.handled = true;
 	}
