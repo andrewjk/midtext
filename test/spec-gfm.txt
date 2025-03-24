@@ -6846,8 +6846,6 @@ But this is an autolink:
 ```````````````````````````````` example
 <http://foo.bar.`baz>`
 .
-<p>&lt;http://foo.bar.<code>baz&gt;</code></p>
-.
 <p><a href="http://foo.bar.%60baz">http://foo.bar.`baz</a>`</p>
 ````````````````````````````````
 
@@ -8738,8 +8736,6 @@ However, links may not contain other links, at any level of nesting.
 ```````````````````````````````` example
 ![[[foo](uri1)](uri2)](uri3)
 .
-<p><img src="uri2" alt="[foo" />](uri3)</p>
-.
 <p><img src="uri3" alt="[foo](uri2)" /></p>
 ````````````````````````````````
 
@@ -8792,8 +8788,6 @@ and autolinks over link grouping:
 
 ```````````````````````````````` example
 [foo<http://example.com/?search=](uri)>
-.
-<p><a href="uri">foo&lt;http://example.com/?search=</a>&gt;</p>
 .
 <p>[foo<a href="http://example.com/?search=%5D(uri)">http://example.com/?search=](uri)</a></p>
 ````````````````````````````````
@@ -8956,8 +8950,6 @@ and autolinks over link grouping:
 [foo<http://example.com/?search=][ref]>
 
 [ref]: /uri
-.
-<p><a href="/uri">foo&lt;http://example.com/?search=</a>&gt;</p>
 .
 <p>[foo<a href="http://example.com/?search=%5D%5Bref%5D">http://example.com/?search=][ref]</a></p>
 ````````````````````````````````
