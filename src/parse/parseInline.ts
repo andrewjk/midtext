@@ -112,6 +112,7 @@ function processDelimiters(
 		// Add the delimiter
 		let text = delimiter.markup.repeat(delimiter.length);
 		let delimiterNode = newInlineNode(delimiter.name, state, text, delimiter.start, delimiter.line);
+		delimiterNode.acceptsContent = delimiter.acceptsContent;
 		delimiterNode.info = delimiter.info;
 		delimiterNode.attributes = delimiter.attributes;
 		if (!delimiter.hidden) {
