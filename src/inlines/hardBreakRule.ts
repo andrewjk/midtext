@@ -15,12 +15,10 @@ function test(state: InlineParserState) {
 			length: 1,
 			canOpen: false,
 			canClose: false,
-			// HACK:
-			content: "!",
+			content: "",
 		});
 
 		state.i += 2;
-
 		return true;
 	}
 
