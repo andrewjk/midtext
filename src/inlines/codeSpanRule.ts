@@ -4,7 +4,6 @@ import delimiterLength from "../utils/delimiterLength";
 import isEscaped from "../utils/isEscaped";
 
 const name = "code_span";
-const precedence = 10;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -42,7 +41,6 @@ function test(state: InlineParserState) {
 				state.delimiters.push({
 					name,
 					markup: char,
-					precedence,
 					line: state.line,
 					start,
 					end: closeEnd,

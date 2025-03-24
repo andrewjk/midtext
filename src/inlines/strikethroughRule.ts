@@ -5,7 +5,6 @@ import delimiterState from "../utils/delimiterState";
 import isEscaped from "../utils/isEscaped";
 
 const name = "strikethrough";
-const precedence = 0;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -21,7 +20,6 @@ function test(state: InlineParserState) {
 			state.delimiters.push({
 				name,
 				markup: char,
-				precedence,
 				line: state.line,
 				start,
 				end: -1,

@@ -4,7 +4,6 @@ import escapeBackslashes from "../utils/escapeBackslashes";
 import isEscaped from "../utils/isEscaped";
 
 const name = "auto_link";
-const precedence = 10;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -41,7 +40,6 @@ function test(state: InlineParserState) {
 				state.delimiters.push({
 					name: "link",
 					markup: char,
-					precedence,
 					line: state.line,
 					start,
 					end: closeEnd,

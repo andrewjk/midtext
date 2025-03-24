@@ -5,7 +5,6 @@ import extractLink from "../utils/extractLink";
 import isEscaped from "../utils/isEscaped";
 
 const name = "link";
-const precedence = 5;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -30,7 +29,6 @@ function testOpen(state: InlineParserState) {
 	state.delimiters.push({
 		name,
 		markup: "[",
-		precedence,
 		length: 1,
 		line: state.line,
 		start: state.i,
@@ -67,7 +65,7 @@ function testClose(state: InlineParserState) {
 		let d = state.delimiters.length;
 		while (d--) {
 			let prevDelimiter = state.delimiters[d];
-			if (prevDelimiter.precedence === precedence && prevDelimiter.end > startDelimiter.start) {
+			if (prevDelimiter.name === name && prevDelimiter.end > startDelimiter.start) {
 				startDelimiter.handled = true;
 				return false;
 			}
@@ -80,7 +78,6 @@ function testClose(state: InlineParserState) {
 			state.delimiters.push({
 				name,
 				markup: startDelimiter.markup,
-				precedence,
 				length: 1,
 				line: state.line,
 				start: state.i - 1,

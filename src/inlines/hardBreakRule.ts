@@ -3,14 +3,12 @@ import type InlineRule from "../types/InlineRule";
 import isNewLine from "../utils/isNewLine";
 
 const name = "hard_break";
-const precedence = 0;
 
 function test(state: InlineParserState) {
 	if (state.src[state.i] === "\\" && isNewLine(state.src[state.i + 1])) {
 		state.delimiters.push({
 			name,
 			markup: "\n",
-			precedence,
 			line: state.line,
 			start: state.i,
 			end: state.i + 1,

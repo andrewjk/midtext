@@ -4,7 +4,6 @@ import delimiterLength from "../utils/delimiterLength";
 import isEscaped from "../utils/isEscaped";
 
 const name = "raw_span";
-const precedence = 10;
 
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
@@ -30,19 +29,9 @@ function test(state: InlineParserState) {
 			if (closeLength === length) {
 				let content = state.src.substring(state.i + length, closeEnd);
 
-				//// NOTE: We strip newlines and replace internal newlines
-				//// with spaces, so that you can have your arbitrarily
-				//// broken text converted into automatically wrapped
-				//// HTML, even with preserve-whitespace set in CSS
-				//content = content
-				//	.replaceAll(/^[\r\n]+/g, "")
-				//	.replaceAll(/[\r\n]+$/g, "")
-				//	.replaceAll(/[\r\n]/g, " ");
-
 				state.delimiters.push({
 					name,
 					markup: char,
-					precedence,
 					line: state.line,
 					start,
 					end: closeEnd,
