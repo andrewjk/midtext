@@ -71,22 +71,10 @@ function testClose(state: InlineParserState) {
 			}
 		}
 
-		let label = state.src.substring(startDelimiter.start + startDelimiter.markup.length, state.i);
+		let label = state.src.substring(startDelimiter.start + 1, state.i);
 		let { link, skip } = extractLink(state, label);
 
 		if (link !== undefined) {
-			state.delimiters.push({
-				name,
-				markup: startDelimiter.markup,
-				length: 1,
-				line: state.line,
-				start: state.i - 1,
-				end: -1,
-				handled: true,
-				canOpen: false,
-				canClose: true,
-			});
-
 			startDelimiter.handled = true;
 			startDelimiter.end = state.i - 1;
 			startDelimiter.info = link;

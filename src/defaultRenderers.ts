@@ -3,6 +3,8 @@ import codeBlockRenderer from "./render/codeBlockRenderer";
 import codeSpanRenderer from "./render/codeSpanRenderer";
 import documentRenderer from "./render/documentRenderer";
 import emphasisRenderer from "./render/emphasisRenderer";
+import footnoteReferenceRenderer from "./render/footnoteReferenceRenderer";
+import footnoteRenderer from "./render/footnoteRenderer";
 import hardBreakRenderer from "./render/hardBreakRenderer";
 import headingRenderer from "./render/headingRenderer";
 import headingUnderlineRenderer from "./render/headingUnderlineRenderer";
@@ -29,9 +31,12 @@ import textRenderer from "./render/textRenderer";
 import type Renderer from "./types/Renderer";
 
 let defaultRenderers = new Map<string, Renderer>();
+
+// Block
 defaultRenderers.set(documentRenderer.name, documentRenderer);
 defaultRenderers.set(blockQuoteRenderer.name, blockQuoteRenderer);
 defaultRenderers.set(codeBlockRenderer.name, codeBlockRenderer);
+defaultRenderers.set(footnoteReferenceRenderer.name, footnoteReferenceRenderer);
 defaultRenderers.set(headingRenderer.name, headingRenderer);
 defaultRenderers.set(headingUnderlineRenderer.name, headingUnderlineRenderer);
 defaultRenderers.set(linkReferenceRenderer.name, linkReferenceRenderer);
@@ -46,9 +51,12 @@ defaultRenderers.set(tableHeaderRenderer.name, tableHeaderRenderer);
 defaultRenderers.set(tableRowRenderer.name, tableRowRenderer);
 defaultRenderers.set(tableCellRenderer.name, tableCellRenderer);
 defaultRenderers.set(taskItemRenderer.name, taskItemRenderer);
+
+// Inline
 defaultRenderers.set(codeSpanRenderer.name, codeSpanRenderer);
 defaultRenderers.set(strongEmphasisRenderer.name, strongEmphasisRenderer);
 defaultRenderers.set(emphasisRenderer.name, emphasisRenderer);
+defaultRenderers.set(footnoteRenderer.name, footnoteRenderer);
 defaultRenderers.set(hardBreakRenderer.name, hardBreakRenderer);
 defaultRenderers.set(highlightRenderer.name, highlightRenderer);
 defaultRenderers.set(linkRenderer.name, linkRenderer);
@@ -57,4 +65,5 @@ defaultRenderers.set(rawSpanRenderer.name, rawSpanRenderer);
 defaultRenderers.set(strikethroughRenderer.name, strikethroughRenderer);
 defaultRenderers.set(superscriptRenderer.name, superscriptRenderer);
 defaultRenderers.set(textRenderer.name, textRenderer);
+
 export default defaultRenderers;

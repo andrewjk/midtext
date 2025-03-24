@@ -2,6 +2,7 @@ import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
+import nodeAttributes from "./nodeAttributes";
 import renderChildren from "./renderChildren";
 import startNewLine from "./startNewLine";
 
@@ -9,12 +10,7 @@ const name = "code_block";
 
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
-	let attributes = "";
-	if (node.attributes) {
-		attributes =
-			" " + node.attributes.map((a) => `${a.name}${a.value ? `="${a.value}"` : ""}`).join(" ");
-	}
-	state.output += `<pre><code${attributes}>`;
+	state.output += `<pre><code${nodeAttributes(node)}>`;
 	renderChildren(node, state);
 	state.output += "</code></pre>";
 	endNewLine(node, state);

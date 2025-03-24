@@ -255,15 +255,14 @@ Duplicated footnote reference[^second].
 
 [^first]: Footnote **can have markup**
 
-    and multiple paragraphs.
+          and multiple paragraphs.
 
 [^second]: Footnote text.
 </code></pre>
-<p>Footnote 1 link<a href="Footnote">^first</a>.</p>
-<p>Footnote 2 link<a href="Footnote">^second</a>.</p>
-<p>Inline footnote^[Text of inline footnote] definition.</p>
-<p>Duplicated footnote reference<a href="Footnote">^second</a>.</p>
-<p>and multiple paragraphs.</p>
+<p>Footnote 1 link<sup><a id="fn-ref-1" href="#fn-1">1</a></sup>.</p>
+<p>Footnote 2 link<sup><a id="fn-ref-2" href="#fn-2">2</a></sup>.</p>
+<p>Inline footnote<sup><a id="fn-ref-3" href="#fn-3">3</a></sup> definition.</p>
+<p>Duplicated footnote reference<sup><a id="fn-ref-2" href="#fn-2">2</a></sup>.</p>
 <hr />
 <h1>Code and Syntax Highlighting</h1>
 <pre><code>Inline `code` has `back-ticks around` it.
@@ -643,3 +642,15 @@ Underscores
 <pre><code>[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 </code></pre>
 <p><a href="https://www.youtube.com/watch?v=ciawICBvQoE"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/YouTube_logo_2015.svg/1200px-YouTube_logo_2015.svg.png" alt="IMAGE ALT TEXT HERE" /></a></p>
+<ol>
+<li id="fn-1">
+<p>Footnote <strong>can have markup</strong></p>
+<p>and multiple paragraphs. <a href="#fn-ref-1">↩︎︎</a></p>
+</li>
+<li id="fn-2">
+<p>Footnote text. <a href="#fn-ref-2">↩︎︎</a></p>
+</li>
+<li id="fn-3">
+<p>Text of inline footnote <a href="#fn-ref-3">↩︎︎</a></p>
+</li>
+</ol>

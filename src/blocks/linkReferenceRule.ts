@@ -130,10 +130,11 @@ function testStart(state: BlockParserState) {
 
 		state.refs[label] = url;
 
-		let ref = newBlockNode(name, state, "", state.indent, state.indent);
-		ref.block = false;
+		let refNode = newBlockNode(name, state, "", state.indent, state.indent);
+		refNode.block = false;
+		refNode.info = label;
 
-		state.openNodes.at(-1)!.children!.push(ref);
+		state.openNodes.at(-1)!.children!.push(refNode);
 
 		// HACK: We are just swallowing everything at the end of the line so
 		// that we can ignore titles, but we should return false if anything is

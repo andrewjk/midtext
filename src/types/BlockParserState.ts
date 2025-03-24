@@ -14,6 +14,10 @@ export default interface BlockParserState {
 	openNodes: MidtextNode[];
 	atLineEnd: boolean;
 	blankLevel: number;
+	/** Reference values for links, images, etc */
 	refs: Record<string, string>;
+	/** Unstructured data that can be set and accessed by rules */
+	meta: Record<string, any>;
+	/** Attribute values that have been read and should be applied to the next block element */
 	attributes?: Attribute[];
 }

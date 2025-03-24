@@ -3,6 +3,7 @@ import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
 import innerNewLine from "./innerNewLine";
+import nodeAttributes from "./nodeAttributes";
 import renderChildren from "./renderChildren";
 import renderNode from "./renderNode";
 import startNewLine from "./startNewLine";
@@ -26,9 +27,9 @@ function render(node: MidtextNode, state: RenderState, ordered?: boolean) {
 				start += ` start="${"-abcdefghijklmnopqrstuvwxyz".indexOf(startAlpha)}"`;
 			}
 		}
-		state.output += `<ol${start}>`;
+		state.output += `<ol${start}${nodeAttributes(node)}>`;
 	} else {
-		state.output += "<ul>";
+		state.output += `<ul${nodeAttributes(node)}>`;
 	}
 
 	innerNewLine(node, state);
@@ -48,7 +49,7 @@ function render(node: MidtextNode, state: RenderState, ordered?: boolean) {
 	}
 
 	for (let item of node.children!) {
-		state.output += "<li>";
+		state.output += `<li${nodeAttributes(item)}>`;
 		for (let [i, child] of item.children!.entries()) {
 			if (!loose && child.name === "paragraph") {
 				// Skip paragraphs under list items to make the list tight

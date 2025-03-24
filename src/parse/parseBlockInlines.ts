@@ -37,6 +37,7 @@ export default function parseBlockInlines(
 	// Now add the inlines
 	if (parent.content.length) {
 		let inlineState: InlineParserState = {
+			root: state.openNodes[0],
 			// Strip final spaces before inline parsing
 			src: parent.content.trimEnd(),
 			rules,
@@ -48,6 +49,7 @@ export default function parseBlockInlines(
 			indent: 0,
 			delimiters: [],
 			refs: state.refs,
+			meta: state.meta,
 		};
 
 		parseInline(inlineState, parent);

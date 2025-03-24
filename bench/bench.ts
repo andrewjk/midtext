@@ -1,4 +1,5 @@
 import markdownit from "markdown-it";
+import mditfootnote from "markdown-it-footnote";
 import { micromark } from "micromark";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import fs from "node:fs";
@@ -28,7 +29,7 @@ const midtextHtmlFile = "./full-midtext.html";
 const root = parse(midtextSource);
 fs.writeFileSync(midtextHtmlFile, renderHtml(root));
 
-const md = markdownit();
+const md = markdownit().use(mditfootnote);
 const encode = md.utils.lib.mdurl.encode;
 md.normalizeLink = (url: string) => encode(url);
 md.normalizeLinkText = (str: string) => str;

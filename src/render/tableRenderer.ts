@@ -3,6 +3,7 @@ import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
 import innerNewLine from "./innerNewLine";
+import nodeAttributes from "./nodeAttributes";
 import renderChildren from "./renderChildren";
 import startNewLine from "./startNewLine";
 
@@ -10,7 +11,7 @@ const name = "table";
 
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
-	state.output += "<table>\n<thead>\n<tr>\n";
+	state.output += `<table${nodeAttributes(node)}>\n<thead>\n<tr>\n`;
 	for (let cell of node.children![0].children!) {
 		renderTableCell(cell, state, "th");
 	}

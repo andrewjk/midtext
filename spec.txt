@@ -755,6 +755,30 @@ I'm some :inline content:!
 <p>I'm some <span>inline content</span>!</p>
 ````````````````````````````````
 
+## Footnotes
+
+```````````````````````````````` example
+I have some more info[^label].
+
+When you only have a short footnote^[You can put its text inline like this].
+
+Duplicated footnote labels get the same number[^label].
+
+[^label]: And here it is
+.
+<p>I have some more info<sup><a id="fn-ref-1" href="#fn-1">1</a></sup>.</p>
+<p>When you only have a short footnote<sup><a id="fn-ref-2" href="#fn-2">2</a></sup>.</p>
+<p>Duplicated footnote labels get the same number<sup><a id="fn-ref-1" href="#fn-1">1</a></sup>.</p>
+<ol>
+<li id="fn-1">
+<p>And here it is <a href="#fn-ref-1">↩︎︎</a></p>
+</li>
+<li id="fn-2">
+<p>You can put its text inline like this <a href="#fn-ref-2">↩︎︎</a></p>
+</li>
+</ol>
+````````````````````````````````
+
 Comments
 --------
 

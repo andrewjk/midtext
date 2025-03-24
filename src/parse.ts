@@ -29,6 +29,7 @@ export default function parse(
 		blankLevel: -1,
 		openNodes: [],
 		refs: {},
+		meta: {},
 	};
 
 	let document = newBlockNode("document", state, "", 0, 0);

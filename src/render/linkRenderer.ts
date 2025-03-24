@@ -9,8 +9,7 @@ const name = "link";
 
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
-	let title = /* node.title ? ` title="${node.title}"` :*/ "";
-	state.output += `<a href="${node.info}"${title}>`;
+	state.output += `<a href="${node.info}">`;
 	renderChildren(node, state);
 	state.output += "</a>";
 	endNewLine(node, state);

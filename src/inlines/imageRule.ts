@@ -4,6 +4,16 @@ import type InlineRule from "../types/InlineRule";
 import extractLink from "../utils/extractLink";
 import isEscaped from "../utils/isEscaped";
 
+// Maybe [alt text]((image.png))
+// Or [[alt text]](image.png)
+// Or [{alt text}](image.png)
+// Or [# alt text](image.png)
+//   goes with footnotes etc
+//   image with link would be [[[alt text]](http://image)](http://link)
+//   maybe we should use <link>(http://etc) and
+// (you can have an image in a link, but not a link in an image)
+// e.g. [[!image](image.png)](http://link.com) is ok
+
 const name = "image";
 
 function test(state: InlineParserState) {
@@ -71,22 +81,10 @@ function testClose(state: InlineParserState) {
 			}
 		}
 
-		let label = state.src.substring(startDelimiter.start + startDelimiter.markup.length, state.i);
+		let label = state.src.substring(startDelimiter.start + 2, state.i);
 		let { link, skip } = extractLink(state, label);
 
 		if (link !== undefined) {
-			state.delimiters.push({
-				name,
-				markup: startDelimiter.markup,
-				length: 1,
-				line: state.line,
-				start: state.i - 1,
-				end: -1,
-				handled: true,
-				canOpen: false,
-				canClose: true,
-			});
-
 			startDelimiter.handled = true;
 			startDelimiter.end = state.i - 1;
 			startDelimiter.info = link;
