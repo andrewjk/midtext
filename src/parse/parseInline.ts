@@ -2,12 +2,9 @@ import type Delimiter from "../types/Delimiter";
 import type InlineParserState from "../types/InlineParserState";
 import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
+import { isAlphaNumeric } from "../utils/isAlphaNumeric";
 import newInlineNode from "../utils/newInlineNode";
 
-export default function parseInline(state: InlineParserState, parent: MidtextNode, end = -1) {
-	// Parse inlines and get the delimiters
-	let inlineEnd = end === -1 ? state.src.length : end;
-	while (state.i < inlineEnd) {
 /**
  * Parses inlines by:
  * 1. Getting the delimiters
@@ -18,8 +15,16 @@ export default function parseInline(state: InlineParserState, parent: MidtextNod
  * @param state The InlineParserState.
  * @param parent The parent node.
  */
+export default function parseInline(state: InlineParserState, parent: MidtextNode) {
+	// Skip until the first non-alpha character, as delimiters must be
+	while (isAlphaNumeric(state.src.charCodeAt(state.i))) {
+		state.i++;
+	}
+
+	// Get the delimiters
+	while (state.i < state.src.length) {
 		let char = state.src[state.i];
-		if (end === -1 && (char === "\r" || char === "\n")) {
+		if (char === "\r" || char === "\n") {
 			// Treat Windows \r\n as \n
 			if (char === "\r" && state.src[state.i + 1] === "\n") {
 				state.i++;
