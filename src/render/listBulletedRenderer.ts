@@ -1,15 +1,13 @@
 import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
-import listRenderer from "./listRenderer";
-
-const name = "list_bulleted";
+import { listRender } from "./listRenderer";
 
 function render(node: MidtextNode, state: RenderState) {
-	listRenderer.render(node, state, false);
+	listRender(node, state, false);
 }
 
 export default {
-	name,
+	name: "list_bulleted",
 	render,
 } satisfies Renderer;

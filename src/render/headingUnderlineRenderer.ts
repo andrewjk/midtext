@@ -3,14 +3,8 @@ import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import renderTag from "./renderTag";
 
-const name = "heading_underline";
-
-function render(node: MidtextNode, state: RenderState) {
-	let level = node.markup.includes("=") ? 1 : 2;
-	renderTag(node, state, `h${level}`);
-}
-
 export default {
-	name,
-	render,
+	name: "heading_underline",
+	render: (node: MidtextNode, state: RenderState) =>
+		renderTag(node, state, `h${node.markup.includes("=") ? 1 : 2}`),
 } satisfies Renderer;

@@ -1,6 +1,5 @@
 import type MidtextNode from "../types/MidtextNode";
 import type RenderState from "../types/RenderState";
-import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
 import innerNewLine from "./innerNewLine";
 import nodeAttributes from "./nodeAttributes";
@@ -8,7 +7,7 @@ import renderChildren from "./renderChildren";
 import renderNode from "./renderNode";
 import startNewLine from "./startNewLine";
 
-function render(node: MidtextNode, state: RenderState, ordered?: boolean) {
+export function listRender(node: MidtextNode, state: RenderState, ordered?: boolean) {
 	// TODO: Can we remove paragraphs when parsing instead?
 
 	startNewLine(node, state);
@@ -68,8 +67,3 @@ function render(node: MidtextNode, state: RenderState, ordered?: boolean) {
 	state.output += ordered ? "</ol>" : "</ul>";
 	endNewLine(node, state);
 }
-
-export default {
-	name: "list",
-	render,
-} satisfies Renderer;

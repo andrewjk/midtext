@@ -1,8 +1,6 @@
 import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
 
-const name = "text";
-
 /**
  * The text inline rule handles any character that hasn't been handled by a
  * previous rule
@@ -13,6 +11,6 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "text",
 	test,
 } satisfies InlineRule;

@@ -4,8 +4,6 @@ import type Renderer from "../types/Renderer";
 import endNewLine from "./endNewLine";
 import startNewLine from "./startNewLine";
 
-const name = "image";
-
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	let alt = getChildText(node);
@@ -28,6 +26,6 @@ function getChildText(node: MidtextNode) {
 }
 
 export default {
-	name,
+	name: "image",
 	render,
 } satisfies Renderer;

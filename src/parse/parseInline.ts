@@ -1,3 +1,4 @@
+import type Delimiter from "../types/Delimiter";
 import type InlineParserState from "../types/InlineParserState";
 import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
@@ -104,14 +105,17 @@ function processDelimiters(
 		// Maybe add the text between delimiters
 		if (delimiter.start > start) {
 			let text = state.src.substring(start, delimiter.start);
-			if (!delimiter.acceptsContent) text = formatText(text);
+			if (!delimiter.acceptsContent) {
+				text = formatText(text);
+			}
 			let textNode = newInlineNode("text", state, text, start, state.line);
 			parent.children!.push(textNode);
+			start = delimiter.start;
 		}
 
 		// Add the delimiter
 		let text = delimiter.markup.repeat(delimiter.length);
-		let delimiterNode = newInlineNode(delimiter.name, state, text, delimiter.start, delimiter.line);
+		let delimiterNode = newInlineNode(delimiter.name, state, text, start, delimiter.line);
 		delimiterNode.acceptsContent = delimiter.acceptsContent;
 		delimiterNode.info = delimiter.info;
 		delimiterNode.attributes = delimiter.attributes;
@@ -125,10 +129,7 @@ function processDelimiters(
 		if (delimiter.hidden) {
 			start = delimiter.end + text.length;
 		} else if (delimiter.content) {
-			let text = delimiter.content;
-			if (!delimiter.acceptsContent) text = formatText(delimiter.content);
-			let textNode = newInlineNode("text", state, text, start, delimiter.line);
-			delimiterNode.children!.push(textNode);
+			addDelimiterText(delimiterNode, delimiter, delimiter.content, state, start);
 			start = delimiter.end + text.length;
 			state.line = delimiter.line;
 		} else {
@@ -153,9 +154,7 @@ function processDelimiters(
 			// No overlapping delimiters, so add the text
 			if (!found) {
 				let text = state.src.substring(start, delimiter.end - (delimiter.skip ?? 0));
-				if (!delimiter.acceptsContent) text = formatText(text);
-				let textNode = newInlineNode("text", state, text, start, delimiter.line);
-				delimiterNode.children!.push(textNode);
+				addDelimiterText(delimiterNode, delimiter, text, state, start);
 				start = delimiter.end + text.length;
 				state.line = delimiter.line;
 			}
@@ -166,9 +165,7 @@ function processDelimiters(
 			// HACK: Need to account for start and end delimiters of different
 			// lengths and go back to using substring
 			let text = state.src.slice(start, delimiter.end - (delimiter.skip ?? 0));
-			if (!delimiter.acceptsContent) text = formatText(text);
-			let textNode = newInlineNode("text", state, text, start, delimiter.line);
-			delimiterNode.children!.push(textNode);
+			addDelimiterText(delimiterNode, delimiter, text, state, start);
 		}
 
 		start = delimiter.end + text.length;
@@ -177,8 +174,20 @@ function processDelimiters(
 	return lastHandledIndex;
 }
 
+function addDelimiterText(
+	parent: MidtextNode,
+	delimiter: Delimiter,
+	text: string,
+	state: InlineParserState,
+	start: number,
+) {
+	if (!delimiter.acceptsContent) {
+		text = formatText(text);
+	}
+	let textNode = newInlineNode("text", state, text, start, delimiter.line);
+	parent.children!.push(textNode);
+}
+
 function formatText(text: string) {
-	text = text.replaceAll(/\s*[\r\n]\s*/g, "\n");
-	text = escapeBackslashes(text);
-	return text;
+	return escapeBackslashes(text.replaceAll(/\s*[\r\n]\s*/g, "\n"));
 }

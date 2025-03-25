@@ -1,7 +1,5 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MidtextNode from "../types/MidtextNode";
-import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import evictBlocks from "../utils/evictBlocks";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
@@ -13,8 +11,6 @@ import newBlockNode from "../utils/newBlockNode";
  * three or more matching -, _, or * characters, each followed optionally by any
  * number of spaces or tabs, forms a thematic break."
  */
-
-const name = "section_break";
 
 function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
@@ -36,17 +32,18 @@ function testStart(state: BlockParserState) {
 			}
 		}
 		if (matched >= 3) {
+			let markup = state.src.substring(state.i, end);
+
 			// Close blocks that this node shouldn't be nested under
 			evictBlocks(state);
 
 			// Create the node
 			let parent = state.openNodes.at(-1)!;
 
-			let markup = state.src.substring(state.i, end);
-			let breakNode = newBlockNode(name, state, markup, state.indent, state.indent);
-			checkBlankLineBefore(state, breakNode, parent);
+			let node = newBlockNode("section_break", state, markup, state.indent, state.indent);
 
-			parent.children!.push(breakNode);
+			parent.children!.push(node);
+
 			state.i = end;
 			return true;
 		}
@@ -55,12 +52,8 @@ function testStart(state: BlockParserState) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
-	return false;
-}
-
 export default {
-	name,
+	name: "section_break",
 	testStart,
-	testContinue,
+	testContinue: () => false,
 } satisfies BlockRule;

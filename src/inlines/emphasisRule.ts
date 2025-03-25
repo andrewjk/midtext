@@ -4,8 +4,6 @@ import delimiterLength from "../utils/delimiterLength";
 import delimiterState from "../utils/delimiterState";
 import isEscaped from "../utils/isEscaped";
 
-const name = "emphasis";
-
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
 	if ((char === "*" || char === "_") && !isEscaped(state.src, state.i)) {
@@ -35,6 +33,6 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "emphasis",
 	test,
 } satisfies InlineRule;

@@ -23,7 +23,6 @@ export default function parseBlockInlines(
 			content: "",
 			indent: 0,
 			subindent: 0,
-			children: [],
 		};
 		parent.children!.push(textNode);
 		return;

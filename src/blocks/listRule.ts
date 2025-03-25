@@ -1,6 +1,5 @@
 import parseBlock from "../parse/parseBlock";
 import type BlockParserState from "../types/BlockParserState";
-import type BlockRule from "../types/BlockRule";
 import type MidtextNode from "../types/MidtextNode";
 import checkBlankLineBefore from "../utils/checkBlankLineBefore";
 import countSpaces from "../utils/countSpaces";
@@ -15,7 +14,7 @@ export interface ListInfo {
 	name: string;
 }
 
-function testStart(state: BlockParserState, info?: ListInfo) {
+export function listTestStart(state: BlockParserState, info?: ListInfo) {
 	if (info) {
 		const name = info.name;
 
@@ -61,7 +60,7 @@ function testStart(state: BlockParserState, info?: ListInfo) {
 			checkBlankLineBefore(state, listNode, parent);
 		}
 
-		// Reset the state and parse inside the item
+		// Parse children
 		state.i += info.markup.length + spaces;
 		state.indent = subindent;
 		parseBlock(state, state.openNodes.length - 1);
@@ -72,7 +71,7 @@ function testStart(state: BlockParserState, info?: ListInfo) {
 	return false;
 }
 
-function testContinue(
+export function listTestContinue(
 	state: BlockParserState,
 	node: MidtextNode,
 	hadBlankLine: boolean,
@@ -133,9 +132,3 @@ function testContinue(
 
 	return false;
 }
-
-export default {
-	name: "list",
-	testStart,
-	testContinue,
-} satisfies BlockRule;

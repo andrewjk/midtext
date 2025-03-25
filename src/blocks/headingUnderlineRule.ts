@@ -1,6 +1,5 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MidtextNode from "../types/MidtextNode";
 import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
@@ -28,8 +27,6 @@ import isSpace from "../utils/isSpace";
  * line. However, it cannot interrupt a paragraph, so when a setext heading
  * comes after a paragraph, a blank line is needed between them."
  */
-
-const name = "heading_underline";
 
 function testStart(state: BlockParserState) {
 	let parent = state.openNodes.at(-1)!;
@@ -69,7 +66,7 @@ function testStart(state: BlockParserState) {
 			}
 		}
 
-		parent.name = name;
+		parent.name = "heading_underline";
 		parent.markup = state.src.substring(state.i, end);
 
 		state.openNodes.pop();
@@ -81,12 +78,8 @@ function testStart(state: BlockParserState) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
-	return false;
-}
-
 export default {
-	name,
+	name: "heading_underline",
 	testStart,
-	testContinue,
+	testContinue: () => false,
 } satisfies BlockRule;

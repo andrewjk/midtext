@@ -8,8 +8,6 @@ import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 import newBlockNode from "../utils/newBlockNode";
 
-const name = "details";
-
 function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "?" && !isEscaped(state.src, state.i)) {
@@ -21,18 +19,19 @@ function testStart(state: BlockParserState) {
 
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
-		let detailsNode = newBlockNode(name, state, char, state.indent, subindent);
-		checkBlankLineBefore(state, detailsNode, parent);
 
+		let node = newBlockNode("details", state, char, state.indent, subindent);
+		checkBlankLineBefore(state, node, parent);
+
+		parent.children!.push(node);
+		state.openNodes.push(node);
+
+		// Create the summary node
 		let end = getEndOfLine(state);
 		let content = state.src.substring(state.i + 1 + spaces, end);
 		let summaryNode = newBlockNode("summary", state, char, state.indent, subindent);
 		summaryNode.content = content;
-
-		detailsNode.children!.push(summaryNode);
-
-		parent.children!.push(detailsNode);
-		state.openNodes.push(detailsNode);
+		node.children!.push(summaryNode);
 
 		state.i = end;
 
@@ -52,7 +51,7 @@ function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: 
 }
 
 export default {
-	name,
+	name: "details",
 	testStart,
 	testContinue,
 } satisfies BlockRule;

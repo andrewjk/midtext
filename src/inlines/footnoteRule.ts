@@ -5,8 +5,6 @@ import isEscaped from "../utils/isEscaped";
 import newDummyNode from "../utils/newDummyNode";
 import normalizeLabel from "../utils/normalizeLabel";
 
-const name = "footnote";
-
 let autoid = 1;
 
 function test(state: InlineParserState) {
@@ -28,13 +26,13 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "footnote",
 	test,
 } satisfies InlineRule;
 
 function testOpen(state: InlineParserState) {
 	state.delimiters.push({
-		name,
+		name: "footnote",
 		markup: "[^",
 		length: 1,
 		line: state.line,
@@ -68,7 +66,7 @@ function testClose(state: InlineParserState) {
 		let d = state.delimiters.length;
 		while (d--) {
 			let prevDelimiter = state.delimiters[d];
-			if (prevDelimiter.name === name && prevDelimiter.end > startDelimiter.start) {
+			if (prevDelimiter.name === "footnote" && prevDelimiter.end > startDelimiter.start) {
 				startDelimiter.handled = true;
 				return false;
 			}
@@ -132,7 +130,7 @@ function testShortOpen(state: InlineParserState) {
 	state.root.children!.push(refNode);
 
 	state.delimiters.push({
-		name,
+		name: "footnote",
 		markup: "^[",
 		line: state.line,
 		start: state.i,

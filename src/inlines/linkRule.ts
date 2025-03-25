@@ -4,8 +4,6 @@ import type InlineRule from "../types/InlineRule";
 import extractLink from "../utils/extractLink";
 import isEscaped from "../utils/isEscaped";
 
-const name = "link";
-
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
 
@@ -21,13 +19,13 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "link",
 	test,
 } satisfies InlineRule;
 
 function testOpen(state: InlineParserState) {
 	state.delimiters.push({
-		name,
+		name: "link",
 		markup: "[",
 		length: 1,
 		line: state.line,
@@ -65,7 +63,7 @@ function testClose(state: InlineParserState) {
 		let d = state.delimiters.length;
 		while (d--) {
 			let prevDelimiter = state.delimiters[d];
-			if (prevDelimiter.name === name && prevDelimiter.end > startDelimiter.start) {
+			if (prevDelimiter.name === "link" && prevDelimiter.end > startDelimiter.start) {
 				startDelimiter.handled = true;
 				return false;
 			}

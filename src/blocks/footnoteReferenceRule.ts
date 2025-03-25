@@ -7,11 +7,12 @@ import isEscaped from "../utils/isEscaped";
 import newBlockNode from "../utils/newBlockNode";
 import normalizeLabel from "../utils/normalizeLabel";
 
-const name = "footnote_ref";
-
 function testStart(state: BlockParserState) {
-	let char = state.src[state.i];
-	if (char === "[" && state.src[state.i + 1] === "^" && !isEscaped(state.src, state.i)) {
+	if (
+		state.src[state.i] === "[" &&
+		state.src[state.i + 1] === "^" &&
+		!isEscaped(state.src, state.i)
+	) {
 		let start = state.i + 1;
 		let end = start;
 
@@ -58,14 +59,14 @@ function testStart(state: BlockParserState) {
 
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
+		let node = newBlockNode("footnote_ref", state, "", state.indent, subindent);
+		parent.children!.push(node);
 
-		let refNode = newBlockNode(name, state, "", state.indent, subindent);
-		refNode.info = label;
+		state.openNodes.push(node);
 
-		parent.children!.push(refNode);
-		state.openNodes.push(refNode);
+		node.info = label;
 
-		// Reset the state and parse inside the item
+		// Parse children
 		state.i = end + spaces;
 		state.indent = subindent;
 		parseBlock(state, state.openNodes.length - 1);
@@ -89,7 +90,7 @@ function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: 
 }
 
 export default {
-	name,
+	name: "footnote_ref",
 	testStart,
 	testContinue,
 } satisfies BlockRule;

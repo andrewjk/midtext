@@ -4,18 +4,6 @@ import type InlineRule from "../types/InlineRule";
 import extractLink from "../utils/extractLink";
 import isEscaped from "../utils/isEscaped";
 
-// Maybe [alt text]((image.png))
-// Or [[alt text]](image.png)
-// Or [{alt text}](image.png)
-// Or [# alt text](image.png)
-//   goes with footnotes etc
-//   image with link would be [[[alt text]](http://image)](http://link)
-//   maybe we should use <link>(http://etc) and
-// (you can have an image in a link, but not a link in an image)
-// e.g. [[!image](image.png)](http://link.com) is ok
-
-const name = "image";
-
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
 
@@ -31,13 +19,13 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "image",
 	test,
 } satisfies InlineRule;
 
 function testOpen(state: InlineParserState) {
 	state.delimiters.push({
-		name,
+		name: "image",
 		markup: "![",
 		length: 1,
 		line: state.line,
@@ -75,7 +63,7 @@ function testClose(state: InlineParserState) {
 		let d = state.delimiters.length;
 		while (d--) {
 			let prevDelimiter = state.delimiters[d];
-			if (prevDelimiter.name === name && prevDelimiter.end > startDelimiter.start) {
+			if (prevDelimiter.name === "image" && prevDelimiter.end > startDelimiter.start) {
 				startDelimiter.handled = true;
 				return false;
 			}

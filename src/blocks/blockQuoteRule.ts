@@ -9,8 +9,6 @@ import isEscaped from "../utils/isEscaped";
 import isNewLine from "../utils/isNewLine";
 import newBlockNode from "../utils/newBlockNode";
 
-const name = "block_quote";
-
 /**
  * "A block quote marker consists of 0-3 spaces of initial indent, plus (a) the
  * character > together with a following space, or (b) a single character > not
@@ -53,18 +51,18 @@ function testStart(state: BlockParserState) {
 		}
 
 		// Close blocks that this node shouldn't be nested under
-		evictBlocksForNestableNode(state, name);
+		evictBlocksForNestableNode(state, "block_quote");
 
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
 
-		let quoteNode = newBlockNode(name, state, char, state.indent, subindent);
-		checkBlankLineBefore(state, quoteNode, parent);
+		let node = newBlockNode("block_quote", state, char, state.indent, subindent);
+		checkBlankLineBefore(state, node, parent);
 
-		parent.children!.push(quoteNode);
-		state.openNodes.push(quoteNode);
+		parent.children!.push(node);
+		state.openNodes.push(node);
 
-		// Reset the state and parse inside the item
+		// Parse children
 		state.i += 1 + spaces;
 		state.indent = subindent;
 		parseBlock(state, state.openNodes.length - 1);
@@ -99,7 +97,7 @@ function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: 
 }
 
 export default {
-	name,
+	name: "block_quote",
 	testStart,
 	testContinue,
 } satisfies BlockRule;

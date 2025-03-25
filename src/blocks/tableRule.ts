@@ -7,15 +7,13 @@ import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 import newBlockNode from "../utils/newBlockNode";
 
-const name = "table";
-
 function testStart(state: BlockParserState) {
 	// TODO: Less work
 	let parent = state.openNodes.at(-1)!;
 
 	let char = state.src[state.i];
 
-	if (parent.name === name && char !== "|") {
+	if (parent.name === "table" && char !== "|") {
 		state.openNodes.pop();
 		return false;
 	}
@@ -23,7 +21,7 @@ function testStart(state: BlockParserState) {
 	let level = state.openNodes.indexOf(parent);
 	let hadBlankLine = state.blankLevel !== -1 && state.blankLevel < level;
 
-	if (!hadBlankLine && parent.name === name && char === "|") {
+	if (!hadBlankLine && parent.name === "table" && char === "|") {
 		// We may already have a table
 		let endOfLine = getEndOfLine(state);
 
@@ -114,7 +112,7 @@ function testStart(state: BlockParserState) {
 				header.children!.push(cell);
 			}
 
-			parent.name = name;
+			parent.name = "table";
 			parent.content = "";
 			parent.markup = state.src.substring(state.i, end);
 
@@ -135,7 +133,7 @@ function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: 
 }
 
 export default {
-	name,
+	name: "table",
 	testStart,
 	testContinue,
 } satisfies BlockRule;

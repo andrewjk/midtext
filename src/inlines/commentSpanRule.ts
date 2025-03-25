@@ -2,8 +2,6 @@ import type InlineParserState from "../types/InlineParserState";
 import type InlineRule from "../types/InlineRule";
 import isEscaped from "../utils/isEscaped";
 
-const name = "comment_span";
-
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
 	if (char === "/" && state.src[state.i + 1] === "*" && !isEscaped(state.src, state.i)) {
@@ -16,7 +14,7 @@ function test(state: InlineParserState) {
 		}
 
 		state.delimiters.push({
-			name,
+			name: "comment_span",
 			markup: char,
 			line: state.line,
 			start,
@@ -35,6 +33,6 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "comment_span",
 	test,
 } satisfies InlineRule;

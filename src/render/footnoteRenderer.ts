@@ -5,8 +5,6 @@ import newDummyNode from "../utils/newDummyNode";
 import endNewLine from "./endNewLine";
 import startNewLine from "./startNewLine";
 
-const name = "footnote";
-
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	const split = node.info!.indexOf(":");
@@ -53,6 +51,6 @@ function render(node: MidtextNode, state: RenderState) {
 }
 
 export default {
-	name,
+	name: "footnote",
 	render,
 } satisfies Renderer;

@@ -5,8 +5,6 @@ import endNewLine from "./endNewLine";
 import renderChildren from "./renderChildren";
 import startNewLine from "./startNewLine";
 
-const name = "link";
-
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	state.output += `<a href="${node.info}">`;
@@ -16,6 +14,6 @@ function render(node: MidtextNode, state: RenderState) {
 }
 
 export default {
-	name,
+	name: "link",
 	render,
 } satisfies Renderer;

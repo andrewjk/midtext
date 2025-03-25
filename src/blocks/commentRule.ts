@@ -1,10 +1,7 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MidtextNode from "../types/MidtextNode";
 import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
-
-const name = "comment";
 
 function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
@@ -18,12 +15,8 @@ function testStart(state: BlockParserState) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
-	return false;
-}
-
 export default {
-	name,
+	name: "comment",
 	testStart,
-	testContinue,
+	testContinue: () => false,
 } satisfies BlockRule;

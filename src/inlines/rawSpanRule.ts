@@ -3,8 +3,6 @@ import type InlineRule from "../types/InlineRule";
 import delimiterLength from "../utils/delimiterLength";
 import isEscaped from "../utils/isEscaped";
 
-const name = "raw_span";
-
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
 	if (char === "%" && !isEscaped(state.src, state.i)) {
@@ -30,7 +28,7 @@ function test(state: InlineParserState) {
 				let content = state.src.substring(state.i + length, closeEnd);
 
 				state.delimiters.push({
-					name,
+					name: "raw_span",
 					markup: char,
 					line: state.line,
 					start,
@@ -55,6 +53,6 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "raw_span",
 	test,
 } satisfies InlineRule;

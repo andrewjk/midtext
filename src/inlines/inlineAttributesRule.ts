@@ -4,11 +4,8 @@ import type InlineRule from "../types/InlineRule";
 import consumeAttributes from "../utils/consumeAttributes";
 import isEscaped from "../utils/isEscaped";
 
-const name = "inline_attributes";
-
 function test(state: InlineParserState) {
-	let char = state.src[state.i];
-	if (char === "{" && !isEscaped(state.src, state.i)) {
+	if (state.src[state.i] === "{" && !isEscaped(state.src, state.i)) {
 		const lastDelimiter = state.delimiters.at(-1);
 		if (lastDelimiter) {
 			const content = consumeAttributes(state.src, state.i);
@@ -29,6 +26,6 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "inline_attributes",
 	test,
 } satisfies InlineRule;

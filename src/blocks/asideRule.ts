@@ -8,8 +8,6 @@ import evictBlocks from "../utils/evictBlocks";
 import isEscaped from "../utils/isEscaped";
 import newBlockNode from "../utils/newBlockNode";
 
-const name = "aside";
-
 function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "@" && !isEscaped(state.src, state.i)) {
@@ -22,11 +20,11 @@ function testStart(state: BlockParserState) {
 		// Create the node
 		let parent = state.openNodes.at(-1)!;
 
-		let asideNode = newBlockNode(name, state, char, state.indent, subindent);
-		checkBlankLineBefore(state, asideNode, parent);
+		let node = newBlockNode("aside", state, char, state.indent, subindent);
+		checkBlankLineBefore(state, node, parent);
 
-		parent.children!.push(asideNode);
-		state.openNodes.push(asideNode);
+		parent.children!.push(node);
+		state.openNodes.push(node);
 
 		// Parse children
 		state.i += 1 + spaces;
@@ -49,7 +47,7 @@ function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: 
 }
 
 export default {
-	name,
+	name: "aside",
 	testStart,
 	testContinue,
 } satisfies BlockRule;

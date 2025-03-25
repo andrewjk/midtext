@@ -3,8 +3,6 @@ import type InlineRule from "../types/InlineRule";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import isEscaped from "../utils/isEscaped";
 
-const name = "auto_link";
-
 function test(state: InlineParserState) {
 	let char = state.src[state.i];
 	if (char === "<" && !isEscaped(state.src, state.i)) {
@@ -63,6 +61,6 @@ function test(state: InlineParserState) {
 }
 
 export default {
-	name,
+	name: "auto_link",
 	test,
 } satisfies InlineRule;

@@ -3,13 +3,7 @@ import type RenderState from "../types/RenderState";
 import type Renderer from "../types/Renderer";
 import renderTag from "./renderTag";
 
-const name = "emphasis";
-
-function render(node: MidtextNode, state: RenderState) {
-	renderTag(node, state, "em");
-}
-
 export default {
-	name,
-	render,
+	name: "emphasis",
+	render: (node: MidtextNode, state: RenderState) => renderTag(node, state, "em"),
 } satisfies Renderer;

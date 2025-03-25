@@ -1,6 +1,5 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MidtextNode from "../types/MidtextNode";
 import escapeBackslashes from "../utils/escapeBackslashes";
 import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
@@ -22,8 +21,6 @@ import normalizeLabel from "../utils/normalizeLabel";
  * and reference-style images elsewhere in the document. Link reference
  * definitions can come either before or after the links that use them."
  */
-
-const name = "link_ref";
 
 function testStart(state: BlockParserState) {
 	//if (parent.acceptsContent) {
@@ -130,11 +127,13 @@ function testStart(state: BlockParserState) {
 
 		state.refs[label] = url;
 
-		let refNode = newBlockNode(name, state, "", state.indent, state.indent);
-		refNode.block = false;
-		refNode.info = label;
+		// Create the node
+		let parent = state.openNodes.at(-1)!;
+		let node = newBlockNode("link_ref", state, "", state.indent, state.indent);
+		parent.children!.push(node);
 
-		state.openNodes.at(-1)!.children!.push(refNode);
+		node.block = false;
+		node.info = label;
 
 		// HACK: We are just swallowing everything at the end of the line so
 		// that we can ignore titles, but we should return false if anything is
@@ -147,12 +146,8 @@ function testStart(state: BlockParserState) {
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
-	return false;
-}
-
 export default {
-	name,
+	name: "link_ref",
 	testStart,
-	testContinue,
+	testContinue: () => false,
 } satisfies BlockRule;

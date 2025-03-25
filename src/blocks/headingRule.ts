@@ -1,8 +1,8 @@
 import type BlockParserState from "../types/BlockParserState";
 import type BlockRule from "../types/BlockRule";
-import type MidtextNode from "../types/MidtextNode";
 import countChars from "../utils/countChars";
 import countSpaces from "../utils/countSpaces";
+import evictBlocks from "../utils/evictBlocks";
 import getEndOfLine from "../utils/getEndOfLine";
 import isEscaped from "../utils/isEscaped";
 import isSpace from "../utils/isSpace";
@@ -20,63 +20,60 @@ import newBlockNode from "../utils/newBlockNode";
  * number of # characters in the opening sequence."
  */
 
-const name = "heading";
-
 function testStart(state: BlockParserState) {
 	let char = state.src[state.i];
 	if (char === "#" && !isEscaped(state.src, state.i)) {
 		let level = countChars(state.src, state.i, "#");
-		if (level < 7 && isSpace(state.src.charCodeAt(state.i + level))) {
-			let spaces = countSpaces(state.src, state.i + level);
-			let subindent = state.indent + level + spaces;
-
-			// If there's an open paragraph, close it
-			if (state.openNodes.at(-1)!.name === "paragraph") {
-				state.openNodes.pop();
-			}
-
-			// Create the node
-			let parent = state.openNodes.at(-1)!;
-			let headingNode = newBlockNode(name, state, "#".repeat(level), state.indent, subindent);
-			parent.children!.push(headingNode);
-
-			// Ignore optional end heading marks and spaces (but stash them in
-			// info if found)
-			state.i += level + spaces;
-			let endOfLine = getEndOfLine(state);
-			let end = endOfLine - 1;
-			for (; end >= state.i; end--) {
-				if (!isSpace(state.src.charCodeAt(end))) {
-					break;
-				}
-			}
-			for (; end >= state.i; end--) {
-				if (state.src[end] !== "#") {
-					if (state.src[end] === "\\" || !isSpace(state.src.charCodeAt(end))) {
-						end = endOfLine - 1;
-					}
-					break;
-				}
-			}
-			headingNode.content = state.src.substring(state.i, end + 1);
-			if (endOfLine > end + 1) {
-				headingNode.info = state.src.substring(end, endOfLine);
-			}
-
-			state.i = endOfLine;
-			return true;
+		if (level > 6 || !isSpace(state.src.charCodeAt(state.i + level))) {
+			return false;
 		}
+
+		let markup = "#".repeat(level);
+		let spaces = countSpaces(state.src, state.i + level);
+		let subindent = state.indent + level + spaces;
+
+		// Close blocks that this node shouldn't be nested under
+		evictBlocks(state);
+
+		// Create the node
+		let parent = state.openNodes.at(-1)!;
+
+		let node = newBlockNode("heading", state, markup, state.indent, subindent);
+
+		parent.children!.push(node);
+
+		// Ignore optional end heading marks and spaces (but stash them in
+		// info if found)
+		state.i += level + spaces;
+		let endOfLine = getEndOfLine(state);
+		let end = endOfLine - 1;
+		for (; end >= state.i; end--) {
+			if (!isSpace(state.src.charCodeAt(end))) {
+				break;
+			}
+		}
+		for (; end >= state.i; end--) {
+			if (state.src[end] !== "#") {
+				if (state.src[end] === "\\" || !isSpace(state.src.charCodeAt(end))) {
+					end = endOfLine - 1;
+				}
+				break;
+			}
+		}
+		node.content = state.src.substring(state.i, end + 1);
+		if (endOfLine > end + 1) {
+			node.info = state.src.substring(end, endOfLine);
+		}
+
+		state.i = endOfLine;
+		return true;
 	}
 
 	return false;
 }
 
-function testContinue(state: BlockParserState, node: MidtextNode, hadBlankLine: boolean) {
-	return false;
-}
-
 export default {
-	name,
+	name: "heading",
 	testStart,
-	testContinue,
+	testContinue: () => false,
 } satisfies BlockRule;

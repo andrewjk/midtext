@@ -6,8 +6,6 @@ import nodeAttributes from "./nodeAttributes";
 import renderChildren from "./renderChildren";
 import startNewLine from "./startNewLine";
 
-const name = "code_block";
-
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	state.output += `<pre><code${nodeAttributes(node)}>`;
@@ -17,6 +15,6 @@ function render(node: MidtextNode, state: RenderState) {
 }
 
 export default {
-	name,
+	name: "code_block",
 	render,
 } satisfies Renderer;

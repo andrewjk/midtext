@@ -7,8 +7,6 @@ import nodeAttributes from "./nodeAttributes";
 import renderChildren from "./renderChildren";
 import startNewLine from "./startNewLine";
 
-const name = "table";
-
 function render(node: MidtextNode, state: RenderState) {
 	startNewLine(node, state);
 	state.output += `<table${nodeAttributes(node)}>\n<thead>\n<tr>\n`;
@@ -42,6 +40,6 @@ function renderTableCell(node: MidtextNode, state: RenderState, tag: string) {
 }
 
 export default {
-	name,
+	name: "table",
 	render,
 } satisfies Renderer;
