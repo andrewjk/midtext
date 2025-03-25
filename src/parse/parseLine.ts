@@ -2,6 +2,13 @@ import type BlockParserState from "../types/BlockParserState";
 import parseBlock from "./parseBlock";
 import parseIndent from "./parseIndent";
 
+/**
+ * Parses a line into block elements by:
+ * 1. Checking whether any currently open nodes should be closed
+ * 2. Calling `parseBlock` to loop through the block rules
+ *
+ * @param state The BlockParserState.
+ */
 export default function parseLine(state: BlockParserState) {
 	state.indent = 0;
 	state.line++;

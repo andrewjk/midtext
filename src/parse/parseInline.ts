@@ -8,6 +8,16 @@ export default function parseInline(state: InlineParserState, parent: MidtextNod
 	// Parse inlines and get the delimiters
 	let inlineEnd = end === -1 ? state.src.length : end;
 	while (state.i < inlineEnd) {
+/**
+ * Parses inlines by:
+ * 1. Getting the delimiters
+ * 2. Matching start and end delimiters
+ * 3. Chopping up the text at delimiter boundaries
+ *
+ * At the end of this process, the parent node will have its `children` array filled.
+ * @param state The InlineParserState.
+ * @param parent The parent node.
+ */
 		let char = state.src[state.i];
 		if (end === -1 && (char === "\r" || char === "\n")) {
 			// Treat Windows \r\n as \n

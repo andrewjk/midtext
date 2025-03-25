@@ -2,6 +2,14 @@ import type BlockParserState from "../types/BlockParserState";
 import isNewLine from "../utils/isNewLine";
 import isSpace from "../utils/isSpace";
 
+/**
+ * Parses indentation, by adding spaces and setting tabs to the next tabstop of
+ * 4 characters.
+ *
+ * @param state The BlockParserState
+ * @param index The index of the currently open node in the state's `openNodes`
+ * stack.
+ */
 export default function parseIndent(state: BlockParserState, index: number) {
 	if (isSpace(state.src.charCodeAt(state.i))) {
 		for (; state.i < state.src.length; state.i++) {

@@ -1,5 +1,12 @@
 import type Attribute from "../types/Attribute";
 
+/**
+ * Parses block or span attributes between `{` and `}`.
+ *
+ * @param content The text from between `{` and `}`.
+ *
+ * @returns An array of Attributes.
+ */
 export default function parseAttributes(content: string): Attribute[] | undefined {
 	// TODO: Ignore comments, proper parsing etc
 	let attributes: Attribute[] = [];

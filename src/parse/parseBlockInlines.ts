@@ -4,6 +4,14 @@ import type InlineRule from "../types/InlineRule";
 import type MidtextNode from "../types/MidtextNode";
 import parseInline from "./parseInline";
 
+/**
+ * Recursively parses the inlines for all block elements that were discovered
+ * during block parsing.
+ *
+ * @param state The BlockParserState.
+ * @param parent The parent node.
+ * @param rules The inline rules to use for parsing.
+ */
 export default function parseBlockInlines(
 	state: BlockParserState,
 	parent: MidtextNode,
